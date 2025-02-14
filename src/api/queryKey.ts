@@ -39,4 +39,8 @@ export const QUERY_KEY = {
     havrutaBoardsCountByHavrutaId: (havrutaId: number) =>
       ['havrutaBoard.havrutaBoardsByHavrutaId', havrutaId] as const,
   },
+
+  signUpCode: {
+    signUpCode: (length: number) => ['signUpCode.signUpCode', length] as const,
+  },
 };
