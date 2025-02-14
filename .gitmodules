@@ -1,0 +1,3 @@
+[submodule "cra-web-frontend-data"]
+	path = cra-web-frontend-data
+	url = https://github.com/LeeKyoungYoung/cra-web-frontend-data.git

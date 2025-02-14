@@ -1,0 +1,1 @@
+import{j as r}from"./index-B8-MUm2i.js";import{B as t}from"./BoardWrite-QhBfef7-.js";import{C as o}from"./category-CfUmwj9X.js";import"./useMutation-BPYMXbH7.js";import"./utils-km2FGkQ4.js";import"./board-BG_76WWX.js";import"./Markdown-Bsc_fMAj.js";import"./index-DAqNPHhV.js";function n(){return r.jsx(t,{category:o.ACADEMIC})}export{n as default};
