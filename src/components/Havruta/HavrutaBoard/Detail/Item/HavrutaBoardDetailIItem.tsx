@@ -12,7 +12,7 @@ import { Viewer } from '@toast-ui/react-editor';
 import { FaRegEdit } from 'react-icons/fa';
 import { IoIosLink } from 'react-icons/io';
 import styles from './HavrutaBoardDetailItem.module.css';
-import { createBoardsView } from '~/api/view';
+import { view } from '~/api/view';
 import { getBoardById } from '~/api/board';
 import viewImage from '~/assets/images/view_img.png';
 import createLike from '~/api/like';
@@ -37,7 +37,7 @@ export default function HavrutaBoardDetailItem({
   useEffect(() => {
     const viewed = localStorage.getItem(`viewed_${board.id}`);
     if (!viewed) {
-      createBoardsView(board.id as number)
+      view(board.id as number)
         .then(() => {
           localStorage.setItem(`viewed_${board.id}`, 'true');
           return getBoardById(board.id as number);
@@ -51,7 +51,7 @@ export default function HavrutaBoardDetailItem({
   }, [board.id]);
 
   const [isLiked, setIsLiked] = useState<boolean>(false);
-  const [likeCnt, setLikeCnt] = useState(board.likes);
+  const [likeCnt, setLikeCnt] = useState(board.like);
 
   useEffect(() => {
     const storedLikeStatus = localStorage.getItem(`isLiked_${board.id}`);

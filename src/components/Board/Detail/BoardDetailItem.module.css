@@ -106,24 +106,15 @@
 
 .like {
   cursor: pointer;
-  margin-top: 4px;
 }
 
 .like:hover {
-  color: var(--color-primary);
+  background-color: #c1c1c1;
   border-radius: 5px;
-}
-
-.activeLike {
-  color: var(--color-primary);
 }
 
 .file-section {
   display: block;
-}
-
-.file-section.hidden {
-  visibility: hidden;
 }
 
 .file-list {
@@ -137,7 +128,7 @@
   margin-right: 500px;
   border-radius: 5px;
   transition: background-color 0.3s;
-  white-space: nowrap;
+  white-space: nowrap; 
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 400px;
@@ -153,9 +144,9 @@
   color: #007bff;
   font-family: 'Pretendard Medium';
   font-size: 16px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  white-space: nowrap; 
+  overflow: hidden; 
+  text-overflow: ellipsis; 
 }
 
 .file-link:hover {
