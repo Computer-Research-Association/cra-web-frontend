@@ -1,1 +1,0 @@
-import{j as r}from"./index-q5O6V7Yp.js";import{B as t}from"./BoardWrite-X8W1XYIS.js";import{C as o}from"./category-CfUmwj9X.js";import"./useMutation-CjRpVrXN.js";import"./utils-km2FGkQ4.js";import"./board-lwMCaOFs.js";import"./Markdown-DRYT8HHQ.js";import"./index-kNur-GzS.js";function u(){return r.jsx(t,{category:o.NOTICE})}export{u as default};
