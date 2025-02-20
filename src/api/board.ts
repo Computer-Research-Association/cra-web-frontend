@@ -147,12 +147,13 @@ export const onUploadImage = async (blob: File): Promise<string> => {
   try {
     const response = await authClient.post<string>('/image/upload', formData, {
       headers: { 'Content-Type': 'multipart/form-data' },
+      timeout: 15000, // 15초로 타임아웃 설정
     });
     const imageUrl = response.data;
 
     console.log('받은 이미지 URL:', imageUrl);
 
-    return imageUrl; // 이미지 URL만 반환 (callback 없음)
+    return imageUrl;
   } catch (error) {
     console.error('이미지 업로드 실패:', error);
     throw error;
