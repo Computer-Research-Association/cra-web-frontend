@@ -36,3 +36,15 @@
 .menuItem.selected a {
   color: var(--color-bright-text) !important;
 }
+
+@media (max-width: 1200px) {
+  .menuItem a {
+    font-size: 17px;
+  }
+}
+
+@media (max-width: 1000px) {
+  .menuItem a {
+    font-size: 16px;
+  }
+}

@@ -13,7 +13,7 @@ createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ThemeProvider theme={theme}>
       <QueryClientProvider client={queryClient}>
-        <BrowserRouter>
+        <BrowserRouter basename={import.meta.env.PUBLIC_URL}>
           <App />
         </BrowserRouter>
       </QueryClientProvider>

@@ -6,6 +6,7 @@ import { Item } from '~/models/Item.ts';
 import { getItemById, updateItem } from '~/api/item.ts';
 import { onUploadImage } from '~/api/board.ts';
 import styles from '../../Project/Project.module.css';
+import LoadingSpinner from '~/components/Common/LoadingSpinner';
 
 function ItemAdminEdit() {
   const navigate = useNavigate();
@@ -31,12 +32,10 @@ function ItemAdminEdit() {
   const mutation = useMutation({
     mutationFn: (newItem: Item) => updateItem(newItem),
     onSuccess: async () => {
-      alert('수정 성공');
       await navigate(-1);
     },
     onError: (error) => {
       console.error('수정 실패:', error);
-      alert('수정 실패');
     },
   });
 
@@ -81,7 +80,7 @@ function ItemAdminEdit() {
   };
 
   if (itemQuery.isLoading) {
-    content = <div className="loading">데이터를 불러오는 중입니다...</div>;
+    content = <LoadingSpinner />;
   } else if (itemQuery.isError) {
     content = <div className="error">에러가 발생했습니다!</div>;
   } else if (itemQuery.isSuccess) {

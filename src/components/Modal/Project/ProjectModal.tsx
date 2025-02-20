@@ -3,6 +3,8 @@ import { getProjectById } from '~/api/project.ts';
 import { QUERY_KEY } from '~/api/queryKey.ts';
 import Modal from 'react-modal';
 import styles from '../Project/ProjectModal.module.css';
+import { Link } from 'react-router-dom';
+import LoadingSpinner from '~/components/Common/LoadingSpinner';
 
 const ProjectModal = ({
   projectId,
@@ -23,7 +25,7 @@ const ProjectModal = ({
   if (isLoading) {
     return (
       <Modal isOpen onRequestClose={closeModal}>
-        Loading...
+        <LoadingSpinner />;
       </Modal>
     );
   }
@@ -47,14 +49,14 @@ const ProjectModal = ({
       >
         <div className={styles['modal-header']}>
           {project.serviceName}
-          <a
-            href={project.serviceUrl}
+          <Link
+            to={project.serviceUrl}
             target="_blank"
             rel="none"
             className={styles['url-button']}
           >
             URL 이동
-          </a>
+          </Link>
         </div>
         <div className={styles['modal-body']}>
           <div className={styles['image-box']}>

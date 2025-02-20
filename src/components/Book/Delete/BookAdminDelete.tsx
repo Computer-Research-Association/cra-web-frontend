@@ -22,7 +22,6 @@ function BookAdminDelete({ id }: { id: number }) {
   const mutation = useMutation({
     mutationFn: (id: number) => deleteItem(id),
     onSuccess: async () => {
-      alert('도서 삭제 성공');
       queryClient.setQueryData<Item[]>(
         QUERY_KEY.item.items(ITEMCATEGORY.BOOK),
         (oldData) => {
@@ -43,7 +42,6 @@ function BookAdminDelete({ id }: { id: number }) {
     },
     onError: (error) => {
       console.error('도서 삭제 실패', error);
-      alert('도서 삭제 실패');
     },
   });
 

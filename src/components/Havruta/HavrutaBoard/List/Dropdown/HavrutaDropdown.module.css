@@ -1,0 +1,35 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f4f4f4;
+}
+
+.dropdown {
+  height: 2.5rem;
+  width: 200px;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background-color: white;
+  font-size: 16px;
+  font-family: 'Pretendard Medium';
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.dropdown:hover {
+  border-color: #3498db;
+}
+
+.dropdown:focus {
+  outline: none;
+  border-color: #3498db;
+  box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+}
+
+@media (max-width: 600px) {
+  .dropdown {
+  font-size: 15px;
+  }
+}

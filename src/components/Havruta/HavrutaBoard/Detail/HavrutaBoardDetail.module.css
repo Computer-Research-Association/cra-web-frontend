@@ -1,3 +1,17 @@
 .full-width {
+  display: flex;
   width: 100vw;
+  max-width: 1086px;
+}
+
+@media (max-width: 1200px) {
+  .full-width {
+    max-width: 886px;
+  }
+}
+
+@media (max-width: 1000px) {
+  .full-width {
+    max-width: 756px;
+  }
 }

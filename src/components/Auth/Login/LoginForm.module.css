@@ -9,15 +9,41 @@
 }
 
 .id input,
-.password input {
+.password input,
+.login input {
   background-color: #fff;
   width: 100%;
+  max-width: 640px; /* 기본 max-width 설정 */
   height: 68px;
   font-size: 20px;
   border-radius: 10px;
   border: 1px solid var(--color-dark-stroke);
   margin-bottom: 0;
   padding-left: 20px;
+}
+
+@media (max-width: 768px) {
+  .id input,
+  .password input,
+  .login input {
+    width: 598px !important;
+  }
+}
+
+@media (max-width: 684px) {
+  .id input,
+  .password input,
+  .login input {
+    width: 572px !important;
+  }
+}
+
+@media (max-width: 468px) {
+  .id input,
+  .password input,
+  .login input {
+    max-width: 100%;
+  }
 }
 
 .id input::placeholder,
@@ -60,4 +86,27 @@
   color: var(--color-dark-text);
   font-size: 1rem;
   color: var(--color-bright-text);
+}
+
+.login input {
+  width: 100%; /* 로그인 버튼도 width 100%로 설정 */
+  max-width: 662px; /* 최대 너비 설정 */
+  background-color: var(--color-primary);
+  border: none;
+  border-radius: 10px;
+  color: #ffffff;
+  font-size: 30px;
+  font-family: 'Pretendard Bold';
+  margin-top: 40px;
+  margin-bottom: 14px;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .id input,
+  .password input,
+  .login input {
+    width: 100%;
+    max-width: 100%; /* 작은 화면에서 너비 100% */
+  }
 }

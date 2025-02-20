@@ -85,24 +85,46 @@
 
 .comment-count {
   display: flex;
-  justify-content: right;
-  gap: 15px;
-  margin-top: 138px;
-  margin-bottom: 14px;
+  justify-content: space-between; /* 양끝 정렬로 변경 */
+  align-items: center; /* 세로 중앙 정렬 추가 */
+  margin: 138px 10px 14px 10px;
   font-size: 20px;
   color: #9b9b9b;
 }
 
-.viewContainer span {
-  min-width: 30px; /* 숫자 너비 고정 */
-  text-align: center; /* 숫자 중앙 정렬 */
-  display: inline-block;
+.stats-container {
+  display: flex;
+  gap: 10px;
+  margin-right: 10px;
+}
+
+.viewContainer {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* 원하는 간격(px 단위) */
+  width: 4ch;
 }
 
 .like {
-  border: none;
-  background: white;
   cursor: pointer;
+  margin-top: 4px;
+}
+
+.like:hover {
+  color: var(--color-primary);
+  border-radius: 5px;
+}
+
+.activeLike {
+  color: var(--color-primary);
+}
+
+.file-section {
+  display: block;
+}
+
+.file-section.hidden {
+  visibility: hidden;
 }
 
 .file-list {
@@ -113,9 +135,13 @@
 }
 
 .file-item {
-  padding: 8px 12px;
+  margin-right: 500px;
   border-radius: 5px;
   transition: background-color 0.3s;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 400px;
 }
 
 .file-item:not(:last-child) {
@@ -123,12 +149,14 @@
 }
 
 .file-link {
-  display: flex;
-  align-items: center;
+  display: inline-block;
   text-decoration: none;
   color: #007bff;
   font-family: 'Pretendard Medium';
   font-size: 16px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .file-link:hover {
@@ -152,4 +180,27 @@
 
 .writter {
   display: flex;
+}
+
+@media (max-width: 768px) {
+  .title {
+    font-size: 18px;
+  }
+  .nav-title,
+  .nav-content {
+    font-size: 15px;
+  }
+  .content-title {
+    font-size: 25px;
+  }
+  .board-content {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 468px) {
+  .nav-title,
+  .nav-content {
+    font-size: 13px;
+  }
 }

@@ -22,7 +22,7 @@
 }
 
 .write-form label {
-  margin: 0 0 16px 10px;
+  margin: 20px 0 16px 10px;
   font-size: 24px;
   font-family: 'Pretendard SemiBold';
   color: #3e3e3e;
@@ -31,7 +31,6 @@
 .write-form input[type='number'],
 .write-form textarea {
   font-family: Arial, Helvetica, sans-serif;
-  margin-bottom: 34px;
   font-size: 18px;
   border: 1px solid #c1c1c1;
   border-radius: 10px;
@@ -76,12 +75,51 @@
   height: 200%;
 }
 
+.submit-button {
+  margin: 0 auto;
+  margin-top: 40px;
+  font-family: 'Pretendard Bold';
+  font-size: 24px;
+  height: 68px;
+  width: 46%;
+  background-color: #2cb4db;
+  color: white;
+  cursor: pointer;
+  border: none;
+  border-radius: 10px;
+}
+
+.submit-button:hover {
+  background-color: #2295ba;
+}
+
+.error-message {
+  color: #ff0000;
+  font-size: 0.875rem;
+  margin: 0.5rem 0 0 0.5rem;
+}
+
+.input-error {
+  border: 1px solid #ff0000 !important;
+}
+
+.editor-error-container {
+  padding-bottom: 2px;
+  border: 0.05rem solid red; /* 테두리를 빨간색으로 표시 */
+  background-color: rgba(255, 0, 0, 0.1); /* 배경을 옅은 빨간색으로 */
+  border-radius: 5px;
+}
+
+.editor-container {
+  padding-bottom: 2px;
+}
+
 .file-button {
   cursor: pointer;
   width: 90px;
   height: 30px;
   margin: 20px 0 0 0 !important;
-  padding: 10px 15px;
+  padding: 10px 15px 5px 15px;
   background-color: #c1c1c1;
   color: white !important;
   text-decoration: none;
@@ -99,32 +137,20 @@
 .file-input {
   display: none;
 }
+
 .file-list {
-  margin-top: 20px;
+  display: block;
   list-style: none;
 }
 
 .file-item {
-  padding: 8px 12px;
+  display: block;
+  width: fit-content;
+  background: #f4f4f4;
   border-radius: 5px;
-  transition: background-color 0.3s;
-}
-
-.file-item:not(:last-child) {
-  margin-bottom: 6px;
-}
-
-.file-link {
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-  color: #007bff;
-  font-family: 'Pretendard Medium';
-  font-size: 16px;
-}
-
-.file-link:hover {
-  text-decoration: underline;
+  font-size: 14px !important;
+  padding: 10px;
+  margin-bottom: 8px;
 }
 
 .remove-button {
@@ -135,20 +161,26 @@
   cursor: pointer;
 }
 
-.submit-button {
-  margin: 0 auto;
-  margin-top: 40px;
-  font-family: 'Pretendard Bold';
-  font-size: 24px;
-  height: 68px;
-  width: 46%;
-  background-color: #2cb4db;
-  color: white;
-  cursor: pointer;
-  border: none;
-  border-radius: 10px;
+@media (max-width: 1200px) {
+  .edit-container {
+    max-width: 886px;
+  }
 }
 
-.submit-button:hover {
-  background-color: #2295ba;
+@media (max-width: 1000px) {
+  .edit-container {
+    max-width: 756px;
+  }
+}
+
+@media (max-width: 788px) {
+  .edit-container {
+    max-width: 566px;
+  }
+}
+
+@media (max-width: 600px) {
+  .edit-container {
+    max-width: 90%;
+  }
 }

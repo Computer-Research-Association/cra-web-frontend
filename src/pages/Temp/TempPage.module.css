@@ -1,0 +1,30 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Pretendard Bold';
+}
+
+.title {
+  color: var(--color-primary);
+  font-size: 30px;
+  margin-top: 1rem;
+}
+
+.content {
+  text-align: center;
+  color: var(--color-gray-text);
+  font-size: 25px;
+  margin-top: 0.5rem;
+}
+
+.link {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  text-decoration: none;
+  font-size: 20px;
+  border-radius: 10px;
+  padding: 0.8rem 1.3rem;
+  margin-top: 1.25rem;
+}

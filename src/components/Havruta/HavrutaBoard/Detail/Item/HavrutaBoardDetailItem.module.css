@@ -85,9 +85,106 @@
 
 .comment-count {
   display: flex;
-  gap: 30px;
-  margin-top: 138px;
-  margin-bottom: 14px;
+  justify-content: space-between;
+  align-items: center; /* 세로 중앙 정렬 추가 */
+  margin: 138px 0 14px 0;
   font-size: 20px;
   color: #9b9b9b;
+}
+
+.stats-container {
+  display: flex;
+  gap: 10px;
+}
+
+.viewContainer {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* 원하는 간격(px 단위) */
+  width: 4ch;
+}
+
+.like {
+  cursor: pointer;
+  margin-top: 4px;
+}
+
+.like:hover {
+  color: var(--color-primary);
+  border-radius: 5px;
+}
+
+.activeLike {
+  color: var(--color-primary);
+}
+
+.file-section {
+  display: flex;
+  align-items: center;
+  margin-right: auto;
+}
+
+.file-list {
+  display: inline-block;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.file-section.hidden {
+  visibility: hidden;
+}
+
+.file-item {
+  margin-right: 500px;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 400px;
+  margin-bottom: 6px; /* 항목 간 간격 추가 */
+}
+
+.file-item:not(:last-child) {
+  margin-bottom: 6px;
+}
+
+.file-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #007bff;
+  font-family: 'Pretendard Medium';
+  font-size: 16px;
+}
+
+.file-link:hover {
+  text-decoration: underline;
+}
+
+.file-section.hidden {
+  visibility: hidden;
+}
+
+@media (max-width: 768px) {
+  .title {
+    font-size: 18px;
+  }
+  .nav-title,
+  .nav-content {
+    font-size: 15px;
+  }
+  .content-title {
+    font-size: 25px;
+  }
+  .board-content {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 468px) {
+  .nav-title,
+  .nav-content {
+    font-size: 13px;
+  }
 }

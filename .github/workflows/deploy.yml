@@ -1,0 +1,39 @@
+name: build and deploy
+
+on:
+  push:
+    branches: [ "dev" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        submodules: true
+        token: ${{ secrets.PAT_TOKEN }}
+        fetch-depth: 0
+
+    - name: Set up node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '22' 
+
+    - name: Install dependencies
+      run: npm install
+    
+    - name: Build vite
+      run: npm run build
+
+    - name: Add 404.html
+      run: |
+        cd dist
+        cp index.html 404.html
+    
+    - name: Install Firebase CLI
+      run: npm install -g firebase-tools
+    
+    - name: Deploy to Firebase
+      run: firebase deploy --only hosting --token ${{ secrets.FIREBASE_AUTH_TOKEN }}

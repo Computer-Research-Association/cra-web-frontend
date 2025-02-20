@@ -1,0 +1,135 @@
+.club {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 10rem;
+  padding-bottom: 4rem;
+}
+
+.club-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5rem 0;
+  gap: 4rem;
+}
+
+.club-card,
+.club-card1 {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.club-title {
+  margin-bottom: 2rem;
+}
+
+.club-title p {
+  color: #13abd7;
+  font-size: 2.5vw;
+  margin: 0.4rem 0;
+}
+
+.club-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 600px;
+  border: 5px var(--color-i-taxi) solid;
+  border-radius: 5px;
+}
+
+.club-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.club-content1 {
+  display: flex;
+  flex-direction: column;
+}
+
+.club-content1 p {
+  color: #ffffff;
+  font-size: 1.5vw;
+  font-family: 'Pretendard SemiBold';
+  margin: 0.3rem 0;
+}
+
+@media (max-width: 1460px) {
+  .club-image {
+    width: 520px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .club-title {
+    order: 1;
+    text-align: center;
+    margin: 0;
+    margin-bottom: 1rem;
+    p {
+      font-size: 5vw;
+    }
+  }
+
+  .club-image {
+    display: flex;
+    align-self: center;
+    order: 2;
+    width: 60% !important;
+    border: 5px var(--color-i-taxi) solid;
+    border-radius: 5px;
+    margin-top: 2rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .club-content {
+    order: 3;
+    text-align: center;
+    margin-top: 2rem;
+  }
+
+  .club-content1 p {
+    padding: 0 2rem;
+    font-size: 3vw;
+  }
+}
+@media (max-width: 900px) {
+  .club-content1 p {
+    font-size: 2.6vw;
+  }
+}
+
+@media (max-width: 540px) {
+  .club-content {
+    order: 3;
+    margin-top: 0 !important;
+  }
+  .club-title {
+    p {
+      font-size: 6vw;
+    }
+  }
+  .club-image {
+    width: 80% !important;
+  }
+  .club-content1 p {
+    font-size: 3vw;
+  }
+}
+
+@media (max-width: 480px) {
+  .club {
+    padding-top: 5rem;
+    padding-bottom: 2rem;
+  }
+}
+
+@media (max-width: 384px) {
+  .club-content1 p {
+    font-size: 14px;
+  }
+}

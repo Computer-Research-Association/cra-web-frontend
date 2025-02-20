@@ -1,4 +1,4 @@
-interface Board {
+export interface Board {
   id?: number;
   userId?: number;
   title: string;
@@ -21,12 +21,18 @@ interface Board {
     githubId?: string;
     imgUrl?: string;
   };
-  havrutaDto: {
+  havrutaDto?: {
     id?: number | null;
     classname?: string;
     professor?: string;
   };
-  fileUrls?: string[];
+  fileUrl?: string;
 }
 
-export type { Board };
+export interface UpdateBoard {
+  title: string;
+  content: string;
+  imageUrls?: string[];
+  isChangedFile: boolean;
+  deleted: boolean;
+}

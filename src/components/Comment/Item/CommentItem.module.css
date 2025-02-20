@@ -62,3 +62,13 @@
   gap: 20px;
   color: #9e9e9e;
 }
+
+@media (max-width: 768px) {
+  .comment-id {
+    font-size: 18px;
+  }
+  .comment-content,
+  .comment-footer {
+    font-size: 14px;
+  }
+}

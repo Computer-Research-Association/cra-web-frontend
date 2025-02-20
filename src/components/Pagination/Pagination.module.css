@@ -1,4 +1,4 @@
-.pagenations {
+.Pagenations {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -11,16 +11,7 @@
   }
 }
 
-.pagenations-dot {
-  width: 41px;
-  height: 41px;
-  margin-left: 15px;
-  margin-right: 15px;
-  font-size: 23px;
-  color: var(--color-bright-text);
-}
-
-.pagenations-elipse {
+.PagenationsElipse {
   width: 41px;
   height: 41px;
   border-radius: 50%;
@@ -36,10 +27,15 @@
   cursor: pointer;
 }
 
-.pagenations-elipse-selected {
+.PagenationsElipseSelected {
   color: var(--color-primary);
 }
 
-.pagenations-elipse-unselected {
+.PagenationsElipseUnselected {
   color: var(--color-bright-text);
+}
+@media (max-width: 600px) {
+  .Pagenations {
+    scale: 90%;
+  }
 }

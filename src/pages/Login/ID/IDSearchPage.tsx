@@ -1,5 +1,8 @@
+import React from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { findId } from '~/api/account';
 
 const Container = styled.div`
   display: flex;
@@ -25,26 +28,42 @@ const Form = styled.form`
   padding: 3rem 10rem;
 `;
 
-const Input = styled.div`
+const InputContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom: 2rem;
+`;
 
-  label {
-    color: var(--color-dark);
-    font-family: 'Pretendard SemiBold';
-    font-size: 1.2rem;
-    margin-bottom: 0.5rem;
-    user-select: none;
+const Label = styled.label`
+  color: var(--color-dark);
+  font-family: 'Pretendard SemiBold';
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  user-select: none;
+`;
+
+const StyledInput = styled.input<{ hasError: boolean }>`
+  width: 100%;
+  background-color: var(--color-white);
+  color: black;
+  border: 1px solid
+    ${({ hasError }) => (hasError ? 'red' : 'var(--color-dark-stroke)')};
+  border-radius: 0.5rem;
+  padding: 1.5rem 1rem;
+  outline: none;
+  box-sizing: border-box;
+  transition: all 0.2s ease-in-out;
+
+  &:focus {
+    border: 1px solid black; /* 기본 border 유지 */
+    box-shadow: 0 0 0 1px black; /* 검정색 테두리를 확실하게 적용 */
   }
-  input {
-    width: 100%;
-    background-color: var(--color-white);
-    color: var(--color-dark-stroke);
-    border: 1px solid var(--color-dark-stroke);
-    border-radius: 0.5rem;
-    padding: 1.5rem 1rem;
-  }
+`;
+
+const ErrorMessage = styled.p`
+  color: red;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
 `;
 
 const Submit = styled.button`
@@ -66,45 +85,121 @@ const Submit = styled.button`
 
 function IDSearchPage() {
   const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    studentId: '',
+    name: '',
+    email: '',
+  });
+
+  const [errors, setErrors] = useState({
+    studentId: '',
+    name: '',
+    email: '',
+  });
+
+  const validate = () => {
+    const newErrors = { studentId: '', name: '', email: '' };
+    let isValid = true;
+
+    if (!formData.studentId) {
+      newErrors.studentId = '학번을 입력하세요.';
+      isValid = false;
+    }
+
+    if (!formData.name) {
+      newErrors.name = '이름을 입력하세요.';
+      isValid = false;
+    }
+
+    if (!formData.email) {
+      newErrors.email = '이메일을 입력하세요.';
+      isValid = false;
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = '유효한 이메일 주소를 입력하세요.';
+      isValid = false;
+    }
+
+    setErrors(newErrors);
+    return isValid;
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+
+    // 입력하면 즉시 오류 제거
+    setErrors((prev) => ({ ...prev, [name]: '' }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!validate()) return;
+
+    try {
+      console.log('Request Data:', formData);
+      const username = await findId(formData);
+      console.log('API Response:', username);
+
+      if (!username) throw new Error('응답에서 username을 찾을 수 없습니다.');
+
+      await navigate(`/idsearch/complete?id=${username}`);
+    } catch (error: unknown) {
+      console.error('API Error:', error);
+      if (error instanceof Error) {
+        setErrors((prev) => ({ ...prev, studentId: error.message }));
+      } else {
+        setErrors((prev) => ({ ...prev, studentId: '오류가 발생했습니다.' }));
+      }
+    }
+  };
+
   return (
     <Container>
       <Title>아이디 찾기</Title>
-      <Form>
-        <Input>
-          <label htmlFor="studentNum">학번</label>
-          <input
+      <Form onSubmit={handleSubmit}>
+        <InputContainer>
+          <Label htmlFor="studentId">학번</Label>
+          <StyledInput
             type="text"
-            name="studentNum"
-            id="studentNum"
+            name="studentId"
+            id="studentId"
             placeholder="학번을 입력하세요."
+            value={formData.studentId}
+            onChange={handleInputChange}
+            hasError={!!errors.studentId}
           />
-        </Input>
-        <Input>
-          <label htmlFor="studentNum">이름</label>
-          <input
+          {errors.studentId && <ErrorMessage>{errors.studentId}</ErrorMessage>}
+        </InputContainer>
+
+        <InputContainer>
+          <Label htmlFor="name">이름</Label>
+          <StyledInput
             type="text"
-            name="studentNum"
-            id="studentNum"
-            placeholder="학번을 입력하세요."
+            name="name"
+            id="name"
+            placeholder="이름을 입력하세요."
+            value={formData.name}
+            onChange={handleInputChange}
+            hasError={!!errors.name}
           />
-        </Input>
-        <Input>
-          <label htmlFor="email">이메일</label>
-          <input
-            type="text"
+          {errors.name && <ErrorMessage>{errors.name}</ErrorMessage>}
+        </InputContainer>
+
+        <InputContainer>
+          <Label htmlFor="email">이메일</Label>
+          <StyledInput
+            type="email"
             name="email"
             id="email"
             placeholder="이메일을 입력하세요."
+            value={formData.email}
+            onChange={handleInputChange}
+            hasError={!!errors.email}
           />
-        </Input>
-        <Submit
-          onClick={(e) => {
-            e.preventDefault();
-            navigate('/idsearch/complete');
-          }}
-        >
-          확인
-        </Submit>
+          {errors.email && <ErrorMessage>{errors.email}</ErrorMessage>}
+        </InputContainer>
+
+        <Submit type="submit">확인</Submit>
       </Form>
     </Container>
   );

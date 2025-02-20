@@ -3,6 +3,7 @@ import { Comment } from '~/models/Comment.ts';
 import { QUERY_KEY } from '~/api/queryKey.ts';
 import { getCommentsByBoardId } from '~/api/comment.ts';
 import CommentItem from '~/components/Comment/Item/CommentItem.tsx';
+import LoadingSpinner from '~/components/Common/LoadingSpinner';
 
 export default function CommentList({ id }: { id: number }) {
   const commentsQuery = useQuery<Comment[]>({
@@ -13,7 +14,7 @@ export default function CommentList({ id }: { id: number }) {
   let content;
 
   if (commentsQuery.isLoading) {
-    content = <div className="loading">데이터를 불러오는 중입니다...</div>;
+    content = <LoadingSpinner />;
   } else if (commentsQuery.isError) {
     content = <div className="error">에러가 발생했습니다!</div>;
   } else if (commentsQuery.isSuccess) {

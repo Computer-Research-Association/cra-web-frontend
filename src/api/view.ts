@@ -1,10 +1,10 @@
 import { Board } from '~/models/Board';
-import { client } from './client';
+import { authClient } from './auth/authClient';
 
 // POST/View
 export const createBoardsView = async (id: number): Promise<Board> => {
   try {
-    const response = await client.post<Board>(`/board/view/${id}`);
+    const response = await authClient.post<Board>(`/board/view/${id}`);
     return response.data;
   } catch (error) {
     console.log(error);

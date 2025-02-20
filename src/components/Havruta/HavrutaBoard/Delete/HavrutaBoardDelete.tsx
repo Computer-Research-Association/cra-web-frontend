@@ -18,7 +18,6 @@ function HavrutaBoardDelete() {
     },
     onError: (error) => {
       console.error('하브루타 게시물 삭제 실패: ', error);
-      alert('하브루타 게시물 삭제 실패');
     },
   });
 

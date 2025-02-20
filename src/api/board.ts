@@ -1,7 +1,7 @@
-import axios from 'axios';
 import { Board } from '~/models/Board.ts';
 import { client } from './client.ts';
 import { authClient } from './auth/authClient.ts';
+import { UpdateBoard } from '~/models/Board.ts';
 
 // [GET]
 export const getBoardCountByCategory = async (category: number) => {
@@ -59,7 +59,7 @@ export const getBoardById = async (id: number) => {
 // [POST]
 // 새로운 게시판(Board)을 생성하기 위해 서버에 POST 요청을 보내는 메소드
 // parameter로 Board 타입의 객체를 받아서 서버로 전송
-export const createBoards = async (board: Board, files: File[]) => {
+export const createBoards = async (board: Board, file: File | null) => {
   try {
     const formData = new FormData();
 
@@ -68,15 +68,16 @@ export const createBoards = async (board: Board, files: File[]) => {
       new Blob([JSON.stringify(board)], { type: 'application/json' }),
     );
 
-    files.forEach((file) => {
-      formData.append('files', file);
-    });
+    if (file) {
+      formData.append('file', file);
+    }
 
     const response = await authClient.post<FormData>('/board', formData, {
       headers: {
         'Content-type': 'multipart/form-data',
       },
     });
+
     return response.data;
   } catch (error) {
     console.log(error);
@@ -85,17 +86,33 @@ export const createBoards = async (board: Board, files: File[]) => {
 };
 
 // PUT
-export const updateBoards = async (board: Board) => {
+export const updateBoards = async (board: UpdateBoard, file: File | null) => {
   try {
     const formData = new FormData();
 
+    const boardData = {
+      title: board.title,
+      content: board.content,
+      imageUrls: board.imageUrls,
+      isChangedFile: !!file,
+      deleted: false,
+    };
+
     formData.append(
       'board',
-      new Blob([JSON.stringify(board)], { type: 'application/json' }),
+      new Blob([JSON.stringify(boardData)], { type: 'application/json' }),
     );
 
+    if (file) {
+      formData.append('file', file);
+    }
+
+    const currentUrl = window.location.href;
+    const id = currentUrl.substring(currentUrl.lastIndexOf('/') + 1);
+    const boardId = Number(id);
+
     const response = await authClient.put<FormData>(
-      `/board/${board.id}`,
+      `/board/${boardId}`,
       formData,
       {
         headers: {
@@ -103,18 +120,13 @@ export const updateBoards = async (board: Board) => {
         },
       },
     );
+
     return response.data;
   } catch (error) {
-    console.error('Failed to post data:', error);
-
-    if (axios.isAxiosError(error)) {
-      throw new Error(`Axios error: ${error.message}`);
-    } else {
-      throw new Error('An unexpected error occurred');
-    }
+    console.error('Update board error:', error);
+    throw error;
   }
 };
-
 // DELETE
 
 export const deleteBoards = async (id: number): Promise<Board> => {
@@ -139,12 +151,10 @@ export const onUploadImage = async (blob: File): Promise<string> => {
     const imageUrl = response.data;
 
     console.log('받은 이미지 URL:', imageUrl);
-    alert('이미지 업로드 성공');
 
     return imageUrl; // 이미지 URL만 반환 (callback 없음)
   } catch (error) {
     console.error('이미지 업로드 실패:', error);
-    alert('이미지 업로드 실패');
     throw error;
   }
 };

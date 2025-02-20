@@ -8,6 +8,7 @@ import { getCommentsCountByCategory } from '~/api/comment.ts';
 import { Board } from '~/models/Board.ts';
 import BoardDetailItem from './BoardDetailItem.tsx';
 import styles from './BoardDetail.module.css';
+import LoadingSpinner from '~/components/Common/LoadingSpinner.tsx';
 
 export default function BoardDetail({ category }: { category: number }) {
   const currentUrl = window.location.href;
@@ -70,7 +71,7 @@ export default function BoardDetail({ category }: { category: number }) {
   });
 
   if (boardQuery.isFetching || commentCountQuery.isFetching) {
-    return <div>로딩 중...</div>;
+    return <LoadingSpinner />;
   }
 
   if (boardQuery.isSuccess && commentCountQuery.isSuccess) {

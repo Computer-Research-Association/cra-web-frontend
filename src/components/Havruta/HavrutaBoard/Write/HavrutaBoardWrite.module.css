@@ -11,7 +11,9 @@
 .write-title {
   margin-left: 10px;
   padding-bottom: 34px;
+  padding-bottom: 34px;
   font-size: 40px;
+  font-family: 'Pretendard Bold';
   font-family: 'Pretendard Bold';
   color: var(--color-bright-text);
 }
@@ -22,16 +24,27 @@
 }
 
 .write-form label {
-  margin: 0 0 16px 10px;
+  margin: 10px 0 16px 10px;
   font-size: 24px;
+  font-family: 'Pretendard SemiBold';
   font-family: 'Pretendard SemiBold';
   color: #3e3e3e;
 }
 .write-form input[type='text'],
-.write-form input[type='number'] {
-  font-family: 'Pretendard SemiBold';
+.write-form input[type='number'],
+.write-form textarea {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 18px;
+  border: 1px solid #c1c1c1;
+  border-radius: 10px;
+}
+
+.write-form input[type='number'],
+.write-form textarea {
+  font-family: Arial, Helvetica, sans-serif;
   margin-bottom: 34px;
   font-size: 18px;
+  padding: 20px;
   border: 1px solid #c1c1c1;
   border-radius: 10px;
 }
@@ -44,14 +57,17 @@
   height: 68px;
   border-color: #c1c1c1;
   padding: 0 20px;
+  border-color: #c1c1c1;
+  padding: 0 20px;
 }
 
 .input-content {
   aspect-ratio: 1 / 1;
 }
 
-.write-form input:focus {
-  border-color: #007bff;
+.write-form input:focus,
+.write-form textarea:focus {
+  border-color: #adadad;
   outline: none;
 }
 
@@ -63,12 +79,40 @@
   height: 200%;
 }
 
+.write-form select {
+  font-family: 'Pretendard SemiBold';
+  margin-bottom: 10px;
+  padding: 20px;
+  font-size: 18px;
+  border-color: #c1c1c1;
+  border-radius: 10px;
+  color: #3e3e3e;
+  background-color: white;
+  appearance: none; /* 오른쪽 끝에 거슬리는 화살표 제거 */
+  cursor: pointer;
+}
+
+.write-form select:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.write-form select option {
+  font-size: 18px;
+  color: #3e3e3e;
+}
+
+.write-form select:disabled {
+  background-color: #f5f5f5;
+  cursor: not-allowed;
+}
+
 .file-button {
   cursor: pointer;
   width: 90px;
   height: 30px;
-  margin: 0 !important;
-  padding: 10px 15px;
+  margin: 20px 0 0 0 !important;
+  padding: 10px 15px 5px 15px;
   background-color: #c1c1c1;
   color: white !important;
   text-decoration: none;
@@ -86,15 +130,20 @@
 .file-input {
   display: none;
 }
+
 .file-list {
+  display: block;
   list-style: none;
 }
 
 .file-item {
+  display: block;
+  width: fit-content;
   background: #f4f4f4;
   border-radius: 5px;
-  padding: 0;
   font-size: 14px !important;
+  padding: 10px;
+  margin-bottom: 8px;
 }
 
 .remove-button {
@@ -123,30 +172,52 @@
   background-color: #2295ba;
 }
 
-.write-form select {
-  font-family: 'Pretendard SemiBold';
-  margin-bottom: 34px;
-  padding: 24px;
-  font-size: 18px;
-  border-color: #c1c1c1;
-  border-radius: 10px;
-  color: #3e3e3e;
-  background-color: white;
-  appearance: none; /* 오른쪽 끝에 거슬리는 화살표 제거 */
-  cursor: pointer;
+.error-message {
+  color: #ff0000;
+  font-size: 0.875rem;
+  margin: 0.5rem 0 0 0.5rem;
 }
 
-.write-form select:focus {
-  border-color: #007bff;
-  outline: none;
+.input-error {
+  border: 1px solid #ff0000 !important;
 }
 
-.write-form select option {
-  font-size: 18px;
-  color: #3e3e3e;
+.editor-error-container {
+  padding-bottom: 2px;
+  border: 0.05rem solid red; /* 테두리를 빨간색으로 표시 */
+  background-color: rgba(255, 0, 0, 0.1); /* 배경을 옅은 빨간색으로 */
+  border-radius: 5px;
 }
 
-.write-form select:disabled {
-  background-color: #f5f5f5;
-  cursor: not-allowed;
+.editor-container {
+  padding-bottom: 2px;
+}
+
+.file-comment {
+  margin-top: 5px;
+  font-size: 12px;
+}
+
+@media (max-width: 1200px) {
+  .write-container {
+    max-width: 886px;
+  }
+}
+
+@media (max-width: 1000px) {
+  .write-container {
+    max-width: 756px;
+  }
+}
+
+@media (max-width: 788px) {
+  .write-container {
+    max-width: 566px;
+  }
+}
+
+@media (max-width: 600px) {
+  .write-container {
+    max-width: 90%;
+  }
 }

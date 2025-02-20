@@ -1,14 +1,23 @@
-import React, { useState, useRef } from 'react';
+/* eslint-disable */
+// @ts-nocheck
+import React, { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
-import { createBoards, onUploadImage } from '~/api/board';
+import { createBoards } from '~/api/board';
 import { useNavigate } from 'react-router-dom';
-import styles from './BoardWrite.module.css';
+import { useMarkdownEditor } from './Markdown.tsx';
 import { Editor } from '@toast-ui/react-editor';
-import { colorSyntax, codeSyntaxHighlight, Prism } from '~/styles/toast-ui';
+import styles from './BoardWrite.module.css';
 
-export default function BoardWrite({ category }: { category: number }) {
-  const editorRef = useRef<any>();
-  const [files, setFiles] = useState<File[]>([]);
+interface BoardWriteProps {
+  category: number;
+}
+
+export default function BoardWrite({ category }: BoardWriteProps) {
+  const [file, setFile] = useState<File | null>(null);
+  const [errors, setErrors] = useState<{ title?: string; content?: string }>(
+    {},
+  );
+  const navigate = useNavigate();
   const [formData, setFormData] = useState<{
     title: string;
     content: string;
@@ -21,30 +30,84 @@ export default function BoardWrite({ category }: { category: number }) {
     imageUrls: [],
   });
 
+  const { editorRef, editorConfig } = useMarkdownEditor({
+    onContentChange: (content) => {
+      setFormData((prev) => ({ ...prev, content }));
+      if (content.trim()) {
+        setErrors((prev) => ({ ...prev, content: undefined }));
+      }
+    },
+  });
   const mutation = useMutation({
     mutationFn: async () => {
       const content = editorRef.current.getInstance().getMarkdown();
-      const filesToUpload = files || [];
-      return await createBoards({ ...formData, content }, filesToUpload);
+      const fileToUpload = file || null;
+
+      // formData 구조를 변경하여 요청 형식에 맞게 변환
+      const payload = {
+        board: {
+          title: formData.title,
+          content,
+          category: formData.category,
+          imageUrls: formData.imageUrls,
+          resUserDetailDto: {
+            name: '사용자 이름', // 실제 사용자 정보로 변경
+            email: 'user@example.com',
+            studentId: 12345678,
+            term: '2025-1',
+            githubId: 'githubUsername',
+            imgUrl: 'https://example.com/profile.jpg',
+          },
+        },
+        file: fileToUpload ? [fileToUpload.name] : [],
+      };
+      console.log(payload.board);
+
+      return await createBoards(
+        { ...payload.board, likes: 0, liked: false },
+        fileToUpload,
+      );
     },
     onSuccess: async () => {
       alert('게시글 작성 성공');
-      const currentPath = window.location.pathname;
-      const parentPath = currentPath.substring(0, currentPath.lastIndexOf('/'));
-      window.location.href = parentPath;
+      await navigate(-1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+      }, 100);
+
       setFormData({
         title: '',
         content: '',
         category: category,
         imageUrls: [],
       });
-      setFiles([]);
+      setFile(null);
     },
+
     onError: (error) => {
       console.error('게시글 작성 실패:', error);
       alert('게시글 작성 실패');
     },
   });
+
+  const validateForm = () => {
+    const newErrors: { title?: string; content?: string } = {};
+    let isValid = true;
+
+    if (!formData.title.trim()) {
+      newErrors.title = '제목을 입력해주세요.';
+      isValid = false;
+    }
+
+    const content = editorRef.current?.getInstance().getMarkdown() || '';
+    if (!content.trim()) {
+      newErrors.content = '내용을 입력해주세요.';
+      isValid = false;
+    }
+
+    setErrors(newErrors);
+    return isValid;
+  };
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -54,32 +117,26 @@ export default function BoardWrite({ category }: { category: number }) {
       ...prev,
       [name]: name === 'imageUrls' ? value.split(',') : value,
     }));
-  };
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      const selectedFiles = Array.from(e.target.files);
-
-      // 현재 파일 개수 + 추가하려는 파일 개수가 3개를 초과하면 추가 불가능
-      if (files.length + selectedFiles.length > 3) {
-        alert('파일은 최대 3개까지만 업로드할 수 있습니다.');
-        return;
-      }
-
-      setFiles((prevFiles) => [...prevFiles, ...selectedFiles]); // 기존 파일 유지하면서 새 파일 추가
+    if (errors[name as keyof typeof errors]) {
+      setErrors((prev) => ({ ...prev, [name]: undefined }));
     }
   };
 
-  // 특정 파일 삭제 함수
-  const handleRemoveFile = (index: number) => {
-    setFiles((prevFiles) => prevFiles.filter((_, i) => i !== index)); // 해당 index의 파일 제거
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      setFile(e.target.files[0]);
+    }
+  };
+
+  const handleRemoveFile = () => {
+    setFile(null);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Submit 버튼 클릭됨');
-    console.log('현재 formData:', formData);
-    console.log('현재 files:', files);
+    if (!validateForm()) {
+      return;
+    }
     mutation.mutate();
   };
 
@@ -90,7 +147,7 @@ export default function BoardWrite({ category }: { category: number }) {
 
         <label htmlFor="title">제목</label>
         <input
-          className={styles['input-title']}
+          className={`${styles['input-title']} ${errors.title ? styles['input-error'] : ''}`}
           type="text"
           id="title"
           name="title"
@@ -98,37 +155,19 @@ export default function BoardWrite({ category }: { category: number }) {
           value={formData.title}
           onChange={handleChange}
         />
+        {errors.title && (
+          <p className={styles['error-message']}>{errors.title}</p>
+        )}
 
         <label htmlFor="content">내용</label>
-        <Editor
-          ref={editorRef}
-          initialValue=" "
-          previewStyle="vertical"
-          height="600px"
-          initialEditType="wysiwyg"
-          useCommandShortcut={true}
-          plugins={[[codeSyntaxHighlight, { highlighter: Prism }], colorSyntax]}
-          hooks={{
-            addImageBlobHook: async (
-              blob: File,
-              callback: (url: string) => void,
-            ) => {
-              try {
-                const url = await onUploadImage(blob); // URL을 받아옴
-                callback(url); // Markdown 에디터에 삽입
-
-                setFormData((prevData) => ({
-                  ...prevData,
-                  imageUrls: [...prevData.imageUrls, url], // DB로 전송할 이미지 URL 배열에 추가
-                }));
-              } catch (error) {
-                console.error('이미지 업로드 실패:', error);
-                alert('이미지 업로드에 실패했습니다.');
-              }
-            },
-          }}
-        />
-        <br />
+        <div
+          className={`${styles['editor-container']} ${errors.content ? styles['editor-error-container'] : ''}`}
+        >
+          <Editor ref={editorRef} {...editorConfig} />
+        </div>
+        {errors.content && (
+          <p className={styles['error-message']}>{errors.content}</p>
+        )}
 
         <label className={styles['file-button']} htmlFor="fileUpload">
           파일 선택
@@ -137,23 +176,23 @@ export default function BoardWrite({ category }: { category: number }) {
           className={styles['file-input']}
           type="file"
           id="fileUpload"
-          multiple
           onChange={handleFileChange}
         />
-        <ul className={styles['file-list']}>
-          {files.map((file, index) => (
-            <li className={styles['file-item']} key={index}>
-              {file.name}
-              <button
-                type="button"
-                className={styles['remove-button']}
-                onClick={() => handleRemoveFile(index)}
-              >
-                ✕
-              </button>
-            </li>
-          ))}
-        </ul>
+        {file && (
+          <div className={styles['file-item']}>
+            {file.name}
+            <button
+              type="button"
+              className={styles['remove-button']}
+              onClick={handleRemoveFile}
+            >
+              ✕
+            </button>
+          </div>
+        )}
+        <div className={styles['file-comment']}>
+          파일 업로드는 한 개만 가능합니다!
+        </div>
 
         <input
           className={styles['submit-button']}

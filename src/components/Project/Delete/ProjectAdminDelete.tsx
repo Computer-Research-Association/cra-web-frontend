@@ -21,7 +21,6 @@ function ProjectAdminDelete({ id }: { id: number }) {
   const mutation = useMutation({
     mutationFn: (id: number) => deleteProject(id),
     onSuccess: async () => {
-      alert('프로젝트 삭제 성공');
       queryClient.setQueryData<Project[]>(
         QUERY_KEY.project.projects(),
         (oldData) => {
@@ -36,7 +35,6 @@ function ProjectAdminDelete({ id }: { id: number }) {
     },
     onError: (error) => {
       console.error('프로젝트 삭제 실패', error);
-      alert('프로젝트 삭제 실패');
     },
   });
 

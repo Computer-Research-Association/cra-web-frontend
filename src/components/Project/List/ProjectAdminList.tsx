@@ -5,6 +5,7 @@ import { QUERY_KEY } from '~/api/queryKey.ts';
 import { Project } from '~/models/Project.ts';
 import ProjectDelete from '../Delete/ProjectAdminDelete.tsx';
 import styled from 'styled-components';
+import LoadingSpinner from '~/components/Common/LoadingSpinner.tsx';
 
 const Container = styled.div`
   padding: 10rem;
@@ -60,7 +61,7 @@ function ProjectAdminList() {
   let content;
 
   if (projectQuery.isLoading) {
-    content = <div>로딩중...</div>;
+    content = <LoadingSpinner />;
   } else if (projectQuery.isError) {
     content = <div>에러가 발생했습니다!</div>;
   } else if (projectQuery.isSuccess) {

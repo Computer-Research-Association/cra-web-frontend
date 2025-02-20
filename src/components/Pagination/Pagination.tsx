@@ -1,11 +1,12 @@
 import LeftVector from '~/assets/images/Vector/LeftVector.png';
 import RightVector from '~/assets/images/Vector/RightVector.png';
 import styles from './Pagination.module.css';
+import { useNavigate } from 'react-router-dom';
 
 interface PaginationProps {
   totalPages: number;
   currentPage: number;
-  onPageChange: (page: number) => void;
+  onPageChange: (_page: number) => void;
 }
 
 function Pagination({
@@ -13,20 +14,29 @@ function Pagination({
   currentPage,
   onPageChange,
 }: PaginationProps) {
+  const navigate = useNavigate();
+
+  const handlePageChange = (pageIndex: number) => {
+    onPageChange(pageIndex);
+    void navigate(
+      `?havrutaId=${new URLSearchParams(window.location.search).get('havrutaId') ? new URLSearchParams(window.location.search).get('havrutaId') : 'all'}&page=${pageIndex + 1}`,
+    );
+  };
+
   if (totalPages === 0) return null;
 
   return (
-    <div className={styles.pagenations}>
+    <div className={styles.Pagenations}>
       <img src={LeftVector} />
-      {[...Array(totalPages)].map((_, pageIndex) => (
+      {Array.from({ length: totalPages }).map((_, pageIndex) => (
         <div
           key={pageIndex}
-          className={`${styles['pagenations-elipse']} ${
+          className={`${styles.PagenationsElipse} ${
             currentPage === pageIndex
-              ? styles['pagenations-elipse-selected']
-              : styles['pagenations-elipse-unselected']
+              ? styles.PagenationsElipseSelected
+              : styles.PagenationsElipseUnselected
           }`}
-          onClick={() => onPageChange(pageIndex)}
+          onClick={() => handlePageChange(pageIndex)}
         >
           {pageIndex + 1}
         </div>

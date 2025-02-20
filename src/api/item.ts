@@ -1,11 +1,9 @@
-import axios from 'axios';
 import { Item } from '~/models/Item.ts';
-import { client } from './client.ts';
 import { authClient } from './auth/authClient.ts';
 
 export const getItems = async (itemCategory: number) => {
   try {
-    const response = await client.get<Item[]>(`/item/${itemCategory}`);
+    const response = await authClient.get<Item[]>(`/item/${itemCategory}`);
     return response.data;
   } catch (error) {
     console.log(error);
@@ -15,7 +13,7 @@ export const getItems = async (itemCategory: number) => {
 
 export const getItemById = async (id: number) => {
   try {
-    const response = await client.get<Item>(`/item/view/${id}`);
+    const response = await authClient.get<Item>(`/item/view/${id}`);
     const Item = response.data;
 
     return {
@@ -63,8 +61,7 @@ export const updateItem = async (item: Item) => {
 
 export const deleteItem = async (id: number) => {
   try {
-    const response = await authClient.delete(`/admin/item/${id}`);
-    return response.data;
+    await authClient.delete(`/admin/item/${id}`);
   } catch (error) {
     console.log(error);
     throw error;

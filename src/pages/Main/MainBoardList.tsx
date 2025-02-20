@@ -4,6 +4,7 @@ import { getBoardCountByCategory } from '~/api/board.ts';
 import { Board } from '~/models/Board.ts';
 import MainBoardItem from './MainBoardItem.tsx';
 import styles from './MainBoardList.module.css';
+import LoadingSpinner from '~/components/Common/LoadingSpinner.tsx';
 
 export default function MainBoardList({ category }: { category: number }) {
   const boardsQuery = useQuery<Board[]>({
@@ -14,7 +15,7 @@ export default function MainBoardList({ category }: { category: number }) {
   let content;
 
   if (boardsQuery.isLoading) {
-    content = <div className="loading">데이터를 불러오는 중입니다...</div>;
+    content = <LoadingSpinner />;
   } else if (boardsQuery.isError) {
     content = <div className="error">에러가 발생했습니다!</div>;
   } else if (boardsQuery.isSuccess) {

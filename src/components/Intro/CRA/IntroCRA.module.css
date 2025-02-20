@@ -1,0 +1,281 @@
+.cra {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-color: var(--color-white);
+  border-radius: 2rem;
+  padding-top: 10rem;
+  padding-bottom: 10rem;
+  color: var(--color-dark-text);
+}
+
+.title {
+  display: flex;
+  justify-content: center;
+  font-size: 50px;
+  user-select: none;
+  span {
+    color: #13abd7;
+  }
+  p {
+    color: var(--color-dark-text);
+  }
+}
+
+.CRAtitle {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-size: 40px;
+  user-select: none;
+  span {
+    color: #13abd7;
+  }
+  p {
+    color: var(--color-dark-text);
+  }
+}
+
+.CRATitleContent {
+  display: flex;
+  padding-bottom: 0.75rem;
+}
+
+.CapLetter {
+  padding-left: 0.9rem;
+}
+
+.description {
+  padding: 4.5rem 0rem;
+  p {
+    font-size: 28px;
+    text-align: center;
+    line-height: 3rem;
+  }
+  span {
+    background-color: #bae6f2;
+    color: var(--color-dark-text);
+  }
+}
+
+.content {
+  display: flex;
+  justify-content: center;
+}
+
+.Card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Pretendard Bold';
+  width: 19rem;
+  aspect-ratio: 1 / 0.9;
+  background-color: #f3f3f3;
+  border-radius: 1rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  padding: 2rem;
+  gap: 1.5rem;
+}
+
+.CardTitle {
+  display: flex;
+  justify-content: center;
+  font-size: 28px;
+  position: relative;
+}
+
+.CardContent {
+  display: flex;
+  position: relative;
+  font-family: 'Pretendard SemiBold';
+  font-size: 80px;
+}
+
+.CardContent2 {
+  display: flex;
+  justify-content: center;
+  font-size: 55px;
+  position: relative;
+}
+
+@media (max-width: 1280px) {
+  .title {
+    font-size: 45px;
+  }
+  .description {
+    p {
+      font-size: 24px;
+    }
+  }
+  .Card {
+    width: 16rem;
+  }
+  .CardTitle {
+    font-size: 24px;
+  }
+  .CardContent {
+    font-size: 65px;
+  }
+  .CardContent2 {
+    font-size: 45px;
+  }
+}
+
+@media (max-width: 1100px) {
+  .Card {
+    width: 14rem;
+    aspect-ratio: 1 / 0.95;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+  }
+  .CardTitle {
+    font-size: 22px;
+  }
+  .CardContent {
+    font-size: 60px;
+  }
+  .CardContent2 {
+    font-size: 40px;
+  }
+}
+
+@media (max-width: 960px) {
+  .Card {
+    width: 12rem;
+    aspect-ratio: 1 / 0.965;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+  }
+  .CardTitle {
+    font-size: 20px;
+  }
+  .CardContent {
+    font-size: 55px;
+  }
+  .CardContent2 {
+    font-size: 35px;
+  }
+}
+
+@media (max-width: 880px) {
+  .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .Card {
+    width: 22rem;
+    aspect-ratio: 1 / 0.9;
+    background-color: #f3f3f3;
+    border-radius: 1rem;
+    margin-bottom: 2rem;
+    padding: 1rem;
+    gap: 1.5rem;
+  }
+  .CardTitle {
+    font-size: 24px;
+  }
+  .CardContent {
+    font-size: 70px;
+  }
+  .CardContent2 {
+    font-size: 50px;
+  }
+}
+
+@media (max-width: 730px) {
+  .title {
+    font-size: 40px;
+  }
+  .description {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+@media (max-width: 730px) {
+  .title {
+    font-size: 40px;
+  }
+  .description {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+@media (max-width: 660px) {
+  .title {
+    font-size: 38px;
+  }
+  .description {
+    p {
+      font-size: 20px;
+    }
+  }
+}
+
+@media (max-width: 620px) {
+  .cra {
+    border-radius: 0;
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+  }
+}
+
+@media (max-width: 468px) {
+  .CRAtitle {
+    font-size: 35px;
+  }
+  .description {
+    p {
+      font-size: 16px;
+    }
+  }
+  .Card {
+    width: 15rem;
+    aspect-ratio: 1 / 0.95;
+    background-color: #f3f3f3;
+    border-radius: 1rem;
+    margin-bottom: 2rem;
+    padding: 1rem;
+    gap: 1.5rem;
+  }
+  .CardTitle {
+    font-size: 20px;
+  }
+  .CardContent {
+    font-size: 60px;
+  }
+  .CardContent2 {
+    font-size: 40px;
+  }
+}
+
+@media (max-width: 348px) {
+  .description {
+    padding-left: 2rem;
+    padding-right: 2rem;
+    p {
+      font-size: 14px;
+    }
+  }
+  .Card {
+    width: 10rem;
+    aspect-ratio: 1 / 0.975;
+    padding: 1rem;
+    gap: 1.5rem;
+  }
+  .CardTitle {
+    font-size: 15px;
+  }
+  .CardContent {
+    font-size: 45px;
+  }
+  .CardContent2 {
+    font-size: 30px;
+  }
+}

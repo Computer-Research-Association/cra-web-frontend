@@ -1,4 +1,4 @@
-.board-item-container {
+.BoardItemContainer {
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -6,7 +6,22 @@
   margin-left: 17px;
 }
 
-.board-professor {
+.BoardProfessor {
+  line-height: 34px;
+  font-size: 15px;
+  font-family: 'Pretendard Medium';
+  transform: translateX(-20px);
+  color: var(--color-bright-text);
+  display: flex;
+  justify-content: space-between;
+}
+
+.BoardTime {
+  font-family: 'Pretendard Medium';
+  margin-right: 20px;
+  color: #9b9b9b;
+}
+.board-user-name {
   line-height: 34px;
   font-size: 16px;
   font-family: 'Pretendard SemiBold';
@@ -15,29 +30,88 @@
   justify-content: space-between;
 }
 
-.board-time {
+.board-info {
   font-family: 'Pretendard Medium';
   margin-right: 20px;
+  display: flex; /* span을 flex 항목으로 만듭니다 */
+  gap: 3px; /* 간격을 10px로 설정 */
   color: #9b9b9b;
 }
 
-.temp-link {
+.comment-img {
+  margin-top: 9px;
+  margin-left: 10px;
+}
+
+.profile {
+  display: flex;
+  float: left;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  margin-right: 0.75rem;
+  border-radius: 50%;
+  object-fit: cover;
+  cursor: pointer;
+}
+
+.TempLink {
   width: 100%;
   display: block;
   text-decoration: none;
 }
 
-.board-title {
+.BoardTitle {
+  display: flex;
+  justify-content: space-between;
   line-height: 34px;
-  font-size: 20px;
+  font-size: 18px;
   font-family: 'Pretendard SemiBold';
   text-decoration: none;
   color: var(--color-dark-text);
   margin-top: 5px;
 }
 
-.board-content {
+.BoardContent {
   line-height: 32px;
   font-size: 15px;
   color: var(--color-dark-text);
+}
+
+@media (max-width: 1200px) {
+  .BoardProfessor {
+    font-size: 14px;
+  }
+  .BoardTitle {
+    font-size: 19px;
+  }
+  .BoardContent {
+    font-size: 14px;
+  }
+  .BoardTime {
+    font-size: 15px;
+  }
+  .board-user-name {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 600px) {
+  .BoardProfessor {
+    font-size: 13px;
+    max-width: 50%;
+  }
+  .BoardTitle {
+    font-size: 15px;
+  }
+  .BoardContent {
+    font-size: 12px;
+  }
+  .BoardTime {
+    font-size: 12px;
+  }
+  .board-user-name {
+    font-size: 14px;
+  }
 }

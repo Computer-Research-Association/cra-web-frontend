@@ -73,6 +73,15 @@
   margin-bottom: 3rem;
 }
 
+.name {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 40px;
+  font-family: 'Pretendard Bold';
+  margin-top: 1.5rem;
+}
+
 .info {
   margin-top: 2rem;
   font-family: 'Pretendard SemiBold';
@@ -142,11 +151,17 @@
   margin-bottom: 3rem;
 }
 
+.profile {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .preview {
   width: 350px;
   height: 350px;
-  border-radius: 50%;
-  border: 2px solid var(--color-bright-text);
+  border-radius: 40%;
+  border: 1px solid var(--color-bright-text);
   object-fit: cover;
 }
 

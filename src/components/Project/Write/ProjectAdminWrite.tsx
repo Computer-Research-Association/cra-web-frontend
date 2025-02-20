@@ -22,8 +22,7 @@ function ProjectAdminWrite() {
   const mutation = useMutation({
     mutationFn: (newProject: Project) => createProjects(newProject),
     onSuccess: async () => {
-      await alert('프로젝트 게시글 작성 성공');
-      navigate(-1);
+      await navigate(-1);
       setFormData({
         semester: '',
         teamName: '',
@@ -37,7 +36,6 @@ function ProjectAdminWrite() {
     },
     onError: (error) => {
       console.error('프로젝트 작성 실패:', error);
-      alert('프로젝트 작성 실패');
     },
   });
 

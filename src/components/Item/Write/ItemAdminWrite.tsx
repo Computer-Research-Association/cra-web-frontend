@@ -18,8 +18,7 @@ function ItemAdminWrite() {
   const mutation = useMutation({
     mutationFn: (newItem: Item) => createItems(newItem),
     onSuccess: async () => {
-      await alert('비품 추가 성공');
-      navigate(-1);
+      await navigate(-1);
       setFormData({
         name: '',
         description: '',
@@ -29,7 +28,6 @@ function ItemAdminWrite() {
     },
     onError: (error) => {
       console.error('비품 추가 실패:', error);
-      alert('비품 추가 실패');
     },
   });
 

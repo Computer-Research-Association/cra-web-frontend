@@ -8,6 +8,7 @@
   --color-bright-text: #5e5e5e;
   --color-placeholder-text: #c1c1c1;
   --color-brighter-text: #9b9b9b;
+  --color-gray-text: #8c8c8c;
 
   --color-dark-stroke: #c1c1c1;
   --color-bright-stroke: #d9d9d9;
@@ -19,9 +20,13 @@
   --color-white: #ffffff;
 
   --color-error: #ff0000;
+  --color-pink: #feb3c7;
 
   --color-hover-white: #f1f1f1;
+  --color-black: #050505;
+
   --color-blue-primary: #117eb2;
   --color-more-primary: #007bff;
-  --color-pink: #feb3c7;
+  --color-i-taxi: #70b1f2;
+  --color-dark-i-taxi: #5ea8df;
 }

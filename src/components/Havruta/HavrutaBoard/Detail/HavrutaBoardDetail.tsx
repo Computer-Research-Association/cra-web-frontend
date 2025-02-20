@@ -3,37 +3,40 @@ import { useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { QUERY_KEY } from '~/api/queryKey.ts';
-import { getHavrutaBoardById } from '~/api/havruta/havrutaBoard.ts';
+import { getBoardById } from '~/api/board.ts';
 import { getCommentsCountByCategory } from '~/api/comment.ts';
-import { HavrutaBoard } from '~/models/Havruta.ts';
+import { Board } from '~/models/Board.ts';
+import { CATEGORY } from '~/constants/category.ts';
 import HavrutaBoardDetailItem from './Item/HavrutaBoardDetailIItem.tsx';
 import styles from './HavrutaBoardDetail.module.css';
+import LoadingSpinner from '~/components/Common/LoadingSpinner.tsx';
 
 export default function HavrutaBoardDetail() {
   const currentUrl = window.location.href;
   const id = currentUrl.substring(currentUrl.lastIndexOf('/') + 1);
-  const havrutaId = Number(id);
+  const boardId = Number(id);
+  const havrutaCategory = CATEGORY.HAVRUTA;
 
   const navigate = useNavigate();
   const hasNavigated = useRef(false);
 
-  const havrutaQuery = useQuery<HavrutaBoard>({
-    queryKey: QUERY_KEY.havrutaBoard.havrutaBoardById(havrutaId),
-    queryFn: async () => getHavrutaBoardById(havrutaId),
+  const boardQuery = useQuery<Board>({
+    queryKey: QUERY_KEY.board.boardById(boardId),
+    queryFn: async () => getBoardById(boardId),
     retry: false,
   });
 
   const commentCountQuery = useQuery<number>({
-    queryKey: QUERY_KEY.comment.commentsCountById(havrutaId),
-    queryFn: async () => getCommentsCountByCategory(havrutaId),
+    queryKey: QUERY_KEY.comment.commentsCountById(boardId),
+    queryFn: async () => getCommentsCountByCategory(boardId),
     retry: false,
   });
 
   useEffect(() => {
     if (hasNavigated.current) return;
 
-    if (havrutaQuery.isError) {
-      const error = havrutaQuery.error;
+    if (boardQuery.isError) {
+      const error = boardQuery.error;
 
       if (axios.isAxiosError(error)) {
         const status = error.response?.status;
@@ -67,15 +70,16 @@ export default function HavrutaBoardDetail() {
     }
   });
 
-  if (havrutaQuery.isFetching || commentCountQuery.isFetching) {
-    return <div>로딩 중...</div>;
+  if (boardQuery.isFetching || commentCountQuery.isFetching) {
+    return <LoadingSpinner />;
   }
 
-  if (havrutaQuery.isSuccess && commentCountQuery.isSuccess) {
+  if (boardQuery.isSuccess && commentCountQuery.isSuccess) {
     return (
       <div className={styles['full-width']}>
         <HavrutaBoardDetailItem
-          havrutaBoard={havrutaQuery.data}
+          board={boardQuery.data}
+          category={havrutaCategory}
           commentCount={commentCountQuery.data}
         />
       </div>

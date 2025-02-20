@@ -18,19 +18,17 @@ export default function BoardDelete({
   const deleteMutation = useMutation({
     mutationFn: (id: number) => deleteBoards(id),
     onSuccess: async () => {
-      alert('게시글 삭제 성공');
       await navigate(-1);
       // 게시글 목록 캐시 무효화
-      queryClient.invalidateQueries({
+      await queryClient.invalidateQueries({
         queryKey: QUERY_KEY.board.boardsCount(category),
       });
-      queryClient.refetchQueries({
+      await queryClient.refetchQueries({
         queryKey: QUERY_KEY.board.boardsCount(category),
       });
     },
     onError: (error) => {
       console.error('게시글 삭제 실패:', error);
-      alert('게시글 삭제 실패');
     },
   });
 

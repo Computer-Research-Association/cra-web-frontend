@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { HavrutaBoard } from '~/models/Havruta.ts';
 import { client } from '~/api/client.ts';
 import { authClient } from '~/api/auth/authClient.ts';
@@ -91,18 +92,28 @@ export const getHavrutaBoardById = async (id: number) => {
   }
 };
 
-// 하브루타 게시물 작성하기
-export const createHavrutaBoard = async (havrutaBoard: HavrutaBoard) => {
+export const createHavrutaBoard = async (
+  havrutaBoard: HavrutaBoard,
+  file: File | null,
+) => {
   try {
-    const response = await authClient.post<HavrutaBoard>(
-      '/board/havruta',
-      havrutaBoard,
-      {
-        headers: {
-          'Content-type': 'application/json; charset=UTF-8',
-        },
-      },
+    const formData = new FormData();
+
+    formData.append(
+      'board',
+      new Blob([JSON.stringify(havrutaBoard)], { type: 'application/json' }),
     );
+
+    if (file) {
+      formData.append('file', file);
+    }
+
+    const response = await authClient.post<FormData>('/board', formData, {
+      headers: {
+        'Content-type': 'multipart/form-data',
+      },
+    });
+
     return response.data;
   } catch (error) {
     console.log(error);
@@ -110,23 +121,33 @@ export const createHavrutaBoard = async (havrutaBoard: HavrutaBoard) => {
   }
 };
 
-// 하브루타 게시물 수정하기
 export const updateHavrutaBoard = async (havrutaBoard: HavrutaBoard) => {
   try {
-    const response = await authClient.put<HavrutaBoard>(
+    const formData = new FormData();
+
+    formData.append(
+      'board',
+      new Blob([JSON.stringify(havrutaBoard)], { type: 'application/json' }),
+    );
+
+    const response = await authClient.put<FormData>(
       `/board/${havrutaBoard.id}`,
-      havrutaBoard,
+      formData,
       {
         headers: {
-          'Content-type': 'application/json; charset=UTF-8',
+          'Content-type': 'multipart/form-data',
         },
       },
     );
-
     return response.data;
   } catch (error) {
-    console.log(error);
-    throw error;
+    console.error('Failed to post data:', error);
+
+    if (axios.isAxiosError(error)) {
+      throw new Error(`Axios error: ${error.message}`);
+    } else {
+      throw new Error('An unexpected error occurred');
+    }
   }
 };
 

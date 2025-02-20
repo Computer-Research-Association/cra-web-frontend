@@ -3,6 +3,7 @@ import { Project } from '~/models/Project.ts';
 import { QUERY_KEY } from '~/api/queryKey.ts';
 import { getProjectById } from '~/api/project.ts';
 import styled from 'styled-components';
+import LoadingSpinner from '~/components/Common/LoadingSpinner';
 
 const Container = styled.div`
   padding: 10rem;
@@ -30,7 +31,7 @@ function ProjectAdminDetail() {
   let content;
 
   if (projectQuery.isLoading) {
-    content = <div className="loading">데이터를 불러오는 중입니다...</div>;
+    content = <LoadingSpinner />;
   } else if (projectQuery.isError) {
     content = <div className="error">에러가 발생했습니다!</div>;
   } else if (projectQuery.isSuccess) {

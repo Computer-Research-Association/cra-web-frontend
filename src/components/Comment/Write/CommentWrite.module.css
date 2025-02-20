@@ -67,3 +67,13 @@
 .submitButton:focus {
   outline: none;
 }
+
+@media (max-width: 768px) {
+  .inputField input,
+  .submitButton {
+    font-size: 16px;
+  }
+  .submitButton {
+    height: 60px;
+  }
+}

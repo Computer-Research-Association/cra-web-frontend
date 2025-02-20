@@ -22,7 +22,7 @@
 }
 
 .write-form label {
-  margin: 0 0 16px 10px;
+  margin: 20px 0 16px 10px;
   font-size: 24px;
   font-family: 'Pretendard SemiBold';
   color: #3e3e3e;
@@ -31,7 +31,6 @@
 .write-form input[type='number'],
 .write-form textarea {
   font-family: Arial, Helvetica, sans-serif;
-  margin-bottom: 34px;
   font-size: 18px;
   border: 1px solid #c1c1c1;
   border-radius: 10px;
@@ -80,7 +79,7 @@
   cursor: pointer;
   width: 90px;
   height: 30px;
-  margin: 0 !important;
+  margin: 20px 0 0 0 !important;
   padding: 10px 15px 5px 15px;
   background-color: #c1c1c1;
   color: white !important;
@@ -139,4 +138,54 @@
 
 .submit-button:hover {
   background-color: #2295ba;
+}
+
+.error-message {
+  color: #ff0000;
+  font-size: 0.875rem;
+  margin: 0.5rem 0 0 0.5rem;
+}
+
+.input-error {
+  border: 1px solid #ff0000 !important;
+}
+
+.editor-error-container {
+  padding-bottom: 2px;
+  border: 0.05rem solid red; /* 테두리를 빨간색으로 표시 */
+  background-color: rgba(255, 0, 0, 0.1); /* 배경을 옅은 빨간색으로 */
+  border-radius: 5px;
+}
+
+.editor-container {
+  padding-bottom: 2px;
+}
+
+.file-comment {
+  margin-top: 5px;
+  font-size: 12px;
+}
+
+@media (max-width: 1200px) {
+  .write-container {
+    max-width: 886px;
+  }
+}
+
+@media (max-width: 1000px) {
+  .write-container {
+    max-width: 756px;
+  }
+}
+
+@media (max-width: 788px) {
+  .write-container {
+    max-width: 566px;
+  }
+}
+
+@media (max-width: 600px) {
+  .write-container {
+    max-width: 90%;
+  }
 }

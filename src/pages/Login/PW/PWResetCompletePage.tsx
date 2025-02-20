@@ -5,9 +5,16 @@ import styled from 'styled-components';
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  margin-top: 20rem;
+  justify-content: center;
+  width: 100%;
+  max-width: 1600px;
+  margin-bottom: 4rem;
+  padding-top: 5rem;
+  padding-bottom: 12rem;
+  @media (max-width: 768px) {
+    width: 80%;
+  }
 `;
 
 const Img = styled.img`
@@ -47,7 +54,7 @@ function PWResetCompletePage() {
     <Container>
       <Img src={BlueCheck} />
       <Title>비밀번호 변경 완료</Title>
-      <Content>크랑이님(dncnwhlrkd206)의 비밀번호가 변경되었습니다.</Content>
+      <Content>비밀번호 변경이 완료되었습니다.</Content>
       <LoginBtn onClick={() => navigate('/login')}>로그인 바로하기</LoginBtn>
     </Container>
   );

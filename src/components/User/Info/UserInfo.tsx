@@ -22,13 +22,12 @@ function UserInfo() {
     <div className={styles.container}>
       <div className={styles.title}>마이페이지</div>
       <div className={styles.profile}>
-        <p>프로필 사진 </p>
         <div>
           <img src={imgUrl} className={styles.preview} />
         </div>
       </div>
-      <div className={styles.info}>
-        <p>이름 </p>
+      <div className={styles.name}>
+        {/* <p>이름 </p> */}
         {name}
       </div>
       <div className={styles.info}>

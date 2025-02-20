@@ -1,13 +1,20 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import BlueCheck from '~/assets/images/Blue-Check.png';
 import styled from 'styled-components';
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  margin-top: 20rem;
+  justify-content: center;
+  width: 100%;
+  max-width: 1600px;
+  margin-bottom: 4rem;
+  padding-top: 5rem;
+  padding-bottom: 12rem;
+  @media (max-width: 768px) {
+    width: 80%;
+  }
 `;
 
 const Img = styled.img`
@@ -33,16 +40,15 @@ const Content = styled.div`
 
 const Context = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   margin: 2rem 0;
-`;
-
-const Black = styled.p`
-  color: var(--color-dark-text);
+  width: 100%;
 `;
 
 const SkyBlue = styled.p`
   color: var(--color-primary);
+  text-align: center;
+  width: 100%;
 `;
 
 const Buttons = styled.div`
@@ -76,18 +82,21 @@ const LoginBtn = styled.button`
 
 function IDSearchCompletePage() {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // URL에서 id 값을 가져오기
+  const queryParams = new URLSearchParams(location.search);
+  const userId = queryParams.get('id') || '알 수 없음'; // id가 없으면 기본값 설정
+
   return (
     <Container>
       <Img src={BlueCheck} />
       <Title>아이디 찾기 완료</Title>
       <Content>
         <Context>
-          <Black>가입일</Black>
-          <Black>2025. 01. 15</Black>
-        </Context>
-        <Context>
-          <SkyBlue>아이디</SkyBlue>
-          <SkyBlue>dnwnchlrkd206</SkyBlue>
+          <SkyBlue>
+            회원님의 아이디는 &nbsp;&nbsp; {userId} &nbsp;&nbsp; 입니다.
+          </SkyBlue>
         </Context>
       </Content>
       <Buttons>

@@ -15,9 +15,13 @@ const Container = styled.div`
   width: 100%;
   max-width: 668px;
   padding-top: 5rem;
-  padding-bottom: 6rem;
+  padding-bottom: 10rem;
   margin: 0 auto;
+  @media (max-width: 468px) {
+    padding-top: 1rem;
+  }
 `;
+
 const Title = styled.div`
   p {
     text-align: center;
@@ -27,25 +31,52 @@ const Title = styled.div`
     margin-bottom: 70px;
     color: var(--color-bright-text);
     user-select: none;
+    @media (max-width: 768px) {
+      padding-top: 2rem;
+      margin-bottom: 15px;
+    }
+    @media (max-width: 468px) {
+      padding-top: 3rem;
+      margin-bottom: 15px;
+    }
   }
 `;
-const MainContainer = styled.div``;
+
+const MainContainer = styled.div`
+  @media (max-width: 768px) {
+    scale: 95%;
+    padding: 0rem 1.5rem;
+  }
+  @media (max-width: 684px) {
+    scale: 90%;
+  }
+  @media (max-width: 568px) {
+    scale: 87.5%;
+  }
+  @media (max-width: 468px) {
+    scale: 85%;
+  }
+`;
+
 const IdOptionsContainer = styled.div`
   display: flex;
   justify-content: space-between;
   margin-top: 20px;
 `;
+
 const Search = styled.div`
   text-align: end;
   line-height: 34px;
   user-select: none;
 `;
+
 const Login = styled.div`
   input {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 103.5%;
+    width: 100%; /* 화면 크기에 맞게 100%로 설정 */
+    max-width: 662px; /* 최대 너비 설정 */
     height: 68px;
     background-color: var(--color-primary);
     border: none;
@@ -58,6 +89,7 @@ const Login = styled.div`
     cursor: pointer;
   }
 `;
+
 const Register = styled.div`
   width: 100%;
   line-height: 34px;

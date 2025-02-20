@@ -17,6 +17,7 @@ export default function HeaderMain() {
   const [modalOpen, setModalOpen] = useState(false);
   const openModal = () => setModalOpen(true);
   const closeModal = () => setModalOpen(false);
+  const isMenuOrModalOpen = isMenuOpen || modalOpen;
 
   const handleLogin = () => {
     void navigate('/login');
@@ -27,7 +28,6 @@ export default function HeaderMain() {
     try {
       void logout();
       closeModal();
-      alert('로그아웃 성공');
       void navigate('/main');
     } catch (error) {
       if (error instanceof AxiosError) {
@@ -40,15 +40,19 @@ export default function HeaderMain() {
   };
 
   // const handleMyInfo = () => {
-  //   navigate('/info');
+  //   navigate('/in  fo');
   // };
   return (
     <div className={styles['header-main']}>
-      <Link to="/main">
+      <Link to="/">
+        {/* <Link to="/main"> */}
         <img src={craIconBlue} alt="크라 아이콘" className={styles.logo} />
       </Link>
 
-      <button className={styles['menu-toggle']} onClick={toggleMenu}>
+      <button
+        className={`${styles['menu-toggle']} ${isMenuOrModalOpen ? styles['menu-toggle-active'] : ''}`}
+        onClick={toggleMenu}
+      >
         <span></span>
         <span></span>
         <span></span>
@@ -57,36 +61,49 @@ export default function HeaderMain() {
       <ul
         className={`${styles['nav-menu']} ${isMenuOpen ? styles.active : ''}`}
       >
-        {[
-          { path: '/notice', label: 'Notice' },
-          { path: '/academic', label: 'Academic' },
-          { path: '/book', label: 'Book' },
-          { path: '/item', label: 'Item' },
-          { path: '/havruta', label: 'Havruta' },
-          { path: '/project', label: 'Project' },
-        ].map(({ path, label }) => (
-          <li key={path}>
-            <Link
-              to={path}
-              className={`${styles['link']} ${styles['navbar-link']} ${
-                location.pathname.startsWith(path) ? styles.active : ''
-              }`}
-              onClick={toggleMenu}
-            >
-              {label}
-            </Link>
-          </li>
-        ))}
+        <>
+          {[
+            { path: '/notice', label: 'Notice' },
+            { path: '/academic', label: 'Academic' },
+            { path: '/book', label: 'Book' },
+            { path: '/item', label: 'Item' },
+            { path: '/havruta', label: 'Havruta' },
+            { path: '/project', label: 'Project' },
+          ].map(({ path, label }) => (
+            <li key={path}>
+              <Link
+                to={path}
+                className={`${styles['link']} ${styles['navbar-link']} ${
+                  location.pathname.startsWith(path) ? styles.active : ''
+                }`}
+                onClick={toggleMenu}
+              >
+                {label}
+              </Link>
+            </li>
+          ))}
+        </>
 
         <li className={styles['mobile-authbutton']}>
           {isAuthenticated ? (
-            <button className={styles.authbutton} onClick={openModal}>
-              내정보
-            </button>
+            <>
+              <img
+                src={imgUrl}
+                className={styles.profile}
+                onClick={openModal}
+              />
+              <p>{name}</p>
+            </>
           ) : (
-            <button className={styles.authbutton} onClick={handleLogin}>
-              로그인
-            </button>
+            <p
+              className={`${styles['link']} ${styles['navbar-link']}`}
+              onClick={() => {
+                handleLogin();
+                toggleMenu();
+              }}
+            >
+              Login
+            </p>
           )}
         </li>
       </ul>
@@ -94,7 +111,7 @@ export default function HeaderMain() {
         {isAuthenticated ? (
           <>
             <img src={imgUrl} className={styles.profile} onClick={openModal} />
-            <p>{name}</p>
+            {/* <p>{name}</p> */}
             {/* <button className={styles.authbutton}>내정보</button> */}
           </>
         ) : (

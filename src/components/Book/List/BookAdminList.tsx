@@ -6,6 +6,7 @@ import { getItems } from '~/api/item.ts';
 import { ITEMCATEGORY } from '~/constants/itemCategory.ts';
 import ItemAdminDelete from '~/components/Book/Delete/BookAdminDelete.tsx';
 import styled from 'styled-components';
+import LoadingSpinner from '~/components/Common/LoadingSpinner';
 
 const Container = styled.div`
   padding: 10rem;
@@ -61,7 +62,7 @@ function BookAdminList() {
   let content;
 
   if (itemQuery.isLoading) {
-    content = <div>로딩중...</div>;
+    content = <LoadingSpinner />;
   } else if (itemQuery.isError) {
     content = <div>에러가 발생했습니다!</div>;
   } else if (itemQuery.isSuccess) {

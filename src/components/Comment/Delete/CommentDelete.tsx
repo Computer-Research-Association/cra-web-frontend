@@ -18,7 +18,6 @@ export default function CommentDelete({ id }: { id: number }) {
     },
     onError: (error) => {
       console.error('댓글 삭제 실패:', error);
-      alert('댓글 삭제 실패');
     },
   });
 

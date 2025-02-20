@@ -12,6 +12,7 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as UserRoutesImport } from './routes/userRoutes'
+import { Route as TempRoutesImport } from './routes/tempRoutes'
 import { Route as RoutesImport } from './routes/routes'
 import { Route as RegisterRoutesImport } from './routes/registerRoutes'
 import { Route as RecruitRouteImport } from './routes/recruitRoute'
@@ -37,6 +38,12 @@ import { Route as AcademicRoutesImport } from './routes/academicRoutes'
 const UserRoutesRoute = UserRoutesImport.update({
   id: '/userRoutes',
   path: '/userRoutes',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const TempRoutesRoute = TempRoutesImport.update({
+  id: '/tempRoutes',
+  path: '/tempRoutes',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -291,6 +298,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RoutesImport
       parentRoute: typeof rootRoute
     }
+    '/tempRoutes': {
+      id: '/tempRoutes'
+      path: '/tempRoutes'
+      fullPath: '/tempRoutes'
+      preLoaderRoute: typeof TempRoutesImport
+      parentRoute: typeof rootRoute
+    }
     '/userRoutes': {
       id: '/userRoutes'
       path: '/userRoutes'
@@ -323,6 +337,7 @@ export interface FileRoutesByFullPath {
   '/recruitRoute': typeof RecruitRouteRoute
   '/registerRoutes': typeof RegisterRoutesRoute
   '/routes': typeof RoutesRoute
+  '/tempRoutes': typeof TempRoutesRoute
   '/userRoutes': typeof UserRoutesRoute
 }
 
@@ -346,6 +361,7 @@ export interface FileRoutesByTo {
   '/recruitRoute': typeof RecruitRouteRoute
   '/registerRoutes': typeof RegisterRoutesRoute
   '/routes': typeof RoutesRoute
+  '/tempRoutes': typeof TempRoutesRoute
   '/userRoutes': typeof UserRoutesRoute
 }
 
@@ -370,6 +386,7 @@ export interface FileRoutesById {
   '/recruitRoute': typeof RecruitRouteRoute
   '/registerRoutes': typeof RegisterRoutesRoute
   '/routes': typeof RoutesRoute
+  '/tempRoutes': typeof TempRoutesRoute
   '/userRoutes': typeof UserRoutesRoute
 }
 
@@ -395,6 +412,7 @@ export interface FileRouteTypes {
     | '/recruitRoute'
     | '/registerRoutes'
     | '/routes'
+    | '/tempRoutes'
     | '/userRoutes'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -417,6 +435,7 @@ export interface FileRouteTypes {
     | '/recruitRoute'
     | '/registerRoutes'
     | '/routes'
+    | '/tempRoutes'
     | '/userRoutes'
   id:
     | '__root__'
@@ -439,6 +458,7 @@ export interface FileRouteTypes {
     | '/recruitRoute'
     | '/registerRoutes'
     | '/routes'
+    | '/tempRoutes'
     | '/userRoutes'
   fileRoutesById: FileRoutesById
 }
@@ -463,6 +483,7 @@ export interface RootRouteChildren {
   RecruitRouteRoute: typeof RecruitRouteRoute
   RegisterRoutesRoute: typeof RegisterRoutesRoute
   RoutesRoute: typeof RoutesRoute
+  TempRoutesRoute: typeof TempRoutesRoute
   UserRoutesRoute: typeof UserRoutesRoute
 }
 
@@ -486,6 +507,7 @@ const rootRouteChildren: RootRouteChildren = {
   RecruitRouteRoute: RecruitRouteRoute,
   RegisterRoutesRoute: RegisterRoutesRoute,
   RoutesRoute: RoutesRoute,
+  TempRoutesRoute: TempRoutesRoute,
   UserRoutesRoute: UserRoutesRoute,
 }
 
@@ -518,6 +540,7 @@ export const routeTree = rootRoute
         "/recruitRoute",
         "/registerRoutes",
         "/routes",
+        "/tempRoutes",
         "/userRoutes"
       ]
     },
@@ -577,6 +600,9 @@ export const routeTree = rootRoute
     },
     "/routes": {
       "filePath": "routes.ts"
+    },
+    "/tempRoutes": {
+      "filePath": "tempRoutes.ts"
     },
     "/userRoutes": {
       "filePath": "userRoutes.ts"

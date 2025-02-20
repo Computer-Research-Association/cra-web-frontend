@@ -1,0 +1,160 @@
+.project {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10rem;
+  p {
+    font-size: 50px;
+    color: var(--color-white);
+  }
+}
+
+.ProjectBanner {
+  margin-top: 10rem;
+}
+
+.ProjectSection {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 7.5rem;
+  margin-bottom: 5rem;
+  img {
+    align-self: center;
+    width: 550px;
+    border: 5px var(--color-i-taxi) solid;
+  }
+  p {
+    text-align: center;
+    font-size: 25px;
+  }
+}
+
+.ProjectTitle {
+  color: var(--color-i-taxi) !important;
+  font-family: 'Pretendard Bold' !important;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.ProjectContext {
+  font-family: 'Pretendard' !important;
+  font-size: 20px !important;
+  p {
+    padding: 0 5rem;
+    line-height: 3rem;
+  }
+  .ProjectStack {
+    font-family: 'Pretendard Bold';
+    margin-top: 2rem;
+  }
+}
+.ProjectMore {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 7rem;
+  .ProjectMoreComment {
+    font-size: 24px !important;
+  }
+
+  .ProjectMoreLink {
+    text-decoration: none;
+    color: var(--color-i-taxi);
+    font-size: 20px !important;
+    margin-top: 2rem;
+    &:hover {
+      color: var(--color-more-primary);
+    }
+  }
+}
+
+@media (max-width: 800px) {
+  .ProjectBanner {
+    font-size: 40px !important;
+  }
+  .ProjectSection {
+    img {
+      width: 450px !important;
+    }
+  }
+  .ProjectContext {
+    p {
+      font-size: 22px !important;
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .ProjectBanner {
+    font-size: 35px !important;
+    margin-top: 8rem !important;
+  }
+  .ProjectSection {
+    img {
+      width: 400px !important;
+    }
+  }
+  .ProjectContext {
+    p {
+      padding: 0 1.5rem;
+      font-size: 20px !important;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .ProjectBanner {
+    font-size: 35px !important;
+  }
+  .ProjectSection {
+    img {
+      width: 350px !important;
+    }
+  }
+  .ProjectContext {
+    p {
+      padding: 0 1rem;
+      font-size: 16px !important;
+    }
+  }
+  .ProjectBanner {
+    margin-top: 0;
+  }
+  .ProjectMore {
+    scale: 95%;
+  }
+}
+
+@media (max-width: 400px) {
+  .ProjectBanner {
+    font-size: 35px !important;
+  }
+  .ProjectSection {
+    img {
+      width: 300px !important;
+    }
+  }
+  .ProjectContext {
+    p {
+      padding: 0;
+    }
+  }
+  .ProjectBanner {
+    margin-top: 0;
+  }
+  .ProjectMore {
+    text-align: center;
+    scale: 80%;
+  }
+}
+
+@media (max-width: 384px) {
+  .ProjectContext {
+    p {
+      font-size: 14px !important;
+    }
+  }
+}

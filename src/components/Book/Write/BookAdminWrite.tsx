@@ -18,8 +18,7 @@ function BookAdminWrite() {
   const mutation = useMutation({
     mutationFn: (newItem: Item) => createItems(newItem),
     onSuccess: async () => {
-      await alert('도서 추가 성공');
-      navigate(-1);
+      await navigate(-1);
       setFormData({
         name: '',
         description: '',
@@ -29,7 +28,6 @@ function BookAdminWrite() {
     },
     onError: (error) => {
       console.error('도서 추가 실패:', error);
-      alert('도서 추가 실패');
     },
   });
 

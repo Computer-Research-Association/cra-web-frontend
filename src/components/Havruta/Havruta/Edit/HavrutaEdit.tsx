@@ -5,6 +5,7 @@ import { getHavrutaById, updateHavruta } from '~/api/havruta/havruta';
 import { Havruta } from '~/models/Havruta';
 import styled from 'styled-components';
 import { QUERY_KEY } from '~/api/queryKey';
+import LoadingSpinner from '~/components/Common/LoadingSpinner';
 
 const Container = styled.div`
   padding: 10rem;
@@ -62,7 +63,7 @@ function HavrutaEdit() {
   };
 
   if (havrutaQuery.isLoading) {
-    content = <div>데이터를 불러오는 중입니다...</div>;
+    content = <LoadingSpinner />;
   } else if (havrutaQuery.isError) {
     content = <div>에러가 발생했습니다!!</div>;
   } else if (havrutaQuery.isSuccess) {

@@ -2,7 +2,7 @@ import { Havruta } from '~/models/Havruta.ts';
 import { client } from '~/api/client.ts';
 import { authClient } from '~/api/auth/authClient.ts';
 
-// /a/havruta
+// /api/havruta
 export const getAllHavrutas = async () => {
   try {
     const response = await client.get<Havruta[]>(`/havruta`);
@@ -72,9 +72,9 @@ export const updateHavruta = async (havruta: Havruta) => {
   }
 };
 
-export const deleteHavruta = async (id: number) => {
+export const deleteHavruta = async (id: number): Promise<Havruta> => {
   try {
-    const response = await authClient.delete(`/admin/havruta/${id}`);
+    const response = await authClient.delete<Havruta>(`/admin/havruta/${id}`);
     return response.data;
   } catch (error) {
     console.log(error);

@@ -1,20 +1,23 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
-import { createBoards, onUploadImage } from '~/api/board.ts';
+import { createBoards } from '~/api/board.ts';
 import { getAllHavrutas } from '~/api/havruta/havruta.ts';
 import { Havruta } from '~/models/Havruta.ts';
 import { CATEGORY } from '~/constants/category.ts';
 import { QUERY_KEY } from '~/api/queryKey.ts';
-import { Editor } from '@toast-ui/react-editor';
-import { colorSyntax, codeSyntaxHighlight, Prism } from '~/styles/toast-ui';
 import styles from './HavrutaBoardWrite.module.css';
+import { useMarkdownEditor } from '../../../Board/Write/Markdown';
+import { Editor } from '@toast-ui/react-editor';
+import LoadingSpinner from '~/components/Common/LoadingSpinner';
 
 export default function HavrutaBoardWrite() {
-  const editorRef = useRef<any>();
   const havrutaCategory = CATEGORY.HAVRUTA;
   const navigate = useNavigate();
-  const [files, setFiles] = useState<File[]>([]);
+  const [file, setFile] = useState<File | null>(null);
+  const [errors, setErrors] = useState<{ title?: string; content?: string }>(
+    {},
+  );
   const [formData, setFormData] = useState<{
     title: string;
     content: string;
@@ -37,7 +40,15 @@ export default function HavrutaBoardWrite() {
     },
   });
 
-  // 하브루타 과목 리스트 가져오기
+  const { editorRef, editorConfig } = useMarkdownEditor({
+    onContentChange: (content) => {
+      setFormData((prev) => ({ ...prev, content }));
+      if (content.trim()) {
+        setErrors((prev) => ({ ...prev, content: undefined }));
+      }
+    },
+  });
+
   const havrutaQuery = useQuery<Havruta[]>({
     queryKey: QUERY_KEY.havruta.havrutas(),
     queryFn: async () => getAllHavrutas(),
@@ -46,7 +57,7 @@ export default function HavrutaBoardWrite() {
   const mutation = useMutation({
     mutationFn: async () => {
       const content = editorRef.current.getInstance().getMarkdown();
-      const filesToUpload = files || [];
+      const fileToUpload = file || null;
 
       // formData 구조를 변경하여 요청 형식에 맞게 변환
       const payload = {
@@ -55,16 +66,31 @@ export default function HavrutaBoardWrite() {
           content,
           category: formData.category,
           imageUrls: formData.imageUrls,
-          havrutaDto: formData.havrutaDto, // 과목 정보 포함
+          havrutaDto: formData.havrutaDto,
+          resUserDetailDto: {
+            name: '사용자 이름', // 실제 사용자 정보로 변경
+            email: 'user@example.com',
+            studentId: 12345678,
+            term: '2025-1',
+            githubId: 'githubUsername',
+            imgUrl: 'https://example.com/profile.jpg',
+          },
         },
-        files: filesToUpload.map((file) => file.name), // 파일 이름만 포함
+        file: fileToUpload ? [fileToUpload.name] : [],
       };
       console.log(payload.board);
 
-      return await createBoards(payload.board, filesToUpload);
+      return await createBoards(
+        { ...payload.board, likes: 0, liked: false },
+        fileToUpload,
+      );
     },
     onSuccess: async () => {
       await navigate(-1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+      }, 100); // 화면 위로 끌어올리기
+
       setFormData({
         title: '',
         content: '',
@@ -76,13 +102,32 @@ export default function HavrutaBoardWrite() {
           professor: '',
         },
       });
-      setFiles([]);
+      setFile(null);
     },
+
     onError: (error) => {
       console.error('게시글 작성 실패:', error);
-      alert('게시글 작성 실패');
     },
   });
+
+  const validateForm = () => {
+    const newErrors: { title?: string; content?: string } = {};
+    let isValid = true;
+
+    if (!formData.title.trim()) {
+      newErrors.title = '제목을 입력해주세요.';
+      isValid = false;
+    }
+
+    const content = editorRef.current?.getInstance().getMarkdown() || '';
+    if (!content.trim()) {
+      newErrors.content = '내용을 입력해주세요.';
+      isValid = false;
+    }
+
+    setErrors(newErrors);
+    return isValid;
+  };
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
@@ -92,6 +137,19 @@ export default function HavrutaBoardWrite() {
       ...prev,
       [name]: name === 'imageUrls' ? value.split(',') : value,
     }));
+    if (errors[name as keyof typeof errors]) {
+      setErrors((prev) => ({ ...prev, [name]: undefined }));
+    }
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      setFile(e.target.files[0]);
+    }
+  };
+
+  const handleRemoveFile = () => {
+    setFile(null);
   };
 
   const handleSelectHavruta = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -100,37 +158,32 @@ export default function HavrutaBoardWrite() {
       (h) => h.id === selectedHavrutaId,
     );
 
+    if (!selectedHavruta) {
+      console.error('선택한 하브루타 과목을 찾을 수 없습니다.');
+      return;
+    }
+
     console.log(
       '선택한 과목:',
       selectedHavruta?.className,
       selectedHavruta?.professor,
     ); // 추가
 
-    if (selectedHavruta) {
-      setFormData((prev) => ({
-        ...prev,
-        havrutaDto: {
-          id: selectedHavruta.id,
-          classname: selectedHavruta.className,
-          professor: selectedHavruta.professor,
-        },
-      }));
-    }
+    setFormData((prev) => ({
+      ...prev,
+      havrutaDto: {
+        id: selectedHavruta.id ?? null,
+        classname: selectedHavruta.className || '', // 🔹 빈 문자열로 기본값 설정
+        professor: selectedHavruta.professor || '', // 🔹 빈 문자열로 기본값 설정
+      },
+    }));
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      const selectedFiles = Array.from(e.target.files);
-      setFiles((prevFiles) => [...prevFiles, ...selectedFiles]);
-    }
-  };
-
-  const handleRemoveFile = (index: number) => {
-    setFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!validateForm()) {
+      return;
+    }
     mutation.mutate();
   };
 
@@ -138,10 +191,9 @@ export default function HavrutaBoardWrite() {
     <div className={styles['write-container']}>
       <form className={styles['write-form']} onSubmit={handleSubmit}>
         <h2 className={styles['write-title']}>하브루타 게시글 작성</h2>
-
         <label htmlFor="title">제목</label>
         <input
-          className={styles['input-title']}
+          className={`${styles['input-title']} ${errors.title ? styles['input-error'] : ''}`}
           type="text"
           id="title"
           name="title"
@@ -149,10 +201,13 @@ export default function HavrutaBoardWrite() {
           value={formData.title}
           onChange={handleChange}
         />
+        {errors.title && (
+          <p className={styles['error-message']}>{errors.title}</p>
+        )}
 
         <label htmlFor="havrutaId">과목명</label>
         {havrutaQuery.isLoading ? (
-          <p>과목 목록을 불러오는 중입니다...</p>
+          <LoadingSpinner />
         ) : havrutaQuery.isError ? (
           <p>과목 목록을 불러오는데 실패했습니다.</p>
         ) : havrutaQuery.data?.length === 0 ? (
@@ -175,37 +230,15 @@ export default function HavrutaBoardWrite() {
             ))}
           </select>
         )}
-
         <label htmlFor="content">내용</label>
-        <Editor
-          ref={editorRef}
-          initialValue=" "
-          previewStyle="vertical"
-          height="600px"
-          initialEditType="wysiwyg"
-          useCommandShortcut={true}
-          plugins={[[codeSyntaxHighlight, { highlighter: Prism }], colorSyntax]}
-          hooks={{
-            addImageBlobHook: async (
-              blob: File,
-              callback: (url: string) => void,
-            ) => {
-              try {
-                const url = await onUploadImage(blob);
-                callback(url);
-
-                setFormData((prevData) => ({
-                  ...prevData,
-                  imageUrls: [...prevData.imageUrls, url],
-                }));
-              } catch (error) {
-                console.error('이미지 업로드 실패:', error);
-                alert('이미지 업로드에 실패했습니다.');
-              }
-            },
-          }}
-        />
-        <br />
+        <div
+          className={`${styles['editor-container']} ${errors.content ? styles['editor-error-container'] : ''}`}
+        >
+          <Editor ref={editorRef} {...editorConfig} />
+        </div>
+        {errors.content && (
+          <p className={styles['error-message']}>{errors.content}</p>
+        )}
 
         <label className={styles['file-button']} htmlFor="fileUpload">
           파일 선택
@@ -214,31 +247,27 @@ export default function HavrutaBoardWrite() {
           className={styles['file-input']}
           type="file"
           id="fileUpload"
-          multiple
           onChange={handleFileChange}
         />
-        <ul className={styles['file-list']}>
-          {files.map((file, index) => (
-            <React.Fragment key={index}>
-              <li className={styles['file-item']}>
-                {file.name}
-                <button
-                  type="button"
-                  className={styles['remove-button']}
-                  onClick={() => handleRemoveFile(index)}
-                >
-                  ✕
-                </button>
-              </li>
-              <br /> {/* 리스트 사이 줄바꿈 추가 */}
-            </React.Fragment>
-          ))}
-        </ul>
-
+        {file && (
+          <div className={styles['file-item']}>
+            {file.name}
+            <button
+              type="button"
+              className={styles['remove-button']}
+              onClick={handleRemoveFile}
+            >
+              ✕
+            </button>
+          </div>
+        )}
+        <div className={styles['file-comment']}>
+          파일 업로드는 한 개만 가능합니다!
+        </div>
         <input
           className={styles['submit-button']}
           type="submit"
-          value="게시글 작성"
+          value="하브루타 작성"
         />
       </form>
     </div>

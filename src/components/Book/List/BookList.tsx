@@ -4,6 +4,7 @@ import { QUERY_KEY } from '~/api/queryKey.ts';
 import { Item } from '~/models/Item.ts';
 import ItemItem from '~/components/Book/Item/BookItem.tsx';
 import styles from '~/components/Book/List/BookList.module.css';
+import LoadingSpinner from '~/components/Common/LoadingSpinner';
 
 export default function BookList({ itemCategory }: { itemCategory: number }) {
   const ItemQuery = useQuery<Item[]>({
@@ -14,7 +15,7 @@ export default function BookList({ itemCategory }: { itemCategory: number }) {
   let content;
 
   if (ItemQuery.isLoading) {
-    content = <div>로딩중...</div>;
+    content = <LoadingSpinner />;
   } else if (ItemQuery.isError) {
     content = <div className="error">에러가 발생했습니다!</div>;
   } else if (ItemQuery.isSuccess) {

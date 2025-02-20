@@ -10,6 +10,7 @@ import WidthSpacer from '~/components/Common/WidthSpacer';
 import AlertModal from '~/components/Modal/Alert/AlertModal';
 import { ReqSignUp } from '~/models/Auth';
 import RegisterInputTextField from './RegisterInputTextField';
+import RegisterPasswordTextField from './RegisterPasswordTextField';
 import { useRegisterStore } from '~/store/registerStore';
 import axios from 'axios';
 
@@ -473,7 +474,7 @@ function RegisterForm() {
           valid={!inputErrors['username']}
           errorMessage={errorMessages['username']}
         />
-        <RegisterInputTextField
+        <RegisterPasswordTextField
           name="password"
           value={formData.password}
           label="비밀번호"
@@ -483,7 +484,7 @@ function RegisterForm() {
           valid={!inputErrors['password']}
           errorMessage={errorMessages['password']}
         />
-        <RegisterInputTextField
+        <RegisterPasswordTextField
           name="passwordCheck"
           value={formData.passwordCheck}
           label="비밀번호 확인"

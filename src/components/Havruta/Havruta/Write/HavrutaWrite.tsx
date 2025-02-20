@@ -28,7 +28,6 @@ function HavrutaWrite() {
     },
     onError: (error) => {
       console.error('하브루타 목록 작성 실패:', error);
-      alert('하브루타 목록 작성 실패');
     },
   });
 
