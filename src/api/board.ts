@@ -2,6 +2,7 @@ import { Board } from '~/models/Board.ts';
 import { client } from './client.ts';
 import { authClient } from './auth/authClient.ts';
 import { UpdateBoard } from '~/models/Board.ts';
+import { resizeImage } from '~/components/Board/Write/Markdown.tsx';
 
 // [GET]
 export const getBoardCountByCategory = async (category: number) => {
@@ -141,19 +142,26 @@ export const deleteBoards = async (id: number): Promise<Board> => {
 };
 
 export const onUploadImage = async (blob: File): Promise<string> => {
-  const formData = new FormData();
-  formData.append('image', blob);
-
   try {
+    // 파일 크기가 특정 크기(예: 1MB) 이상일 때만 리사이징
+    const shouldResize = blob.size > 1024 * 1024;
+
+    const formData = new FormData();
+
+    if (shouldResize) {
+      const resizedBlob = await resizeImage(blob);
+      formData.append('image', resizedBlob, blob.name);
+    } else {
+      formData.append('image', blob);
+    }
+
     const response = await authClient.post<string>('/image/upload', formData, {
       headers: { 'Content-Type': 'multipart/form-data' },
-      timeout: 15000, // 15초로 타임아웃 설정
+      timeout: 15000, // 타임아웃 설정 추가
     });
-    const imageUrl = response.data;
 
-    console.log('받은 이미지 URL:', imageUrl);
-
-    return imageUrl;
+    console.log('받은 이미지 URL:', response.data);
+    return response.data;
   } catch (error) {
     console.error('이미지 업로드 실패:', error);
     throw error;
