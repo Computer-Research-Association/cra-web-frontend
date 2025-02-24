@@ -28,6 +28,10 @@ const ToggleButton = styled.button`
     background-color: var(--color-primary);
     color: white;
   }
+
+  @media (max-width: 768px) {
+    margin-left: 30px; /* 768px 이하에서 왼쪽 여백 30px 추가 */
+  }
 `;
 
 function IntroHistory() {
