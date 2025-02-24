@@ -31,9 +31,26 @@ jobs:
       run: |
         cd dist
         cp index.html 404.html
+
+    # azure에 옮기기
+    - name: copy file via ssh password
+      uses: appleboy/scp-action@v0.1.7
+      with:
+        debug: true
+        host: ${{ secrets.AZURE_HOST }}
+        username: ${{ secrets.AZURE_USERNAME }}
+        key: ${{ secrets.AZURE_PRIVATE_KEY }}
+        source: "./dist"
+        target: /home/${{ secrets.AZURE_USERNAME }}/craweb
+
+    # ssh 접속해서 nginx 재시작
+    - name: Restart nginx
+      run: |
+        sudo service nginx stop
+        sudo service nginx start
+
+    # - name: Install Firebase CLI
+    #   run: npm install -g firebase-tools
     
-    - name: Install Firebase CLI
-      run: npm install -g firebase-tools
-    
-    - name: Deploy to Firebase
-      run: firebase deploy --only hosting --token ${{ secrets.FIREBASE_AUTH_TOKEN }}
+    # - name: Deploy to Firebase
+    #   run: firebase deploy --only hosting --token ${{ secrets.FIREBASE_AUTH_TOKEN }}
