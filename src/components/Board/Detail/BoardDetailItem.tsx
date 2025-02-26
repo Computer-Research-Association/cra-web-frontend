@@ -34,20 +34,17 @@ const extractFileName = (fileUrl: string) => {
 export default function BoardDetailItem({
   board,
   category,
-  commentCount,
 }: {
   board: Board;
   category: number;
-  commentCount: number;
 }) {
-  console.log(board);
-  console.log('Board Detail Item', board.commentCount);
   const [viewCnt, setViewCnt] = useState(board.view);
 
   const [modalOpen, setModalOpen] = useState(false);
   const openModal = () => setModalOpen(true);
   const closeModal = () => setModalOpen(false);
   const userId = useAuthStore.getState().userId as number;
+  console.log(useAuthStore.getState());
 
   useEffect(() => {
     const viewed = localStorage.getItem(`viewed_${board.id}`);
@@ -212,7 +209,7 @@ export default function BoardDetailItem({
               </span>
               <span className={styles.viewContainer}>
                 <FaRegComment />
-                <span>{commentCount}</span>
+                <span>{board.resListCommentDtos?.length}</span>
               </span>
             </div>
           </div>

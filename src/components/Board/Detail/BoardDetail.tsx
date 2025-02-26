@@ -75,14 +75,9 @@ export default function BoardDetail({ category }: { category: number }) {
   }
 
   if (boardQuery.isSuccess) {
-    console.log('Board Detail: ', boardQuery.data.commentCount);
     return (
       <div className={styles['full-width']}>
-        <BoardDetailItem
-          board={boardQuery.data}
-          category={category}
-          commentCount={boardQuery.data.commentCount}
-        />
+        <BoardDetailItem board={boardQuery.data} category={category} />
       </div>
     );
   }
