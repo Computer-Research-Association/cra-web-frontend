@@ -26,7 +26,6 @@ import { Route as HavrutaRoutesImport } from './routes/havrutaRoutes'
 import { Route as ErrorRouteImport } from './routes/errorRoute'
 import { Route as BookRouteImport } from './routes/bookRoute'
 import { Route as AuthRoutesImport } from './routes/authRoutes'
-import { Route as AuthCheckImport } from './routes/authCheck'
 import { Route as AdminRouteImport } from './routes/adminRoute'
 import { Route as AdminProjectRoutesImport } from './routes/adminProjectRoutes'
 import { Route as AdminItemRoutesImport } from './routes/adminItemRoutes'
@@ -126,12 +125,6 @@ const AuthRoutesRoute = AuthRoutesImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const AuthCheckRoute = AuthCheckImport.update({
-  id: '/authCheck',
-  path: '/authCheck',
-  getParentRoute: () => rootRoute,
-} as any)
-
 const AdminRouteRoute = AdminRouteImport.update({
   id: '/adminRoute',
   path: '/adminRoute',
@@ -212,13 +205,6 @@ declare module '@tanstack/react-router' {
       path: '/adminRoute'
       fullPath: '/adminRoute'
       preLoaderRoute: typeof AdminRouteImport
-      parentRoute: typeof rootRoute
-    }
-    '/authCheck': {
-      id: '/authCheck'
-      path: '/authCheck'
-      fullPath: '/authCheck'
-      preLoaderRoute: typeof AuthCheckImport
       parentRoute: typeof rootRoute
     }
     '/authRoutes': {
@@ -338,7 +324,6 @@ export interface FileRoutesByFullPath {
   '/adminItemRoutes': typeof AdminItemRoutesRoute
   '/adminProjectRoutes': typeof AdminProjectRoutesRoute
   '/adminRoute': typeof AdminRouteRoute
-  '/authCheck': typeof AuthCheckRoute
   '/authRoutes': typeof AuthRoutesRoute
   '/bookRoute': typeof BookRouteRoute
   '/errorRoute': typeof ErrorRouteRoute
@@ -363,7 +348,6 @@ export interface FileRoutesByTo {
   '/adminItemRoutes': typeof AdminItemRoutesRoute
   '/adminProjectRoutes': typeof AdminProjectRoutesRoute
   '/adminRoute': typeof AdminRouteRoute
-  '/authCheck': typeof AuthCheckRoute
   '/authRoutes': typeof AuthRoutesRoute
   '/bookRoute': typeof BookRouteRoute
   '/errorRoute': typeof ErrorRouteRoute
@@ -389,7 +373,6 @@ export interface FileRoutesById {
   '/adminItemRoutes': typeof AdminItemRoutesRoute
   '/adminProjectRoutes': typeof AdminProjectRoutesRoute
   '/adminRoute': typeof AdminRouteRoute
-  '/authCheck': typeof AuthCheckRoute
   '/authRoutes': typeof AuthRoutesRoute
   '/bookRoute': typeof BookRouteRoute
   '/errorRoute': typeof ErrorRouteRoute
@@ -416,7 +399,6 @@ export interface FileRouteTypes {
     | '/adminItemRoutes'
     | '/adminProjectRoutes'
     | '/adminRoute'
-    | '/authCheck'
     | '/authRoutes'
     | '/bookRoute'
     | '/errorRoute'
@@ -440,7 +422,6 @@ export interface FileRouteTypes {
     | '/adminItemRoutes'
     | '/adminProjectRoutes'
     | '/adminRoute'
-    | '/authCheck'
     | '/authRoutes'
     | '/bookRoute'
     | '/errorRoute'
@@ -464,7 +445,6 @@ export interface FileRouteTypes {
     | '/adminItemRoutes'
     | '/adminProjectRoutes'
     | '/adminRoute'
-    | '/authCheck'
     | '/authRoutes'
     | '/bookRoute'
     | '/errorRoute'
@@ -490,7 +470,6 @@ export interface RootRouteChildren {
   AdminItemRoutesRoute: typeof AdminItemRoutesRoute
   AdminProjectRoutesRoute: typeof AdminProjectRoutesRoute
   AdminRouteRoute: typeof AdminRouteRoute
-  AuthCheckRoute: typeof AuthCheckRoute
   AuthRoutesRoute: typeof AuthRoutesRoute
   BookRouteRoute: typeof BookRouteRoute
   ErrorRouteRoute: typeof ErrorRouteRoute
@@ -515,7 +494,6 @@ const rootRouteChildren: RootRouteChildren = {
   AdminItemRoutesRoute: AdminItemRoutesRoute,
   AdminProjectRoutesRoute: AdminProjectRoutesRoute,
   AdminRouteRoute: AdminRouteRoute,
-  AuthCheckRoute: AuthCheckRoute,
   AuthRoutesRoute: AuthRoutesRoute,
   BookRouteRoute: BookRouteRoute,
   ErrorRouteRoute: ErrorRouteRoute,
@@ -549,7 +527,6 @@ export const routeTree = rootRoute
         "/adminItemRoutes",
         "/adminProjectRoutes",
         "/adminRoute",
-        "/authCheck",
         "/authRoutes",
         "/bookRoute",
         "/errorRoute",
@@ -584,9 +561,6 @@ export const routeTree = rootRoute
     },
     "/adminRoute": {
       "filePath": "adminRoute.ts"
-    },
-    "/authCheck": {
-      "filePath": "authCheck.ts"
     },
     "/authRoutes": {
       "filePath": "authRoutes.ts"

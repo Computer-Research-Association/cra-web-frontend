@@ -5,6 +5,7 @@ import styles from './HeaderIntro.module.css';
 export default function HeaderIntro() {
   return (
     <div className={styles.HeaderIntro}>
+      {/* 상단 헤더 */}
       <ul className={styles.UlIntro}>
         <Link to="./intro">
           <li className={`${styles.LiIntro} ${styles.LiImg}`}>
