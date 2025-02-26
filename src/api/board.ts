@@ -4,15 +4,15 @@ import { authClient } from './auth/authClient.ts';
 import { UpdateBoard } from '~/models/Board.ts';
 
 // [GET]
-export const getBoardCountByCategory = async (category: number) => {
-  try {
-    const response = await client.get<Board[]>(`/board/${category}`);
-    return response.data;
-  } catch (error) {
-    console.error(error);
-    throw error;
-  }
-};
+// export const getBoardCountByCategory = async (category: number) => {
+//   try {
+//     const response = await client.get<Board[]>(`/board/${category}`);
+//     return response.data;
+//   } catch (error) {
+//     console.error(error);
+//     throw error;
+//   }
+// };
 
 // [GET] by Pagination
 export const getBoardsByCategory = async (
