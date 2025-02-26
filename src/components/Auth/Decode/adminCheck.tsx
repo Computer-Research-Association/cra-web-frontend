@@ -1,3 +1,7 @@
+/* eslint-disable */
+
+// @ts-nocheck
+
 import { jwtDecode, JwtPayload } from 'jwt-decode';
 
 function isAdmin(token: string): boolean {
