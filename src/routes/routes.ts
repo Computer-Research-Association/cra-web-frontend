@@ -1,5 +1,4 @@
-// ------------------------------배포용 route------------------------------------
-
+//------------------------------배포용 route------------------------------------
 // import { createRouter } from '@tanstack/react-router';
 // import { rootRoute } from './__root.tsx';
 // import { HomeRoute, introRoute } from './introRoutes.ts';
@@ -93,6 +92,7 @@ import {
   userImageRoute,
 } from './userRoutes.ts';
 // import { comingSoonRoute, WIPRoute } from './tempRoutes.ts';
+import { swaggerRoute } from './swaggerRoutes.ts';
 
 export const routes = createRouter({
   routeTree: rootRoute.addChildren([
@@ -149,6 +149,7 @@ export const routes = createRouter({
     userInfoRoute,
     userDeleteRoute,
     userImageRoute,
+    swaggerRoute,
     // comingSoonRoute,
     // WIPRoute,
   ]),
