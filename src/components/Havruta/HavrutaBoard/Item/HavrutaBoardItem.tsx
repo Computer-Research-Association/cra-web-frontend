@@ -1,7 +1,7 @@
 // import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 // import { getCommentsCountByCategory } from '~/api/comment';
-import { HavrutaBoard } from '~/models/Havruta.ts';
+import { Board } from '~/models/Board.ts';
 import styles from './HavrutaBoardItem.module.css';
 import COMMENT from '~/assets/images/comment_img.png';
 
@@ -10,7 +10,7 @@ const DEFAULT_PROFILE = import.meta.env.VITE_DEFAULT_IMG as string;
 export default function HavrutaBoardItem({
   havrutaBoard,
 }: {
-  havrutaBoard: HavrutaBoard;
+  havrutaBoard: Board;
 }) {
   // const [commentCnt, setCommentCnt] = useState<number | null>(null);
 
