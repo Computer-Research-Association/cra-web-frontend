@@ -122,6 +122,7 @@ export const useAuthStore = create<authStore>()(
       logout: async () => {
         try {
           await logOutApi();
+          sessionStorage.clear();
         } catch (error) {
           console.error('Logout Error:', error);
           throw error;

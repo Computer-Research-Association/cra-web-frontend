@@ -13,6 +13,7 @@
 import { Route as rootRoute } from './routes/__root'
 import { Route as UserRoutesImport } from './routes/userRoutes'
 import { Route as TempRoutesImport } from './routes/tempRoutes'
+import { Route as SwaggerRoutesImport } from './routes/swaggerRoutes'
 import { Route as RoutesImport } from './routes/routes'
 import { Route as RegisterRoutesImport } from './routes/registerRoutes'
 import { Route as RecruitRouteImport } from './routes/recruitRoute'
@@ -26,7 +27,6 @@ import { Route as HavrutaRoutesImport } from './routes/havrutaRoutes'
 import { Route as ErrorRouteImport } from './routes/errorRoute'
 import { Route as BookRouteImport } from './routes/bookRoute'
 import { Route as AuthRoutesImport } from './routes/authRoutes'
-import { Route as AuthCheckImport } from './routes/authCheck'
 import { Route as AdminRouteImport } from './routes/adminRoute'
 import { Route as AdminProjectRoutesImport } from './routes/adminProjectRoutes'
 import { Route as AdminItemRoutesImport } from './routes/adminItemRoutes'
@@ -45,6 +45,12 @@ const UserRoutesRoute = UserRoutesImport.update({
 const TempRoutesRoute = TempRoutesImport.update({
   id: '/tempRoutes',
   path: '/tempRoutes',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const SwaggerRoutesRoute = SwaggerRoutesImport.update({
+  id: '/swaggerRoutes',
+  path: '/swaggerRoutes',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -123,12 +129,6 @@ const BookRouteRoute = BookRouteImport.update({
 const AuthRoutesRoute = AuthRoutesImport.update({
   id: '/authRoutes',
   path: '/authRoutes',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const AuthCheckRoute = AuthCheckImport.update({
-  id: '/authCheck',
-  path: '/authCheck',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -212,13 +212,6 @@ declare module '@tanstack/react-router' {
       path: '/adminRoute'
       fullPath: '/adminRoute'
       preLoaderRoute: typeof AdminRouteImport
-      parentRoute: typeof rootRoute
-    }
-    '/authCheck': {
-      id: '/authCheck'
-      path: '/authCheck'
-      fullPath: '/authCheck'
-      preLoaderRoute: typeof AuthCheckImport
       parentRoute: typeof rootRoute
     }
     '/authRoutes': {
@@ -312,6 +305,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RoutesImport
       parentRoute: typeof rootRoute
     }
+    '/swaggerRoutes': {
+      id: '/swaggerRoutes'
+      path: '/swaggerRoutes'
+      fullPath: '/swaggerRoutes'
+      preLoaderRoute: typeof SwaggerRoutesImport
+      parentRoute: typeof rootRoute
+    }
     '/tempRoutes': {
       id: '/tempRoutes'
       path: '/tempRoutes'
@@ -338,7 +338,6 @@ export interface FileRoutesByFullPath {
   '/adminItemRoutes': typeof AdminItemRoutesRoute
   '/adminProjectRoutes': typeof AdminProjectRoutesRoute
   '/adminRoute': typeof AdminRouteRoute
-  '/authCheck': typeof AuthCheckRoute
   '/authRoutes': typeof AuthRoutesRoute
   '/bookRoute': typeof BookRouteRoute
   '/errorRoute': typeof ErrorRouteRoute
@@ -352,6 +351,7 @@ export interface FileRoutesByFullPath {
   '/recruitRoute': typeof RecruitRouteRoute
   '/registerRoutes': typeof RegisterRoutesRoute
   '/routes': typeof RoutesRoute
+  '/swaggerRoutes': typeof SwaggerRoutesRoute
   '/tempRoutes': typeof TempRoutesRoute
   '/userRoutes': typeof UserRoutesRoute
 }
@@ -363,7 +363,6 @@ export interface FileRoutesByTo {
   '/adminItemRoutes': typeof AdminItemRoutesRoute
   '/adminProjectRoutes': typeof AdminProjectRoutesRoute
   '/adminRoute': typeof AdminRouteRoute
-  '/authCheck': typeof AuthCheckRoute
   '/authRoutes': typeof AuthRoutesRoute
   '/bookRoute': typeof BookRouteRoute
   '/errorRoute': typeof ErrorRouteRoute
@@ -377,6 +376,7 @@ export interface FileRoutesByTo {
   '/recruitRoute': typeof RecruitRouteRoute
   '/registerRoutes': typeof RegisterRoutesRoute
   '/routes': typeof RoutesRoute
+  '/swaggerRoutes': typeof SwaggerRoutesRoute
   '/tempRoutes': typeof TempRoutesRoute
   '/userRoutes': typeof UserRoutesRoute
 }
@@ -389,7 +389,6 @@ export interface FileRoutesById {
   '/adminItemRoutes': typeof AdminItemRoutesRoute
   '/adminProjectRoutes': typeof AdminProjectRoutesRoute
   '/adminRoute': typeof AdminRouteRoute
-  '/authCheck': typeof AuthCheckRoute
   '/authRoutes': typeof AuthRoutesRoute
   '/bookRoute': typeof BookRouteRoute
   '/errorRoute': typeof ErrorRouteRoute
@@ -403,6 +402,7 @@ export interface FileRoutesById {
   '/recruitRoute': typeof RecruitRouteRoute
   '/registerRoutes': typeof RegisterRoutesRoute
   '/routes': typeof RoutesRoute
+  '/swaggerRoutes': typeof SwaggerRoutesRoute
   '/tempRoutes': typeof TempRoutesRoute
   '/userRoutes': typeof UserRoutesRoute
 }
@@ -416,7 +416,6 @@ export interface FileRouteTypes {
     | '/adminItemRoutes'
     | '/adminProjectRoutes'
     | '/adminRoute'
-    | '/authCheck'
     | '/authRoutes'
     | '/bookRoute'
     | '/errorRoute'
@@ -430,6 +429,7 @@ export interface FileRouteTypes {
     | '/recruitRoute'
     | '/registerRoutes'
     | '/routes'
+    | '/swaggerRoutes'
     | '/tempRoutes'
     | '/userRoutes'
   fileRoutesByTo: FileRoutesByTo
@@ -440,7 +440,6 @@ export interface FileRouteTypes {
     | '/adminItemRoutes'
     | '/adminProjectRoutes'
     | '/adminRoute'
-    | '/authCheck'
     | '/authRoutes'
     | '/bookRoute'
     | '/errorRoute'
@@ -454,6 +453,7 @@ export interface FileRouteTypes {
     | '/recruitRoute'
     | '/registerRoutes'
     | '/routes'
+    | '/swaggerRoutes'
     | '/tempRoutes'
     | '/userRoutes'
   id:
@@ -464,7 +464,6 @@ export interface FileRouteTypes {
     | '/adminItemRoutes'
     | '/adminProjectRoutes'
     | '/adminRoute'
-    | '/authCheck'
     | '/authRoutes'
     | '/bookRoute'
     | '/errorRoute'
@@ -478,6 +477,7 @@ export interface FileRouteTypes {
     | '/recruitRoute'
     | '/registerRoutes'
     | '/routes'
+    | '/swaggerRoutes'
     | '/tempRoutes'
     | '/userRoutes'
   fileRoutesById: FileRoutesById
@@ -490,7 +490,6 @@ export interface RootRouteChildren {
   AdminItemRoutesRoute: typeof AdminItemRoutesRoute
   AdminProjectRoutesRoute: typeof AdminProjectRoutesRoute
   AdminRouteRoute: typeof AdminRouteRoute
-  AuthCheckRoute: typeof AuthCheckRoute
   AuthRoutesRoute: typeof AuthRoutesRoute
   BookRouteRoute: typeof BookRouteRoute
   ErrorRouteRoute: typeof ErrorRouteRoute
@@ -504,6 +503,7 @@ export interface RootRouteChildren {
   RecruitRouteRoute: typeof RecruitRouteRoute
   RegisterRoutesRoute: typeof RegisterRoutesRoute
   RoutesRoute: typeof RoutesRoute
+  SwaggerRoutesRoute: typeof SwaggerRoutesRoute
   TempRoutesRoute: typeof TempRoutesRoute
   UserRoutesRoute: typeof UserRoutesRoute
 }
@@ -515,7 +515,6 @@ const rootRouteChildren: RootRouteChildren = {
   AdminItemRoutesRoute: AdminItemRoutesRoute,
   AdminProjectRoutesRoute: AdminProjectRoutesRoute,
   AdminRouteRoute: AdminRouteRoute,
-  AuthCheckRoute: AuthCheckRoute,
   AuthRoutesRoute: AuthRoutesRoute,
   BookRouteRoute: BookRouteRoute,
   ErrorRouteRoute: ErrorRouteRoute,
@@ -529,6 +528,7 @@ const rootRouteChildren: RootRouteChildren = {
   RecruitRouteRoute: RecruitRouteRoute,
   RegisterRoutesRoute: RegisterRoutesRoute,
   RoutesRoute: RoutesRoute,
+  SwaggerRoutesRoute: SwaggerRoutesRoute,
   TempRoutesRoute: TempRoutesRoute,
   UserRoutesRoute: UserRoutesRoute,
 }
@@ -549,7 +549,6 @@ export const routeTree = rootRoute
         "/adminItemRoutes",
         "/adminProjectRoutes",
         "/adminRoute",
-        "/authCheck",
         "/authRoutes",
         "/bookRoute",
         "/errorRoute",
@@ -563,6 +562,7 @@ export const routeTree = rootRoute
         "/recruitRoute",
         "/registerRoutes",
         "/routes",
+        "/swaggerRoutes",
         "/tempRoutes",
         "/userRoutes"
       ]
@@ -584,9 +584,6 @@ export const routeTree = rootRoute
     },
     "/adminRoute": {
       "filePath": "adminRoute.ts"
-    },
-    "/authCheck": {
-      "filePath": "authCheck.ts"
     },
     "/authRoutes": {
       "filePath": "authRoutes.ts"
@@ -626,6 +623,9 @@ export const routeTree = rootRoute
     },
     "/routes": {
       "filePath": "routes.ts"
+    },
+    "/swaggerRoutes": {
+      "filePath": "swaggerRoutes.ts"
     },
     "/tempRoutes": {
       "filePath": "tempRoutes.ts"
