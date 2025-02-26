@@ -13,6 +13,7 @@ export interface Board {
   likes: number;
   liked: boolean;
   view?: number;
+  commentCount: number;
   resUserDetailDto: {
     name?: string;
     email?: string;

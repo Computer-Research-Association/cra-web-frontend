@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
+// import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { getCommentsCountByCategory } from '~/api/comment';
+// import { getCommentsCountByCategory } from '~/api/comment';
 import { HavrutaBoard } from '~/models/Havruta.ts';
 import styles from './HavrutaBoardItem.module.css';
 import COMMENT from '~/assets/images/comment_img.png';
@@ -12,21 +12,21 @@ export default function HavrutaBoardItem({
 }: {
   havrutaBoard: HavrutaBoard;
 }) {
-  const [commentCnt, setCommentCnt] = useState<number | null>(null);
+  // const [commentCnt, setCommentCnt] = useState<number | null>(null);
 
-  useEffect(() => {
-    const fetchCommentsCount = async () => {
-      try {
-        const count = await getCommentsCountByCategory(
-          havrutaBoard.id as number,
-        );
-        setCommentCnt(count);
-      } catch (error) {
-        console.error('댓글 수를 가져오는 중 오류 발생:', error);
-      }
-    };
-    void fetchCommentsCount();
-  }, [havrutaBoard.id]);
+  // useEffect(() => {
+  //   const fetchCommentsCount = async () => {
+  //     try {
+  //       const count = await getCommentsCountByCategory(
+  //         havrutaBoard.id as number,
+  //       );
+  //       setCommentCnt(count);
+  //     } catch (error) {
+  //       console.error('댓글 수를 가져오는 중 오류 발생:', error);
+  //     }
+  //   };
+  //   void fetchCommentsCount();
+  // }, [havrutaBoard.id]);
 
   const truncatedContent =
     havrutaBoard.content.length > 40
@@ -57,7 +57,9 @@ export default function HavrutaBoardItem({
                 />
               </span>
               <span style={{ color: 'var(--color-primary)' }}>
-                {commentCnt !== null ? commentCnt : '로딩 중'}
+                {havrutaBoard.commentCount !== null
+                  ? havrutaBoard.commentCount
+                  : '로딩 중'}
               </span>
             </div>
           </div>
