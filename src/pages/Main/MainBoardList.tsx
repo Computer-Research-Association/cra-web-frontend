@@ -1,5 +1,5 @@
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+// import { useEffect } from 'react';
+// import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { QUERY_KEY } from '~/api/queryKey.ts';
 import { getBoardCountByCategory } from '~/api/board.ts';
@@ -9,17 +9,17 @@ import LoadingSpinner from '~/components/Common/LoadingSpinner.tsx';
 import styles from './MainBoardList.module.css';
 
 export default function MainBoardList({ category }: { category: number }) {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const boardsQuery = useQuery<Board[]>({
     queryKey: QUERY_KEY.board.boardsCount(category),
     queryFn: async () => getBoardCountByCategory(category),
   });
 
-  useEffect(() => {
-    if (boardsQuery.isError) {
-      void navigate('/internal-server-error');
-    }
-  }, [boardsQuery.isError, navigate]);
+  // useEffect(() => {
+  //   if (boardsQuery.isError) {
+  //     void navigate('/internal-server-error');
+  //   }
+  // }, [boardsQuery.isError, navigate]);
 
   let content;
 
