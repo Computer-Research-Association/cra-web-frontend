@@ -6,12 +6,12 @@ import styles from './Footer.module.css';
 export default function Footer() {
   const location = useLocation();
   const isIntro = location.pathname === '/';
-  const isRecruit = location.pathname === '/recruit';
+  // const isRecruit = location.pathname === '/recruit';
   return (
     <div className={styles.footer}>
       <div className={styles.content}>
         <div className={styles.logo}>
-          {isIntro || isRecruit ? (
+          {isIntro ? (
             <img src={craIcon} alt="크라 아이콘" loading="lazy" />
           ) : (
             <Link to="/">
