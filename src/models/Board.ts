@@ -1,3 +1,10 @@
+import { Comment } from './Comment';
+
+export interface BoardPageList {
+  resListBoardDtoList?: Board;
+  totalPages?: number;
+}
+
 export interface Board {
   id?: number;
   userId?: number;
@@ -7,13 +14,13 @@ export interface Board {
   imageUrls?: string[];
   createdAt?: Date;
   updatedAt?: Date;
-  havrutaId?: number;
+  // havrutaId?: number;
   likeCount?: number;
   viewerLiked?: boolean;
   likes: number;
   liked: boolean;
   view?: number;
-  commentCount: number;
+  commentCount?: number;
   resUserDetailDto: {
     name?: string;
     email?: string;
@@ -22,14 +29,13 @@ export interface Board {
     githubId?: string;
     imgUrl?: string;
   };
-  havrutaDto?: {
-    id?: number | null;
+  havrutaDto: {
+    id?: 0;
     classname?: string;
     professor?: string;
   };
-  fileUrl?: string;
+  resListCommentDtos?: Comment[];
 }
-
 export interface UpdateBoard {
   title: string;
   content: string;
