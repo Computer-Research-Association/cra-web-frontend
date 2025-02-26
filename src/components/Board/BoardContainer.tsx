@@ -1,29 +1,32 @@
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { Board } from '~/models/Board.ts';
+import { BoardPageList, Board } from '~/models/Board.ts';
 import { QUERY_KEY } from '~/api/queryKey.ts';
 import { getBoardsByCategory } from '~/api/board.ts';
 import BoardList from './List/BoardList.tsx';
+import LoadingSpinner from '../Common/LoadingSpinner.tsx';
 
 function BoardContainer({ category }: { category: number }) {
   const [currentPage, setCurrentPage] = useState(0);
-  const itemsPerPage = 10;
 
-  const boardsQuery = useQuery<Board[]>({
+  const boardsQuery = useQuery<BoardPageList>({
     queryKey: QUERY_KEY.board.boards(category, currentPage),
     queryFn: async () => getBoardsByCategory(category, currentPage),
   });
 
-  // 다음 페이지 여부 확인
-  const hasNextPage = boardsQuery.data
-    ? boardsQuery.data.length === itemsPerPage
-    : false;
+  if (boardsQuery.isLoading) return <LoadingSpinner />;
+  if (boardsQuery.isError) return <p>Error: {boardsQuery.error?.message}</p>;
+
+  const boards = Array.isArray(boardsQuery.data?.resListBoardDtoList)
+    ? boardsQuery.data.resListBoardDtoList
+    : [];
+  const totalPage = boardsQuery.data?.totalPages || 1;
 
   return (
     <BoardList
       category={category}
-      boardsQuery={boardsQuery}
-      totalPages={hasNextPage ? currentPage + 2 : currentPage + 1}
+      boardsQuery={boards as Board[]}
+      totalPages={totalPage}
       currentPage={currentPage}
       onPageChange={setCurrentPage}
     />
