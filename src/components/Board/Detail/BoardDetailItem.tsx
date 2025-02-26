@@ -40,6 +40,8 @@ export default function BoardDetailItem({
   category: number;
   commentCount: number;
 }) {
+  console.log(board);
+  console.log('Board Detail Item', board.commentCount);
   const [viewCnt, setViewCnt] = useState(board.view);
 
   const [modalOpen, setModalOpen] = useState(false);
@@ -217,7 +219,7 @@ export default function BoardDetailItem({
         </div>
         <div className={styles['footer']}>
           <HeightSpacer space={20} />
-          <CommentList id={board.id!} />
+          <CommentList board={board} />
           <CommentWrite parentId={undefined} />
         </div>
       </div>

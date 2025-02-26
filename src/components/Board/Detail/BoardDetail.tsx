@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { QUERY_KEY } from '~/api/queryKey.ts';
 import { getBoardById } from '~/api/board.ts';
-import { getCommentsCountByCategory } from '~/api/comment.ts';
+// import { getCommentsCountByCategory } from '~/api/comment.ts';
 import { Board } from '~/models/Board.ts';
 import BoardDetailItem from './BoardDetailItem.tsx';
 import styles from './BoardDetail.module.css';
@@ -24,11 +24,11 @@ export default function BoardDetail({ category }: { category: number }) {
     retry: false,
   });
 
-  const commentCountQuery = useQuery<number>({
-    queryKey: QUERY_KEY.comment.commentsCountById(boardId),
-    queryFn: async () => getCommentsCountByCategory(boardId),
-    retry: false,
-  });
+  // const commentCountQuery = useQuery<number>({
+  //   queryKey: QUERY_KEY.comment.commentsCountById(boardId),
+  //   queryFn: async () => getCommentsCountByCategory(boardId),
+  //   retry: false,
+  // });
 
   useEffect(() => {
     if (hasNavigated.current) return;
@@ -70,17 +70,18 @@ export default function BoardDetail({ category }: { category: number }) {
     }
   });
 
-  if (boardQuery.isFetching || commentCountQuery.isFetching) {
+  if (boardQuery.isFetching) {
     return <LoadingSpinner />;
   }
 
-  if (boardQuery.isSuccess && commentCountQuery.isSuccess) {
+  if (boardQuery.isSuccess) {
+    console.log('Board Detail: ', boardQuery.data.commentCount);
     return (
       <div className={styles['full-width']}>
         <BoardDetailItem
           board={boardQuery.data}
           category={category}
-          commentCount={commentCountQuery.data}
+          commentCount={boardQuery.data.commentCount}
         />
       </div>
     );
