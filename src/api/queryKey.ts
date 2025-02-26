@@ -26,7 +26,6 @@ export const QUERY_KEY = {
   havrutaBoard: {
     havrutaBoards: (currnetPage: number) =>
       ['havrutaBoard.havrutaBoards', currnetPage] as const,
-    havrutaBoardsCount: () => ['havrutaBoard.havrutaBoards'] as const,
     havrutaBoardById: (id: number) =>
       ['havrutaBoard.havrutaBoardById', id] as const,
     havrutaBoardsByHavrutaId: (havrutaId: number, currentPage: number) =>
