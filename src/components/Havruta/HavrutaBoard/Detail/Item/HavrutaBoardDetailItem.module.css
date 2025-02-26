@@ -166,6 +166,25 @@
   visibility: hidden;
 }
 
+.profile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  margin-left: 1rem;
+  margin-right: 0.75rem;
+  border-radius: 50%;
+  transform: translateY(-6px);
+  object-fit: cover;
+  cursor: pointer;
+  user-select: none;
+}
+
+.writter {
+  display: flex;
+}
+
 @media (max-width: 768px) {
   .title {
     font-size: 18px;
