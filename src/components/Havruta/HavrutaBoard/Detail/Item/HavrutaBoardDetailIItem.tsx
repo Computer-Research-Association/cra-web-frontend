@@ -41,7 +41,6 @@ export default function HavrutaBoardDetailItem({
   const openModal = () => setModalOpen(true);
   const closeModal = () => setModalOpen(false);
   const userId = useAuthStore.getState().userId as number;
-  console.log(useAuthStore.getState());
 
   useEffect(() => {
     const viewed = localStorage.getItem(`viewed_${board.id}`);
