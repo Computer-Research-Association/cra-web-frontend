@@ -17,7 +17,7 @@ interface authStore {
   signUp: (_data: ReqSignUp) => Promise<void>; // 새로운 사용자 등록 처리
   reissueToken: (_data: ReissueToken) => Promise<void>; // 저장된 Refresh Token으로 새로운 Access, Refresh Token 받는 요청 처리
   logout: () => Promise<void>; // 로그아웃 처리 (상태 초기화, 토큰 제거)
-  userId: number | null; // 현재 로그인된 사용자의 고유 Id 저장 (number 이거나 null)
+  email: string | null; // 현재 로그인된 사용자의 고유 Id 저장 (number 이거나 null)
   accessToken: string | null; // 로그인 성공 시 서버에서 발급한 Access Token 저장
   refreshToken: string | null; // Access Token이 만료되었을때, 새로운 토근을 발급받기 위한 Refresh Token을 저장
   isAuthenticated: boolean; // 현재 로그인 상태인가?
@@ -32,7 +32,7 @@ export const useAuthStore = create<authStore>()(
       isAuthenticated: false,
       accessToken: null,
       refreshToken: null,
-      userId: null,
+      email: null,
 
       // 로그인 메서드
       login: async (data: Login) => {
@@ -49,7 +49,7 @@ export const useAuthStore = create<authStore>()(
             isAuthenticated: true, // 로그인 성공 시 true로 변경하여 인증 상태를 갱신
             accessToken: resTokenDto.accessToken,
             refreshToken: resTokenDto.refreshToken,
-            userId: resTokenDto.userId,
+            email: resUserDetailDto.email,
           });
 
           // Session Storage에도 토큰을 저장하여 다른 Api 요청에서도 사용할 수 있게하기
@@ -105,7 +105,6 @@ export const useAuthStore = create<authStore>()(
           set({
             accessToken: response.accessToken,
             refreshToken: newRefreshToken,
-            userId: response.userId,
           });
 
           // Session Storage를 갱신해서 최신 인증 정보 유지
@@ -131,7 +130,7 @@ export const useAuthStore = create<authStore>()(
             isAuthenticated: false,
             accessToken: null,
             refreshToken: null,
-            userId: null,
+            email: null,
           });
           useUserStore.getState().resetUser();
           sessionStorage.removeItem('accessToken');
