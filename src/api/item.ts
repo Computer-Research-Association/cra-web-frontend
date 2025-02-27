@@ -1,9 +1,23 @@
-import { Item } from '~/models/Item.ts';
+import { Item, ItemPageList } from '~/models/Item.ts';
 import { authClient } from './auth/authClient.ts';
 
-export const getItems = async (itemCategory: number) => {
+// 페이지네이션 적용된 아이템 불러오기
+export const getItems = async (
+  itemCategory: number,
+  page: number = 1,
+  perPage: number = 12,
+): Promise<ItemPageList> => {
   try {
-    const response = await authClient.get<Item[]>(`/item/${itemCategory}`);
+    const response = await authClient.get<ItemPageList>(
+      `/item/${itemCategory}/page`,
+      {
+        params: {
+          page,
+          perPage,
+          isASC: false,
+        },
+      },
+    );
     return response.data;
   } catch (error) {
     console.error(error);
