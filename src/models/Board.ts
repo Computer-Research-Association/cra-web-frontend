@@ -20,6 +20,7 @@ export interface Board {
   likes: number;
   liked: boolean;
   view?: number;
+  fileUrl?: string;
   commentCount?: number;
   resUserDetailDto: {
     name?: string;
