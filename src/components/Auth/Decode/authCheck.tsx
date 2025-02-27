@@ -5,7 +5,6 @@ import isAdmin from './adminCheck.tsx';
 export const requireAuth = () => {
   const { isAuthenticated, accessToken } = useAuthStore.getState();
   const token = accessToken as string;
-  console.log(token);
   if (!isAuthenticated) {
     return redirect({ to: '/forbidden' });
   }
@@ -16,6 +15,6 @@ export const requireAuth = () => {
   if (!userIsAdmin) {
     return redirect({ to: '/forbidden' });
   } else {
-    console.log('환영합니다');
+    console.error('error');
   }
 };

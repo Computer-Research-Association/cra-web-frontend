@@ -15,11 +15,9 @@ const DEFAULT_PROFILE = import.meta.env.VITE_DEFAULT_IMG as string;
 export default function CommentItem({
   comment,
   isRoot,
-  commentsQuery,
 }: {
   comment: Comment;
   isRoot: boolean;
-  commentsQuery: Comment | null;
 }) {
   const [showReplyForm, setShowReplyForm] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -57,11 +55,8 @@ export default function CommentItem({
               <div className={styles['comment-id']}>
                 {comment.resUserDetailDto.name}
               </div>
-              {modalOpen && commentsQuery && (
-                <CommentUserModal
-                  closeModal={closeModal}
-                  comment={commentsQuery}
-                />
+              {modalOpen && comment && (
+                <CommentUserModal closeModal={closeModal} comment={comment} />
               )}
             </div>
             <div className={styles['comment-content']}>{comment.content}</div>

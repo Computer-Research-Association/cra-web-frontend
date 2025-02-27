@@ -1,18 +1,18 @@
-import { Board } from '~/models/Board.ts';
+import { Board, BoardPageList } from '~/models/Board.ts';
 import { client } from './client.ts';
 import { authClient } from './auth/authClient.ts';
 import { UpdateBoard } from '~/models/Board.ts';
 
 // [GET]
-export const getBoardCountByCategory = async (category: number) => {
-  try {
-    const response = await client.get<Board[]>(`/board/${category}`);
-    return response.data;
-  } catch (error) {
-    console.error(error);
-    throw error;
-  }
-};
+// export const getBoardCountByCategory = async (category: number) => {
+//   try {
+//     const response = await client.get<Board[]>(`/board/${category}`);
+//     return response.data;
+//   } catch (error) {
+//     console.error(error);
+//     throw error;
+//   }
+// };
 
 // [GET] by Pagination
 export const getBoardsByCategory = async (
@@ -22,7 +22,7 @@ export const getBoardsByCategory = async (
   orderBy: number = 0,
 ) => {
   try {
-    const response = await client.get<Board[]>(
+    const response = await client.get<BoardPageList>(
       `/board/${category}/page/${page}`,
       {
         params: {
