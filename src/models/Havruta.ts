@@ -17,6 +17,7 @@ interface HavrutaBoard {
   imageUrls: string[];
   createdAt?: Date;
   updatedAt?: Date;
+  commentCount: number;
   resUserDetailDto: {
     name?: string;
     email?: string;

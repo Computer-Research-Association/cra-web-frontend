@@ -2,7 +2,6 @@ export const QUERY_KEY = {
   board: {
     boards: (category: number, currentPage: number) =>
       ['board.boards', category, currentPage] as const,
-    boardsCount: (category: number) => ['board.boards', category] as const,
     boardById: (id: number) => ['board.boardById', id] as const,
   },
   comment: {
@@ -27,7 +26,6 @@ export const QUERY_KEY = {
   havrutaBoard: {
     havrutaBoards: (currnetPage: number) =>
       ['havrutaBoard.havrutaBoards', currnetPage] as const,
-    havrutaBoardsCount: () => ['havrutaBoard.havrutaBoards'] as const,
     havrutaBoardById: (id: number) =>
       ['havrutaBoard.havrutaBoardById', id] as const,
     havrutaBoardsByHavrutaId: (havrutaId: number, currentPage: number) =>
