@@ -43,7 +43,7 @@ export default function BoardDetailItem({
   const [modalOpen, setModalOpen] = useState(false);
   const openModal = () => setModalOpen(true);
   const closeModal = () => setModalOpen(false);
-  const userId = useAuthStore.getState().userId as number;
+  const email = useAuthStore.getState().email;
 
   useEffect(() => {
     const viewed = localStorage.getItem(`viewed_${board.id}`);
@@ -158,7 +158,7 @@ export default function BoardDetailItem({
               </span>
             </div>
             <div className={styles['fix-button']}>
-              {userId === board.userId && (
+              {email === board.resUserDetailDto.email && (
                 <>
                   <Link
                     to={`/${CATEGORY_STRINGS_EN[category]}/edit/${board.id}`}

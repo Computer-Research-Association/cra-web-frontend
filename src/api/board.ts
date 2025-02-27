@@ -15,6 +15,7 @@ import { UpdateBoard } from '~/models/Board.ts';
 // };
 
 // [GET] by Pagination
+// orderBy: 0번 날짜순, 1번 좋아요순
 export const getBoardsByCategory = async (
   category: number,
   page: number = 1,

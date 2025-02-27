@@ -10,12 +10,14 @@ export const QUERY_KEY = {
       ['comment.commentsCountById', id] as const,
   },
   project: {
-    projects: () => ['project.projects'] as const,
+    projects: (currentPage: number) =>
+      ['project.projects', currentPage] as const,
     projectById: (id: number) => ['project.projectById', id] as const,
   },
 
   item: {
-    items: (itemCategory: number) => ['item.items', itemCategory] as const,
+    items: (itemCategory: number, currentPage: number) =>
+      ['item.items', itemCategory, currentPage] as const,
     itemById: (id: number) => ['item.itemById', id] as const,
   },
 
