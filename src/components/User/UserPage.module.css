@@ -6,15 +6,9 @@
   font-size: 1.2rem;
   background-color: var(--color-white);
   border-radius: 1rem;
-  padding: 4rem 10rem;
+  padding: 3rem 10rem;
   margin-top: 2rem;
   margin-bottom: 6rem;
-  p {
-    font-family: 'Pretendard Medium';
-    float: left;
-    margin-right: 0.5rem;
-    background-color: var(--color-pink);
-  }
 
   form {
     display: flex;
@@ -65,6 +59,54 @@
   }
 }
 
+.profile_container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 2rem;
+}
+
+.profile_image {
+  flex-shrink: 0;
+  width: fit-content;
+}
+
+.info_container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2.5rem;
+  margin-top: 2rem;
+}
+
+.info_row {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+}
+
+.info_full {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  font-family: 'Pretendard SemiBold';
+
+  p {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Pretendard Medium';
+    margin-bottom: 0.5rem;
+    width: 100%;
+  }
+}
+
+.info_content {
+  font-size: 1.5rem;
+}
+
 .title {
   align-self: center;
   font-size: 40px;
@@ -74,17 +116,37 @@
 }
 
 .name {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  align-self: center;
+  margin: 1.5rem 0;
   font-size: 40px;
   font-family: 'Pretendard Bold';
-  margin-top: 1.5rem;
+  width: fit-content;
 }
 
 .info {
-  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  align-self: center;
+  width: 20rem;
+  flex: 1;
   font-family: 'Pretendard SemiBold';
+
+  p {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    font-family: 'Pretendard Medium';
+    font-size: 1.3rem;
+    float: left;
+    margin-bottom: 0.5rem;
+    width: 100%;
+    border-bottom: 1px solid var(--color-dark-stroke);
+  }
+}
+
+.infoIcon {
+  margin-right: 0.3rem;
 }
 
 .buttons {
@@ -154,12 +216,11 @@
 .profile {
   display: flex;
   justify-content: center;
-  align-items: center;
 }
 
 .preview {
-  width: 350px;
-  height: 350px;
+  width: 20rem;
+  height: 20rem;
   border-radius: 40%;
   border: 1px solid var(--color-bright-text);
   object-fit: cover;
