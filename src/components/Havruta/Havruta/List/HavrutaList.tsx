@@ -101,7 +101,7 @@ function HavrutaList() {
 
   return (
     <Container>
-      <h1>관리자 Havruta 페이지</h1>
+      <h1>관리자 하브루타 페이지</h1>
       {content}
       <CreateHavrutaLink to="./admin/havruta/write">
         새 하브루타 생성
