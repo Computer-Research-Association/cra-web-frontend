@@ -1,40 +1,29 @@
-import { useQuery } from '@tanstack/react-query';
-import { Comment } from '~/models/Comment.ts';
-import { QUERY_KEY } from '~/api/queryKey.ts';
-import { getCommentsByBoardId } from '~/api/comment.ts';
 import CommentItem from '~/components/Comment/Item/CommentItem.tsx';
-import LoadingSpinner from '~/components/Common/LoadingSpinner';
+// import LoadingSpinner from '~/components/Common/LoadingSpinner';
+import { Board } from '~/models/Board';
 
-export default function CommentList({ id }: { id: number }) {
-  const commentsQuery = useQuery<Comment[]>({
-    queryKey: QUERY_KEY.comment.commentsById(id),
-    queryFn: async () => getCommentsByBoardId(id),
-  });
-
+export default function CommentList({ board }: { board: Board }) {
+  // const commentsQuery = useQuery<Comment[]>({
+  //   queryKey: QUERY_KEY.comment.commentsById(id),
+  //   queryFn: async () => getCommentsByBoardId(id),
+  // });
+  const commentsQuery = board.resListCommentDtos;
   let content;
 
-  if (commentsQuery.isLoading) {
-    content = <LoadingSpinner />;
-  } else if (commentsQuery.isError) {
+  // if (commentsQuery.isLoading) {
+  //   content = <LoadingSpinner />;
+  if (!commentsQuery) {
     content = <div className="error">에러가 발생했습니다!</div>;
-  } else if (commentsQuery.isSuccess) {
-    content = commentsQuery.data.map((comment) => (
+  } else {
+    content = commentsQuery.map((comment) => (
       <div key={comment.id}>
-        <CommentItem
-          key={comment.id}
-          comment={comment}
-          isRoot={true}
-          commentsQuery={
-            commentsQuery.data.find((c) => c.id === comment.id) || null
-          }
-        />
+        <CommentItem key={comment.id} comment={comment} isRoot={true} />
         {comment.commentList.map((childComment) => {
           return (
             <CommentItem
               key={childComment.id}
               comment={childComment}
               isRoot={false}
-              commentsQuery={childComment}
             />
           );
         })}
