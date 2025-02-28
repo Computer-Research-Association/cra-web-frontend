@@ -45,6 +45,9 @@ export default function AdminSideBar() {
       <MenuItem>
         <Link to="/admin/project">프로젝트 관리</Link>
       </MenuItem>
+      <MenuItem>
+        <Link to="/admin/code">가입코드 생성</Link>
+      </MenuItem>
     </Menu>
   );
 }
