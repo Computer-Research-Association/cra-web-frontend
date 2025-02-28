@@ -56,7 +56,6 @@ export const useAuthStore = create<authStore>()(
           localStorage.setItem('refreshToken', resTokenDto.refreshToken);
 
           await useAuthStore.getState().reissueToken({
-            userId: resTokenDto.userId,
             refreshToken: resTokenDto.refreshToken,
           });
 
