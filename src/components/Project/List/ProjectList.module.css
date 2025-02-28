@@ -1,14 +1,11 @@
-.container {
+.boardList {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0.5rem;
-  row-gap: 2.2rem;
+  grid-template-columns: repeat(3, 1fr); /* 3열 고정 */
   padding-top: 34px;
-  padding-bottom: 10rem;
+  padding-bottom: 2rem;
   max-width: 1200px;
   margin: 0 auto;
-  width: 100%;
-  box-sizing: border-box;
+  gap: 1rem;
 }
 
 /* 반응형 조정 */
