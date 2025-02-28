@@ -44,7 +44,7 @@ const BoardUserModal = ({ closeModal, board }: BoardUserModalProps) => {
             </div>
           </div>
           <div className={styles['hanmadi']}>
-            {' 나의 한마디를 입력하세요. '}
+            {board.resUserDetailDto.greetingMessage}
           </div>
         </div>
         <div className={styles['extra-info']}>
