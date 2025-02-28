@@ -1,4 +1,4 @@
-import { UseQueryResult } from '@tanstack/react-query';
+// import { UseQueryResult } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 import { Board } from '~/models/Board.ts';
 import { CATEGORY_STRINGS } from '~/constants/category_strings.ts';
@@ -6,11 +6,11 @@ import { CATEGORY_STRINGS_EN } from '~/constants/category_strings_en.ts';
 import BoardItem from '~/components/Board/Item/BoardItem.tsx';
 import Pagination from '~/components/Pagination/Pagination.tsx';
 import styles from './BoardList.module.css';
-import LoadingSpinner from '~/components/Common/LoadingSpinner';
+// import LoadingSpinner from '~/components/Common/LoadingSpinner';
 
 interface BoardListProps {
   category: number;
-  boardsQuery: UseQueryResult<Board[], unknown>;
+  boardsQuery: Board[];
   totalPages: number;
   currentPage: number;
   onPageChange: (_page: number) => void;
@@ -24,23 +24,15 @@ export default function BoardList({
   onPageChange,
 }: BoardListProps) {
   const renderBoardContent = () => {
-    if (boardsQuery.isLoading) return <LoadingSpinner />;
-
-    if (totalPages === 0)
-      return <div className={styles.noBoards}>현재 게시물이 없습니다.</div>;
-
-    if (boardsQuery.isError)
-      return <div className={styles.error}>에러가 발생했습니다!</div>;
-
-    if (boardsQuery.isSuccess) {
-      return boardsQuery.data
+    if (boardsQuery != null) {
+      return boardsQuery
         .filter((board) => board.id !== undefined)
         .map((board, index) => (
           <div key={`board-${board.id}`}>
             <div className={styles['board-wrapper']}>
               <BoardItem board={board} category={category} />
             </div>
-            {index < boardsQuery.data.length - 1 && (
+            {index < boardsQuery.length - 1 && (
               <div className={styles.divider}></div>
             )}
           </div>

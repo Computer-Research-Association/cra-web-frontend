@@ -1,4 +1,4 @@
-.project-list-container {
+.container {
   display: grid;
   grid-template-columns: repeat(
     auto-fill,
