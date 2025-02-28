@@ -15,7 +15,7 @@ const ListSearch: React.FC<ListSearchProps> = ({
       <input
         type="text"
         className={styles['search-input']}
-        placeholder="검색어를 입력하세요..."
+        placeholder="제목을 입력하세요..."
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
       />

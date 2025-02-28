@@ -3,7 +3,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 
 import { colorSyntax, codeSyntaxHighlight, Prism } from '~/styles/toast-ui';
-// import { onUploadImage } from '~/api/board';
+import { onUploadImage } from '~/api/board';
 
 interface UseMarkdownEditorProps {
   initialContent?: string;
@@ -105,7 +105,7 @@ export const useMarkdownEditor = ({
     plugins: [[codeSyntaxHighlight, { highlighter: Prism }], colorSyntax],
     onChange: handleEditorChange,
     hooks: {
-      addImageBlobHook: async () => {},
+      addImageBlobHook: handleImageUpload,
     },
   };
 
