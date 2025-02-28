@@ -18,6 +18,7 @@
   letter-spacing: -1px;
   line-height: clamp(30px, 5vw, 5vw);
   font-family: 'Archivo Black';
+  margin-bottom: 1rem;
 }
 
 #content {

@@ -37,8 +37,8 @@ TODO: 배너 이미지 추가
 
 
 ## 🔗 Github Links
-- [FrontEnd](https://github.com/LeeKyoungYoung/cra-web-frontend)
-- [BackEnd](https://github.com/I-Taxi/server)
+- [FrontEnd](https://github.com/Computer-Research-Association/cra-web-frontend)
+- [BackEnd](https://github.com/Computer-Research-Association/CRAWebBackend)
 
 
 ## .env 파일 생성 방법
