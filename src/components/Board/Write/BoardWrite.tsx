@@ -8,6 +8,8 @@ import { useMarkdownEditor } from './Markdown.tsx';
 import { Editor } from '@toast-ui/react-editor';
 import styles from './BoardWrite.module.css';
 import BoardUploadSpinner from '~/components/Common/BoardUploadSpinner.tsx';
+import AlertModal from '~/components/Modal/Alert/AlertModal.tsx';
+import { useModalStore } from '~/store/modalStore.ts';
 
 interface BoardWriteProps {
   category: number;
@@ -18,7 +20,8 @@ export default function BoardWrite({ category }: BoardWriteProps) {
   const [errors, setErrors] = useState<{ title?: string; content?: string }>(
     {},
   );
-  const navigate = useNavigate();
+  const { isOpen: modalIsOpen, openModal, closeModal } = useModalStore();
+  const [modalMessage, setModalMessage] = useState('');
   const [formData, setFormData] = useState<{
     title: string;
     content: string;
@@ -70,7 +73,9 @@ export default function BoardWrite({ category }: BoardWriteProps) {
     },
     onSuccess: async () => {
       alert('게시글 작성 성공');
-      await navigate(-1);
+      const currentPath = window.location.pathname;
+      const basePath = currentPath.replace('/write', '');
+      window.location.href = basePath;
       setTimeout(() => {
         window.scrollTo(0, 0);
       }, 100);
@@ -131,7 +136,8 @@ export default function BoardWrite({ category }: BoardWriteProps) {
     ) {
       setFile(e.target.files[0]);
     } else {
-      alert('파일 크기는 최대 20MB까지 가능합니다.');
+      openModal();
+      setModalMessage('파일 크기는 최대 20MB까지 가능합니다.');
     }
   };
 
@@ -205,6 +211,9 @@ export default function BoardWrite({ category }: BoardWriteProps) {
           value="게시글 작성"
           disabled={mutation.isPending}
         />
+        {modalIsOpen && (
+          <AlertModal closeModal={closeModal} message={modalMessage} />
+        )}
       </form>
     </div>
   );
