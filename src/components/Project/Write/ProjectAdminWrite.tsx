@@ -61,14 +61,13 @@ function ProjectAdminWrite() {
 
   const HandleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Sending Data:', formData);
     mutation.mutate(formData);
   };
 
   return (
     <div className={styles['container']}>
       <form onSubmit={HandleSubmit}>
-        <h2>프로젝트 게시글 작성</h2>
+        <h2>프로젝트 생성</h2>
 
         <label htmlFor="semester">학기</label>
         <input
@@ -147,13 +146,14 @@ function ProjectAdminWrite() {
           required
         />
         <br />
-        <label htmlFor="imageSelect">이미지 선택</label>
+        <label htmlFor="imageUrl">이미지 선택</label>
         <input
           type="file"
-          id="imageSelect"
-          name="imageSelect"
+          id="imageUrl"
+          name="imageUrl"
           accept="image/*"
           onChange={handleChange}
+          required
         />
         <br />
         <input type="submit" value="게시글 작성" />

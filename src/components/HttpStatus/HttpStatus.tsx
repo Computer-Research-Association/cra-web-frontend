@@ -1,4 +1,4 @@
-import CrangE from '~/assets/images/Status_Crang.png';
+import CrangE from '~/assets/images/Status_Crang.png?format=webp&as=srcset';
 import styled from 'styled-components';
 
 const Status = styled.div`
@@ -24,7 +24,7 @@ function HttpStatus({ statusCode }: { statusCode: number }) {
   return (
     <Status>
       <StatusNum>{firstNum}</StatusNum>
-      <Img src={CrangE} />
+      <Img srcSet={CrangE} loading="lazy" />
       <StatusNum>{lastNum}</StatusNum>
     </Status>
   );

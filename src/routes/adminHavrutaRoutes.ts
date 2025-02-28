@@ -1,6 +1,7 @@
 import { createRoute } from '@tanstack/react-router';
 import { lazy } from 'react';
 import { rootRoute } from './__root';
+import { requireAuth } from '~/components/Auth/Decode/authCheck.tsx';
 
 export const adminHavrutaRoute = createRoute({
   getParentRoute: () => rootRoute,
@@ -8,6 +9,7 @@ export const adminHavrutaRoute = createRoute({
   component: lazy(
     () => import('~/pages/Board/Havruta/HavrutaAdmin/HavrutaAdminPage.tsx'),
   ),
+  beforeLoad: requireAuth,
 });
 
 export const adminHavrutaUpdateRoute = createRoute({
@@ -16,6 +18,7 @@ export const adminHavrutaUpdateRoute = createRoute({
   component: lazy(
     () => import('~/pages/Board/Havruta/HavrutaAdmin/HavrutaAdminEditPage.tsx'),
   ),
+  beforeLoad: requireAuth,
 });
 
 export const adminHavrutaCreateRoute = createRoute({
@@ -25,4 +28,5 @@ export const adminHavrutaCreateRoute = createRoute({
     () =>
       import('~/pages/Board/Havruta/HavrutaAdmin/HavrutaAdminWritePage.tsx'),
   ),
+  beforeLoad: requireAuth,
 });

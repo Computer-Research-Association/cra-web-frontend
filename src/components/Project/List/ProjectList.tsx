@@ -1,40 +1,50 @@
-import { useQuery } from '@tanstack/react-query';
-import { getProjects } from '~/api/project.ts';
-import { QUERY_KEY } from '~/api/queryKey.ts';
 import { Project } from '~/models/Project.ts';
 import ProjectItem from '~/components/Project/Item/ProjectItem.tsx';
 import styles from './ProjectList.module.css';
-import LoadingSpinner from '~/components/Common/LoadingSpinner';
+import Pagination from '~/components/Pagination/Pagination';
 
-export default function ProjectList() {
-  const projectQuery = useQuery<Project[]>({
-    queryKey: QUERY_KEY.project.projects(),
-    queryFn: async () => getProjects(),
-  });
+interface ProjectListProps {
+  projectsQuery: Project[];
+  totalPages: number;
+  currentPage: number;
+  onPageChange: (_page: number) => void;
+}
 
-  let content;
-
-  if (projectQuery.isLoading) {
-    content = <LoadingSpinner />;
-  } else if (projectQuery.isError) {
-    content = <div className="error">에러가 발생했습니다!</div>;
-  } else if (projectQuery.isSuccess) {
-    if (projectQuery.data.length === 0) {
-      console.log('서버 통신 가능, 아직 데이터 없음');
-    } else {
-      content = (
-        <div className={styles['project-list-container']}>
-          {projectQuery.data.map((projectElement) => (
-            <ProjectItem key={projectElement.id} project={projectElement} />
-          ))}
-        </div>
-      );
+export default function ProjectList({
+  projectsQuery,
+  totalPages,
+  currentPage,
+  onPageChange,
+}: ProjectListProps) {
+  const renderBoardContent = () => {
+    if (projectsQuery != null) {
+      return projectsQuery
+        .filter((project) => project.id !== undefined)
+        .map((project, index) => (
+          <div key={`board-${project.id}`}>
+            <div className={styles['board-wrapper']}>
+              <ProjectItem project={project} />
+            </div>
+            {index < projectsQuery.length - 1 && (
+              <div className={styles.divider}></div>
+            )}
+          </div>
+        ));
     }
-  }
+  };
 
   return (
-    <>
-      <div className={styles['content']}>{content}</div>
-    </>
+    <div className={styles.container}>
+      <h2 className={styles.title}>프로젝트</h2>
+      <div className={styles.boardList}>{renderBoardContent()}</div>
+      <div className={styles['board-list-footer']}>
+        <div className={styles['spacer']}></div>
+        <Pagination
+          totalPages={totalPages}
+          currentPage={currentPage}
+          onPageChange={onPageChange}
+        />
+      </div>
+    </div>
   );
 }

@@ -3,7 +3,7 @@
 }
 .delete-button:hover {
   cursor: pointer;
-  color: #2cb4db;
+  color: var(--color-primary);
 }
 
 .item-container {
@@ -27,7 +27,7 @@
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background-color: #d9d9d9;
+  background-color: var(--color-bright-stroke);
   margin-top: 0.1rem;
   cursor: pointer;
   user-select: none;
@@ -37,7 +37,7 @@
   font-family: 'Pretendard SemiBold';
   line-height: 34px;
   font-size: 20px;
-  color: #5e5e5e;
+  color: var(--color-bright-text);
   margin-bottom: 25px;
 }
 
@@ -50,17 +50,17 @@
   cursor: pointer;
 }
 .comment-reply2 {
-  color: #2cb4db;
+  color: var(--color-primary);
   cursor: pointer;
 }
 .comment-reply:hover {
-  color: #2cb4db;
+  color: var(--color-primary);
 }
 
 .comment-footer {
   display: flex;
   gap: 20px;
-  color: #9e9e9e;
+  color: var(--color-comment-gray);
 }
 
 @media (max-width: 768px) {

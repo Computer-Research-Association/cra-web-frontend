@@ -1,0 +1,91 @@
+.recruit-main1 {
+  background: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 110vh; /* 최소 높이를 화면 전체로 설정 (스크롤 가능) */
+}
+
+.recruit-banner1 {
+  position: relative;
+  width: 55vw;
+  max-width: 777px; /* 원하는 크기 */
+  height: auto; /* 비율 유지 */
+  aspect-ratio: 777 / 303; /* 가로세로 비율 유지 */
+  margin-top: 15rem;
+  margin-bottom: 25rem;
+}
+
+.recruit-banner1 img {
+  position: absolute;
+}
+
+.cr-image {
+  left: 20%; /* CR은 왼쪽에 위치 */
+  width: 100%; /* CR 이미지 크기 */
+  transform-origin: left center; /* 왼쪽 끝을 기준으로 이동 */
+  transition:
+    transform 1.5s cubic-bezier(0.25, 0.8, 0.25, 1),
+    opacity 1s ease-out;
+}
+
+.a-image {
+  right: 30%; /* A는 오른쪽에 위치 */
+  width: 100%; /* A 이미지 크기 */
+  transform-origin: right center; /* 오른쪽 끝을 기준으로 이동 */
+  transition:
+    transform 1.5s cubic-bezier(0.25, 0.8, 0.25, 1),
+    opacity 1s ease-out;
+}
+
+/* CR은 왼쪽 끝으로 이동, A는 오른쪽 끝으로 이동 */
+.cr-expand {
+  transform: translateX(-20%); /* CR 이미지가 왼쪽 끝으로 이동 */
+  transition:
+    transform 1.5s cubic-bezier(0.25, 0.8, 0.25, 1),
+    opacity 1s ease-out;
+}
+
+.a-expand {
+  transform: translateX(30%); /* A 이미지가 오른쪽 끝으로 이동 */
+  transition:
+    transform 1.5s cubic-bezier(0.25, 0.8, 0.25, 1),
+    opacity 1s ease-out;
+}
+
+.scratch-image {
+  left: 50%;
+  top: 50%;
+  width: 100%;
+  transform: translate(-50%, -50%) scale(0); /* 처음에는 작게 시작 */
+  opacity: 0; /* 처음에는 보이지 않음 */
+  transition:
+    opacity 1s ease-out,
+    transform 1s ease-out; /* 애니메이션 효과 */
+  z-index: 1;
+}
+
+/* 확장될 때 스크래치 이미지 */
+.scratch-expand {
+  width: 100%;
+  opacity: 1; /* 보이게 됨 */
+  transform: translate(-50%, -50%) scale(1); /* 크기가 커짐 */
+  transition:
+    opacity 1s ease-out,
+    transform 1s ease-out;
+}
+
+.content-image {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
+  filter: drop-shadow(0 0 15px var(--color-primary));
+}
+
+.content-expand {
+  width: 100%;
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+  transition: opacity 1s ease-out 1s;
+}

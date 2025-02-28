@@ -2,8 +2,7 @@
   display: flex;
   flex-direction: column; /* 가로 방향으로 배치 */
   justify-content: space-between; /* 각 아이템 사이 여백을 고르게 배치 */
-  flex-wrap: wrap; /* 아이템이 넘칠 경우 줄바꿈 */
-  width: 100%;
+  width: 90%;
   max-width: 1086px;
   margin: 0 auto;
 }
@@ -11,6 +10,6 @@
 .project-section p {
   font-size: 40px;
   font-family: 'Pretendard Bold';
-  color: #5e5e5e;
+  color: var(--color-bright-text);
   margin-left: 10px;
 }

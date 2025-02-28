@@ -2,7 +2,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #f4f4f4;
+  background-color: var(--color-file-white);
 }
 
 .dropdown {
@@ -10,8 +10,8 @@
   width: 200px;
   padding: 10px;
   border-radius: 8px;
-  border: 1px solid #ccc;
-  background-color: white;
+  border: 1px solid var(--color-dark-stroke);
+  background-color: var(--color-white);
   font-size: 16px;
   font-family: 'Pretendard Medium';
   cursor: pointer;
@@ -19,17 +19,17 @@
 }
 
 .dropdown:hover {
-  border-color: #3498db;
+  border-color: var(--color-hover-blue);
 }
 
 .dropdown:focus {
   outline: none;
-  border-color: #3498db;
+  border-color: var(--color-hover-blue);
   box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
 }
 
 @media (max-width: 600px) {
   .dropdown {
-  font-size: 15px;
+    font-size: 15px;
   }
 }

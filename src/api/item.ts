@@ -1,12 +1,26 @@
-import { Item } from '~/models/Item.ts';
+import { Item, ItemPageList } from '~/models/Item.ts';
 import { authClient } from './auth/authClient.ts';
 
-export const getItems = async (itemCategory: number) => {
+// 페이지네이션 적용된 아이템 불러오기
+export const getItems = async (
+  itemCategory: number,
+  page: number = 1,
+  perPage: number = 12,
+): Promise<ItemPageList> => {
   try {
-    const response = await authClient.get<Item[]>(`/item/${itemCategory}`);
+    const response = await authClient.get<ItemPageList>(
+      `/item/${itemCategory}/page`,
+      {
+        params: {
+          page,
+          perPage,
+          isASC: false,
+        },
+      },
+    );
     return response.data;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     throw error;
   }
 };
@@ -22,7 +36,7 @@ export const getItemById = async (id: number) => {
       createdAt: Item.createdAt ? new Date(Item.createdAt) : new Date(),
     };
   } catch (error) {
-    console.log(error);
+    console.error(error);
     throw error;
   }
 };
@@ -36,7 +50,7 @@ export const createItems = async (item: Item) => {
     });
     return response.data;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     throw error;
   }
 };
@@ -54,7 +68,7 @@ export const updateItem = async (item: Item) => {
     );
     return response.data;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     throw error;
   }
 };
@@ -63,7 +77,7 @@ export const deleteItem = async (id: number) => {
   try {
     await authClient.delete(`/admin/item/${id}`);
   } catch (error) {
-    console.log(error);
+    console.error(error);
     throw error;
   }
 };

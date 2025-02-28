@@ -1,45 +1,44 @@
 import { Comment } from '~/models/Comment.ts';
-import { client } from './client.ts';
 import { authClient } from './auth/authClient.ts';
 
 //get
-export const getCommentsByBoardId = async (boardId: number) => {
-  try {
-    const response = await client.get<Comment[]>(`/comment/${boardId}`);
+// export const getCommentsByBoardId = async (boardId: number) => {
+//   try {
+//     const response = await client.get<Comment[]>(`/comment/${boardId}`);
 
-    // createdAt 필드를 Date 객체로 변환
-    const comments: Comment[] = [];
-    response.data.forEach((comment) => {
-      const replies: Comment[] = [];
-      comment.commentList.forEach((reply) => {
-        replies.push({
-          ...reply,
-          createdAt: new Date(reply.createdAt),
-        });
-      });
-      comments.push({
-        ...comment,
-        createdAt: new Date(comment.createdAt),
-        commentList: replies,
-      });
-    });
+//     // createdAt 필드를 Date 객체로 변환
+//     const comments: Comment[] = [];
+//     response.data.forEach((comment) => {
+//       const replies: Comment[] = [];
+//       comment.commentList.forEach((reply) => {
+//         replies.push({
+//           ...reply,
+//           createdAt: new Date(reply.createdAt),
+//         });
+//       });
+//       comments.push({
+//         ...comment,
+//         createdAt: new Date(comment.createdAt),
+//         commentList: replies,
+//       });
+//     });
 
-    return comments;
-  } catch (error) {
-    console.log(error);
-    throw error;
-  }
-};
+//     return comments;
+//   } catch (error) {
+//     console.error(error);
+//     throw error;
+//   }
+// };
 
-export const getCommentsCountByCategory = async (boardId: number) => {
-  try {
-    const response = await client.get<number>(`/comment/count/${boardId}`);
-    return response.data;
-  } catch (error) {
-    console.log(error);
-    throw error;
-  }
-};
+// export const getCommentsCountByCategory = async (boardId: number) => {
+//   try {
+//     const response = await client.get<number>(`/comment/count/${boardId}`);
+//     return response.data;
+//   } catch (error) {
+//     console.error(error);
+//     throw error;
+//   }
+// };
 
 //post
 export const createComments = async (comment: Comment, boardId: number) => {
@@ -54,7 +53,7 @@ export const createComments = async (comment: Comment, boardId: number) => {
     );
     return response.data;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     throw error;
   }
 };
@@ -80,7 +79,7 @@ export const createChildComments = async (
     );
     return response.data;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     throw error;
   }
 };
@@ -98,7 +97,7 @@ export const updateComments = async (comment: Comment) => {
     );
     return response.data;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     throw error;
   }
 };
@@ -110,7 +109,7 @@ export const deleteComments = async (id: number) => {
     const response = await authClient.delete<Comment>(`/comment/${id}`);
     return response.data;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     throw error;
   }
 };

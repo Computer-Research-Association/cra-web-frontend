@@ -32,7 +32,7 @@
 
 /* Header */
 .modal-header {
-  background-color: #d2f5ff;
+  background-color: var(--color-white-blue-text);
   height: 40px; /* 최소 높이 지정 */
   width: 100%;
 }
@@ -41,14 +41,14 @@
   font-size: 20px;
   border: none;
   background-color: transparent;
-  color: gray;
+  color: var(--color-gray-text);
   cursor: pointer;
   margin-left: 310px;
   margin-top: 10px;
 }
 
 .close-button:hover {
-  color: #2cb4db;
+  color: var(--color-primary);
 }
 
 /* Modal Body */
@@ -57,23 +57,23 @@
   margin-top: 20%;
   margin-bottom: 20%;
   font-family: 'Pretendard Medium';
-  color: #050044;
+  color: var(--color-modal-black);
   text-align: center;
 }
 
 .check-button {
   width: 60px;
   height: 35px;
-  background-color: #2cb4db;
+  background-color: var(--color-primary);
   font-family: 'Pretendard Medium';
   font-size: 15px;
-  color: white;
+  color: var(--color-white);
   border-radius: 10px;
   border: none; /* 기본 border 제거 */
   cursor: pointer;
 }
 
 .check-button:hover {
-  background-color: #a0e0f3;
-  color: #2cb4db;
+  background-color: var(--color-check-blue);
+  color: var(--color-primary);
 }

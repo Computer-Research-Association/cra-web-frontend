@@ -28,7 +28,7 @@ export const signUp = async (data: ReqSignUp): Promise<ResSignUp | null> => {
     if (axios.isAxiosError(error) && error.response) {
       console.error('SignUp Error:', error.response.data);
 
-      // 상태 코드에 따른 에러 메시지 처리
+      // 상태 코드에 따른 에러 메시지 처리//
       let errorMessage = '회원가입에 실패했습니다.';
       if (error.response.status === 400) {
         errorMessage = '입력한 정보를 다시 확인해주세요.';

@@ -27,7 +27,7 @@
   width: 100%;
   height: 100%;
   border-radius: 20px;
-  background-color: #c1c1c1;
+  background-color: var(--color-dark-stroke);
   margin-bottom: 10px;
 }
 
@@ -49,34 +49,21 @@
 /* 내용 */
 .content {
   font-family: 'Pretendard Regular';
-  color: #c1c1c1;
+  color: var(--color-dark-stroke);
   text-align: left;
   padding-left: 10px;
 }
 
 .borrow {
   font-family: 'Pretendard Regular';
-  color: rgb(255, 0, 0);
+  color: var(--color-error);
   text-align: left;
   padding-left: 10px;
 }
 
 .available {
   font-family: 'Pretendard Regular';
-  color: #2cb4db;
+  color: var(--color-primary);
   text-align: left;
   padding-left: 10px;
-}
-
-@media (max-width: 1024px) {
-  .project-block {
-    flex-basis: calc(50% - 1rem); /* 2개씩 배치 */
-  }
-}
-
-/* 화면이 768px 이하일 때: 1개씩 배치 */
-@media (max-width: 768px) {
-  .project-block {
-    flex-basis: calc(100% - 1rem); /* 1개씩 배치 */
-  }
 }

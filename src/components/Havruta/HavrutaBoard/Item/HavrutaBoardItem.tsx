@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
+// import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { getCommentsCountByCategory } from '~/api/comment';
-import { HavrutaBoard } from '~/models/Havruta.ts';
+// import { getCommentsCountByCategory } from '~/api/comment';
+import { Board } from '~/models/Board.ts';
 import styles from './HavrutaBoardItem.module.css';
 import COMMENT from '~/assets/images/comment_img.png';
 
@@ -10,23 +10,23 @@ const DEFAULT_PROFILE = import.meta.env.VITE_DEFAULT_IMG as string;
 export default function HavrutaBoardItem({
   havrutaBoard,
 }: {
-  havrutaBoard: HavrutaBoard;
+  havrutaBoard: Board;
 }) {
-  const [commentCnt, setCommentCnt] = useState<number | null>(null);
+  // const [commentCnt, setCommentCnt] = useState<number | null>(null);
 
-  useEffect(() => {
-    const fetchCommentsCount = async () => {
-      try {
-        const count = await getCommentsCountByCategory(
-          havrutaBoard.id as number,
-        );
-        setCommentCnt(count);
-      } catch (error) {
-        console.error('댓글 수를 가져오는 중 오류 발생:', error);
-      }
-    };
-    void fetchCommentsCount();
-  }, [havrutaBoard.id]);
+  // useEffect(() => {
+  //   const fetchCommentsCount = async () => {
+  //     try {
+  //       const count = await getCommentsCountByCategory(
+  //         havrutaBoard.id as number,
+  //       );
+  //       setCommentCnt(count);
+  //     } catch (error) {
+  //       console.error('댓글 수를 가져오는 중 오류 발생:', error);
+  //     }
+  //   };
+  //   void fetchCommentsCount();
+  // }, [havrutaBoard.id]);
 
   const truncatedContent =
     havrutaBoard.content.length > 40
@@ -38,7 +38,7 @@ export default function HavrutaBoardItem({
       <div className={styles.BoardItemContainer}>
         <div>
           <img
-            src={
+            srcSet={
               havrutaBoard.resUserDetailDto.imgUrl
                 ? havrutaBoard.resUserDetailDto.imgUrl
                 : DEFAULT_PROFILE
@@ -50,10 +50,16 @@ export default function HavrutaBoardItem({
             <div className={styles['board-info']}>
               <span>{havrutaBoard.createdAt?.toString().substring(0, 10)}</span>
               <span>
-                <img src={COMMENT} className={styles['comment-img']} />
+                <img
+                  src={COMMENT}
+                  className={styles['comment-img']}
+                  loading="lazy"
+                />
               </span>
-              <span style={{ color: '#2CB4DB' }}>
-                {commentCnt !== null ? commentCnt : '로딩 중'}
+              <span style={{ color: 'var(--color-primary)' }}>
+                {havrutaBoard.commentCount !== null
+                  ? havrutaBoard.commentCount
+                  : '로딩 중'}
               </span>
             </div>
           </div>

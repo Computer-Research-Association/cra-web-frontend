@@ -12,7 +12,7 @@
   padding: 10px 15px;
   width: 5rem;
   background-color: var(--color-primary);
-  color: white;
+  color: var(--color-white);
   text-decoration: none;
   border-radius: 5px;
   transition: background-color 0.2s;
@@ -95,7 +95,7 @@
   padding-right: 17px;
   border-radius: 10px;
   border: 1px solid var(--color-dark-stroke);
-  background-color: #ffffff;
+  background-color: var(--color-white);
 }
 
 .board-wrapper {

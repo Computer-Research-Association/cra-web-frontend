@@ -28,14 +28,14 @@
   font-size: 24px;
   font-family: 'Pretendard SemiBold';
   font-family: 'Pretendard SemiBold';
-  color: #3e3e3e;
+  color: var(--color-dark-text);
 }
 .write-form input[type='text'],
 .write-form input[type='number'],
 .write-form textarea {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 18px;
-  border: 1px solid #c1c1c1;
+  border: 1px solid var(--color-dark-stroke);
   border-radius: 10px;
 }
 
@@ -45,19 +45,19 @@
   margin-bottom: 34px;
   font-size: 18px;
   padding: 20px;
-  border: 1px solid #c1c1c1;
+  border: 1px solid var(--color-dark-stroke);
   border-radius: 10px;
 }
 
 .write-form input[type='text']::placeholder {
-  color: #c1c1c1;
+  color: var(--color-dark-stroke);
 }
 
 .input-title {
   height: 68px;
-  border-color: #c1c1c1;
+  border-color: var(--color-dark-stroke);
   padding: 0 20px;
-  border-color: #c1c1c1;
+  border-color: var(--color-dark-stroke);
   padding: 0 20px;
 }
 
@@ -67,7 +67,7 @@
 
 .write-form input:focus,
 .write-form textarea:focus {
-  border-color: #adadad;
+  border-color: var(--color-brighter-border);
   outline: none;
 }
 
@@ -84,26 +84,26 @@
   margin-bottom: 10px;
   padding: 20px;
   font-size: 18px;
-  border-color: #c1c1c1;
+  border-color: var(--color-dark-stroke);
   border-radius: 10px;
-  color: #3e3e3e;
-  background-color: white;
+  color: var(--color-dark-text);
+  background-color: var(--color-white);
   appearance: none; /* 오른쪽 끝에 거슬리는 화살표 제거 */
   cursor: pointer;
 }
 
 .write-form select:focus {
-  border-color: #007bff;
+  border-color: var(--color-more-primary);
   outline: none;
 }
 
 .write-form select option {
   font-size: 18px;
-  color: #3e3e3e;
+  color: var(--color-dark-text);
 }
 
 .write-form select:disabled {
-  background-color: #f5f5f5;
+  background-color: var(--color-file-white);
   cursor: not-allowed;
 }
 
@@ -113,8 +113,8 @@
   height: 30px;
   margin: 20px 0 0 0 !important;
   padding: 10px 15px 5px 15px;
-  background-color: #c1c1c1;
-  color: white !important;
+  background-color: var(--color-dark-stroke);
+  color: var(--color-white) !important;
   text-decoration: none;
   border-radius: 5px;
   transition: background-color 0.2s;
@@ -124,7 +124,7 @@
 }
 
 .file-button:hover {
-  background-color: #adadad;
+  background-color: var(--color-brighter-border);
 }
 
 .file-input {
@@ -139,7 +139,7 @@
 .file-item {
   display: block;
   width: fit-content;
-  background: #f4f4f4;
+  background: var(--color-modal-white);
   border-radius: 5px;
   font-size: 14px !important;
   padding: 10px;
@@ -147,7 +147,7 @@
 }
 
 .remove-button {
-  color: black;
+  color: var(--color-black);
   border: none;
   padding: 3px 7px;
   border-radius: 50%;
@@ -161,30 +161,30 @@
   font-family: 'Pretendard Bold';
   height: 68px;
   width: 46%;
-  background-color: #2cb4db;
-  color: white;
+  background-color: var(--color-primary);
+  color: var(--color-white);
   cursor: pointer;
   border: none;
   border-radius: 10px;
 }
 
 .submit-button:hover {
-  background-color: #2295ba;
+  background-color: var(--color-blue-primary);
 }
 
 .error-message {
-  color: #ff0000;
+  color: var(--color-error);
   font-size: 0.875rem;
   margin: 0.5rem 0 0 0.5rem;
 }
 
 .input-error {
-  border: 1px solid #ff0000 !important;
+  border: 1px solid var(--color-error) !important;
 }
 
 .editor-error-container {
   padding-bottom: 2px;
-  border: 0.05rem solid red; /* 테두리를 빨간색으로 표시 */
+  border: 0.05rem solid var(--color-error); /* 테두리를 빨간색으로 표시 */
   background-color: rgba(255, 0, 0, 0.1); /* 배경을 옅은 빨간색으로 */
   border-radius: 5px;
 }

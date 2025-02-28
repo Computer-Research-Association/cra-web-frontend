@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react';
 import styles from './IntroCRA.module.css';
 
+const CRA_YEAR = '30';
+const CRA_SERVICE = '11';
+
 function IntroCRA() {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 620);
 
@@ -60,13 +63,13 @@ function IntroCRA() {
         {/* CARD 1 */}
         <div className={styles.Card}>
           <p className={styles.CardTitle}>CRA가 창립한지</p>
-          <p className={styles.CardContent}>30년</p>
+          <p className={styles.CardContent}>{CRA_YEAR}년</p>
         </div>
 
         {/* CARD 2 */}
         <div className={styles.Card}>
           <p className={styles.CardTitle}>출시 서비스</p>
-          <p className={styles.CardContent}>?개</p>
+          <p className={styles.CardContent}>{CRA_SERVICE}개</p>
         </div>
 
         {/* CARD 3 */}

@@ -19,7 +19,7 @@
   margin-right: 20px;
   display: flex; /* span을 flex 항목으로 만듭니다 */
   gap: 3px; /* 간격을 10px로 설정 */
-  color: #9b9b9b;
+  color: var(--color-secondary-button);
 }
 .comment-img {
   margin-top: 9px;

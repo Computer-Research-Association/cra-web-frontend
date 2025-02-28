@@ -30,7 +30,6 @@ function UserImage() {
 
     try {
       const finalImageUrl = await changeUserProfileImage(uploadedUrl);
-      console.log('최종 반영된 이미지 URL:', finalImageUrl);
 
       setUser({ imgUrl: finalImageUrl });
       setPreviewUrl(null);

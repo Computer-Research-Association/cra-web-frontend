@@ -73,7 +73,7 @@ const LoginBtn = styled.button`
   background-color: var(--color-primary);
   border: 2px solid var(--color-primary);
   border-radius: 1rem;
-  color: #ffffff;
+  color: var(--color-white);
   font-size: 2rem;
   padding: 1rem 5rem;
   font-family: 'Pretendard Bold';
@@ -90,7 +90,7 @@ function IDSearchCompletePage() {
 
   return (
     <Container>
-      <Img src={BlueCheck} />
+      <Img src={BlueCheck} loading="lazy" />
       <Title>아이디 찾기 완료</Title>
       <Content>
         <Context>

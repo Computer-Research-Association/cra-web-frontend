@@ -34,7 +34,7 @@ const LoginBtn = styled.button`
   background-color: var(--color-primary);
   border: none;
   border-radius: 1rem;
-  color: #ffffff;
+  color: var(--color-white);
   font-size: 2rem;
   padding: 1rem 5rem;
   font-family: 'Pretendard Bold';
@@ -46,7 +46,7 @@ function RegisterCompletePage() {
   const { username, name } = useRegisterStore();
   return (
     <Container>
-      <Img src={BlueCheck} />
+      <Img src={BlueCheck} loading="lazy" />
       <Title>회원가입 완료</Title>
       <Content>
         {name} ({username}),

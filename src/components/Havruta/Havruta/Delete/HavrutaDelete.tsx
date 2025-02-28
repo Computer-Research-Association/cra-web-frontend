@@ -7,7 +7,7 @@ import styled from 'styled-components';
 const DeleteButton = styled.button`
   background: none;
   border: none;
-  color: #da2b2b;
+  color: var(--color-delete);
   cursor: pointer;
   text-decoration: none;
   &:hover {

@@ -1,16 +1,16 @@
 import { Link } from 'react-router-dom';
 import { UseQueryResult } from '@tanstack/react-query';
-import { Havruta, HavrutaBoard } from '~/models/Havruta.ts';
+import { Havruta } from '~/models/Havruta.ts';
+import { Board } from '~/models/Board.ts';
 import SideBar from './Sidebar/HavrutaSidebar.tsx';
 import Dropdown from './Dropdown/HavrutaDropdown.tsx';
 import Pagination from '~/components/Pagination/Pagination.tsx';
 import HavrutaBoardItem from '~/components/Havruta/HavrutaBoard/Item/HavrutaBoardItem.tsx';
 import styles from './HavrutaBoardList.module.css';
-import LoadingSpinner from '~/components/Common/LoadingSpinner.tsx';
 
 interface HavrutaBoardListProps {
   havrutaQuery: UseQueryResult<Havruta[], unknown>;
-  havrutaBoardQuery: UseQueryResult<HavrutaBoard[], unknown>;
+  havrutaBoardQuery: Board[];
   totalPages: number;
   currentPage: number;
   selectedHavrutaId: number | null;
@@ -28,28 +28,24 @@ export default function HavrutaBoardList({
   onHavrutaChange,
 }: HavrutaBoardListProps) {
   const renderBoardContent = () => {
-    if (havrutaBoardQuery.isLoading) return <LoadingSpinner />;
-
-    if (totalPages === 0)
-      return <div className={styles.noBoards}>현재 게시물이 없습니다.</div>;
-
-    if (havrutaBoardQuery.isError)
-      return <div className={styles.error}>에러가 발생했습니다!</div>;
-
-    if (havrutaBoardQuery.isSuccess) {
-      return havrutaBoardQuery.data
-        .filter((havrutaBoard) => havrutaBoard.id !== undefined)
-        .map((havrutaBoard, index) => (
-          <div key={`havruta-${havrutaBoard.id}`}>
-            <div className={styles['board-wrapper']}>
-              <HavrutaBoardItem havrutaBoard={havrutaBoard} />
-            </div>
-            {index < havrutaBoardQuery.data.length - 1 && (
-              <div className={styles.divider}></div>
-            )}
-          </div>
-        ));
+    if (!havrutaBoardQuery || havrutaBoardQuery.length === 0) {
+      return (
+        <div className={styles.container}>게시물이 존재하지 않습니다.</div>
+      );
     }
+
+    return havrutaBoardQuery
+      .filter((havrutaBoard) => havrutaBoard.id !== undefined)
+      .map((havrutaBoard, index) => (
+        <div key={`havruta-${havrutaBoard.id}`}>
+          <div className={styles['board-wrapper']}>
+            <HavrutaBoardItem havrutaBoard={havrutaBoard} />
+          </div>
+          {index < havrutaBoardQuery.length - 1 && (
+            <div className={styles.divider}></div>
+          )}
+        </div>
+      ));
   };
 
   return (

@@ -8,11 +8,9 @@ export default function CommentDelete({ id }: { id: number }) {
 
   const deleteMutation = useMutation({
     mutationFn: () => {
-      console.log('삭제 요청 ID:', id); // 여기서 id가 제대로 전달되는지 확인
       return deleteComments(id);
     },
     onSuccess: () => {
-      console.log('삭제 성공:', id); // 삭제가 성공했을 때 id 확인
       QUERY_KEY.comment.commentsById(id);
       void queryClient.invalidateQueries(); // invalidateQueries 호출
     },

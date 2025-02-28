@@ -34,22 +34,20 @@ const extractFileName = (fileUrl: string) => {
 export default function BoardDetailItem({
   board,
   category,
-  commentCount,
 }: {
   board: Board;
   category: number;
-  commentCount: number;
 }) {
   const [viewCnt, setViewCnt] = useState(board.view);
 
   const [modalOpen, setModalOpen] = useState(false);
   const openModal = () => setModalOpen(true);
   const closeModal = () => setModalOpen(false);
-  const userId = useAuthStore.getState().userId as number;
+  const email = useAuthStore.getState().email;
 
   useEffect(() => {
     const viewed = localStorage.getItem(`viewed_${board.id}`);
-    console.log(viewed);
+
     if (!viewed) {
       localStorage.setItem(`viewed_${board.id}`, 'true');
       createBoardsView(board.id as number)
@@ -58,7 +56,6 @@ export default function BoardDetailItem({
         })
         .then((updatedBoard) => {
           setViewCnt(updatedBoard.view as number);
-          console.log('Updated view count:', updatedBoard.view);
         })
         .catch((err) => console.error('조회수 업데이트 실패:', err));
     }
@@ -83,7 +80,6 @@ export default function BoardDetailItem({
   const handleLike = async () => {
     try {
       const data = await createLike(board.id as number, !isLiked);
-      console.log('Response from like API:', data);
 
       // API 응답을 바로 반영
       setIsLiked(data.liked);
@@ -155,14 +151,14 @@ export default function BoardDetailItem({
                 {board.resUserDetailDto.name}
               </span>
             </div>
-            <div>
+            <div className={styles.NavDate}>
               <span className={styles['nav-title']}>작성일 | </span>
               <span className={styles['nav-content']}>
                 {dateFormat(board.createdAt)}
               </span>
             </div>
             <div className={styles['fix-button']}>
-              {userId === board.userId && (
+              {email === board.resUserDetailDto.email && (
                 <>
                   <Link
                     to={`/${CATEGORY_STRINGS_EN[category]}/edit/${board.id}`}
@@ -212,14 +208,14 @@ export default function BoardDetailItem({
               </span>
               <span className={styles.viewContainer}>
                 <FaRegComment />
-                <span>{commentCount}</span>
+                <span>{board.resListCommentDtos?.length}</span>
               </span>
             </div>
           </div>
         </div>
         <div className={styles['footer']}>
           <HeightSpacer space={20} />
-          <CommentList id={board.id!} />
+          <CommentList board={board} />
           <CommentWrite parentId={undefined} />
         </div>
       </div>

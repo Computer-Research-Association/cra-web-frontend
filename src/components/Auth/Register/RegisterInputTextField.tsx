@@ -36,13 +36,13 @@ const Input = styled.div`
   }
 
   input.error {
-    border-color: red;
+    border-color: var(--color-error);
   }
 
   div.error {
     margin-top: 0.25rem;
     margin-left: 0.25rem;
-    color: red;
+    color: var(--color-error);
     font-size: 1rem;
   }
 `;

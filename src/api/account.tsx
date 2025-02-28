@@ -59,8 +59,6 @@ export const findId = async (params: FindUsernameParams): Promise<string> => {
       },
     });
 
-    console.log('Full API Response:', response);
-
     if (!response.data) {
       throw new Error('응답에서 username을 찾을 수 없습니다.');
     }

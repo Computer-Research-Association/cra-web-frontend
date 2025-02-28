@@ -5,7 +5,7 @@
   top: 0;
   z-index: 1000;
   width: 100%;
-  background-color: #ffffff;
+  background-color: var(--color-white);
   font-family: 'Pretendard Bold';
   align-items: center;
   box-sizing: border-box;
@@ -63,9 +63,9 @@ li {
   display: block;
   width: 25px;
   height: 2px;
-  background-color: #5d5d5d;
+  background-color: var(--color-menu-toggle-black);
   margin: 4px 0;
-  transition: all 0.3s ease;
+  transition: all 0.1s ease;
 }
 
 /* 데스크탑에서만 보이는 로그인 버튼 */
@@ -94,7 +94,7 @@ li {
   padding: 0.65rem 1rem;
   cursor: pointer;
   &:hover {
-    background-color: #5eccfa;
+    background-color: var(--color-dark-i-taxi);
   }
 }
 
@@ -130,7 +130,7 @@ li {
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: #ffffff;
+    background-color: var(--color-white);
     padding: 1rem;
     display: none;
     transform: none;
@@ -147,7 +147,7 @@ li {
   li {
     width: 100%;
     padding-top: 24px;
-    margin-left: 30px;
+    margin-left: 16px;
     text-align: left;
   }
 

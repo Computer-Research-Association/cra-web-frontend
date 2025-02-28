@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { HavrutaBoard } from '~/models/Havruta.ts';
+import { Board, BoardPageList } from '~/models/Board';
 import { client } from '~/api/client.ts';
 import { authClient } from '~/api/auth/authClient.ts';
 
@@ -10,7 +10,7 @@ export const getHavrutaBoards = async (
   orderBy: number = 0,
 ) => {
   try {
-    const response = await client.get<HavrutaBoard[]>(
+    const response = await client.get<BoardPageList>(
       `/board/havruta/page/${page}`,
       {
         params: {
@@ -22,18 +22,7 @@ export const getHavrutaBoards = async (
     );
     return response.data;
   } catch (error) {
-    console.log(error);
-    throw error;
-  }
-};
-
-// 하브루타 게시물 모두 가져오기
-export const getHavrutaBoardsCount = async () => {
-  try {
-    const response = await client.get<HavrutaBoard[]>(`/board/havruta`);
-    return response.data;
-  } catch (error) {
-    console.log(error);
+    console.error(error);
     throw error;
   }
 };
@@ -46,7 +35,7 @@ export const getHavrutaBoardsByHavrutaId = async (
   orderBy: number = 0,
 ) => {
   try {
-    const response = await client.get<HavrutaBoard[]>(
+    const response = await client.get<BoardPageList>(
       `/board/havruta/${havrutaId}/page/${page}`,
       {
         params: {
@@ -58,20 +47,7 @@ export const getHavrutaBoardsByHavrutaId = async (
     );
     return response.data;
   } catch (error) {
-    console.log(error);
-    throw error;
-  }
-};
-
-export const getHavrutaBoardsCountByHavrutaId = async (havrutaId: number) => {
-  try {
-    const response = await client.get<HavrutaBoard[]>(
-      `/board/havruta/${havrutaId}`,
-    );
-
-    return response.data;
-  } catch (error) {
-    console.log(error);
+    console.error(error);
     throw error;
   }
 };
@@ -79,7 +55,7 @@ export const getHavrutaBoardsCountByHavrutaId = async (havrutaId: number) => {
 // 하브루타 게시물 상세보기
 export const getHavrutaBoardById = async (id: number) => {
   try {
-    const response = await client.get<HavrutaBoard>(`/board/view/${id}`);
+    const response = await client.get<Board>(`/board/view/${id}`);
     const havruta = response.data;
 
     return {
@@ -87,13 +63,13 @@ export const getHavrutaBoardById = async (id: number) => {
       createdAt: havruta.createdAt ? new Date(havruta.createdAt) : new Date(),
     };
   } catch (error) {
-    console.log(error);
+    console.error(error);
     throw error;
   }
 };
 
 export const createHavrutaBoard = async (
-  havrutaBoard: HavrutaBoard,
+  havrutaBoard: Board,
   file: File | null,
 ) => {
   try {
@@ -116,12 +92,12 @@ export const createHavrutaBoard = async (
 
     return response.data;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     throw error;
   }
 };
 
-export const updateHavrutaBoard = async (havrutaBoard: HavrutaBoard) => {
+export const updateHavrutaBoard = async (havrutaBoard: Board) => {
   try {
     const formData = new FormData();
 
@@ -152,14 +128,12 @@ export const updateHavrutaBoard = async (havrutaBoard: HavrutaBoard) => {
 };
 
 // 하브루타 게시물 삭제하기
-export const deleteHavrutaBoards = async (
-  id: number,
-): Promise<HavrutaBoard> => {
+export const deleteHavrutaBoards = async (id: number): Promise<Board> => {
   try {
-    const response = await authClient.delete<HavrutaBoard>(`/board/${id}`);
+    const response = await authClient.delete<Board>(`/board/${id}`);
     return response.data;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     throw error;
   }
 };

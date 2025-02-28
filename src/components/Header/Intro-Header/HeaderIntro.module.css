@@ -24,27 +24,34 @@
 .LiIntro {
   display: flex;
   align-items: center;
+  z-index: 2;
 }
 
 .NavbarLink {
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   font-family: 'Pretendard Bold';
-  color: white;
+  background-color: var(--color-crang);
+  color: var(--color-white);
   text-decoration: none;
-  transition: transform 0.2s ease;
+  padding: 12px 20px;
+  border-radius: 15px;
+  transition:
+    background-color 0.5s ease,
+    color 0.5s ease;
   user-select: none;
   &:hover {
-    transform: scale(1.1);
+    background-color: var(--color-white);
+    color: var(--color-crang);
   }
 }
 
 .Logo {
-  width: 8rem;
+  width: 128px;
 }
 
 @media (max-width: 1064px) {
   .Logo {
-    width: 7rem;
+    width: 112px;
   }
 }
 
@@ -53,8 +60,8 @@
     padding: 0.5rem 3rem 2.5rem 0;
   }
   .Logo {
-    width: 6rem;
-    transform: translateY(0.25rem);
+    width: 96px;
+    transform: translateY(0.45rem) translateX(2rem);
   }
   .NavbarLink {
     font-size: 1.25rem;
@@ -62,13 +69,13 @@
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 620px) {
   .HeaderIntro {
     padding: 0.5rem 1.25rem 2.5rem 0;
   }
-  .Logo { 
-    width: 5rem;
-    transform: translateX(-1.25rem);
+  .Logo {
+    width: 80px;
+    transform: translateY(0.9rem) translateX(1.25rem);
   }
   .NavbarLink {
     font-size: 0.95rem;

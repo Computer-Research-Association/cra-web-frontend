@@ -8,7 +8,7 @@ import styled from 'styled-components';
 const DeleteButton = styled.button`
   background: none;
   border: none;
-  color: #da2b2b;
+  color: var(--color-delete);
   cursor: pointer;
   text-decoration: none;
   &:hover {
@@ -25,7 +25,6 @@ function BookAdminDelete({ id }: { id: number }) {
       queryClient.setQueryData<Item[]>(
         QUERY_KEY.item.items(ITEMCATEGORY.BOOK),
         (oldData) => {
-          console.log('Old Cached Data Before Update:', oldData);
           if (!oldData) return [];
           return oldData.filter((item) => item.id !== id);
         },
@@ -35,10 +34,7 @@ function BookAdminDelete({ id }: { id: number }) {
         queryKey: QUERY_KEY.item.items(ITEMCATEGORY.BOOK),
       });
 
-      const updatedData = queryClient.getQueryData<Item[]>(
-        QUERY_KEY.item.items(ITEMCATEGORY.BOOK),
-      );
-      console.log('Updated Cached Data:', updatedData);
+      queryClient.getQueryData<Item[]>(QUERY_KEY.item.items(ITEMCATEGORY.BOOK));
     },
     onError: (error) => {
       console.error('도서 삭제 실패', error);

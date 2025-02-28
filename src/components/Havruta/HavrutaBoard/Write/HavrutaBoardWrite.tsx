@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { createBoards } from '~/api/board.ts';
@@ -54,61 +54,45 @@ export default function HavrutaBoardWrite() {
     queryFn: async () => getAllHavrutas(),
   });
 
-  const mutation = useMutation({
-    mutationFn: async () => {
-      const content = editorRef.current.getInstance().getMarkdown();
-      const fileToUpload = file || null;
-
-      // formData 구조를 변경하여 요청 형식에 맞게 변환
-      const payload = {
-        board: {
-          title: formData.title,
-          content,
-          category: formData.category,
-          imageUrls: formData.imageUrls,
-          havrutaDto: formData.havrutaDto,
-          resUserDetailDto: {
-            name: '사용자 이름', // 실제 사용자 정보로 변경
-            email: 'user@example.com',
-            studentId: 12345678,
-            term: '2025-1',
-            githubId: 'githubUsername',
-            imgUrl: 'https://example.com/profile.jpg',
-          },
-        },
-        file: fileToUpload ? [fileToUpload.name] : [],
-      };
-      console.log(payload.board);
-
-      return await createBoards(
-        { ...payload.board, likes: 0, liked: false },
-        fileToUpload,
+  useEffect(() => {
+    const savedHavrutaId = sessionStorage.getItem('havruta');
+    if (savedHavrutaId && havrutaQuery.data) {
+      const selectedHavruta = havrutaQuery.data.find(
+        (h) => h.id === parseInt(savedHavrutaId, 10),
       );
-    },
-    onSuccess: async () => {
-      await navigate(-1);
-      setTimeout(() => {
-        window.scrollTo(0, 0);
-      }, 100); // 화면 위로 끌어올리기
+      if (selectedHavruta) {
+        setFormData((prev) => ({
+          ...prev,
+          havrutaDto: {
+            id: selectedHavruta.id ?? null,
+            classname: selectedHavruta.className,
+            professor: selectedHavruta.professor,
+          },
+        }));
+      }
+    }
+  }, [havrutaQuery.data]);
 
-      setFormData({
-        title: '',
-        content: '',
-        category: havrutaCategory,
-        imageUrls: [],
-        havrutaDto: {
-          id: null,
-          classname: '',
-          professor: '',
-        },
-      });
-      setFile(null);
-    },
+  const handleSelectHavruta = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedHavrutaId = parseInt(e.target.value, 10);
+    const selectedHavruta = havrutaQuery.data?.find(
+      (h) => h.id === selectedHavrutaId,
+    );
 
-    onError: (error) => {
-      console.error('게시글 작성 실패:', error);
-    },
-  });
+    if (!selectedHavruta) {
+      console.error('선택한 하브루타 과목을 찾을 수 없습니다.');
+      return;
+    }
+
+    setFormData((prev) => ({
+      ...prev,
+      havrutaDto: {
+        id: selectedHavruta.id ?? null,
+        classname: selectedHavruta.className || '', // 🔹 빈 문자열로 기본값 설정
+        professor: selectedHavruta.professor || '', // 🔹 빈 문자열로 기본값 설정
+      },
+    }));
+  };
 
   const validateForm = () => {
     const newErrors: { title?: string; content?: string } = {};
@@ -152,32 +136,60 @@ export default function HavrutaBoardWrite() {
     setFile(null);
   };
 
-  const handleSelectHavruta = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedHavrutaId = parseInt(e.target.value, 10);
-    const selectedHavruta = havrutaQuery.data?.find(
-      (h) => h.id === selectedHavrutaId,
-    );
+  const mutation = useMutation({
+    mutationFn: async () => {
+      const content = editorRef.current.getInstance().getMarkdown();
+      const fileToUpload = file || null;
 
-    if (!selectedHavruta) {
-      console.error('선택한 하브루타 과목을 찾을 수 없습니다.');
-      return;
-    }
+      // formData 구조를 변경하여 요청 형식에 맞게 변환
+      const payload = {
+        board: {
+          title: formData.title,
+          content,
+          category: formData.category,
+          imageUrls: formData.imageUrls,
+          havrutaDto: formData.havrutaDto,
+          resUserDetailDto: {
+            name: '사용자 이름', // 실제 사용자 정보로 변경
+            email: 'user@example.com',
+            studentId: 12345678,
+            term: '2025-1',
+            githubId: 'githubUsername',
+            imgUrl: 'https://example.com/profile.jpg',
+          },
+        },
+        file: fileToUpload ? [fileToUpload.name] : [],
+      };
 
-    console.log(
-      '선택한 과목:',
-      selectedHavruta?.className,
-      selectedHavruta?.professor,
-    ); // 추가
+      return await createBoards(
+        { ...payload.board, likes: 0, liked: false },
+        fileToUpload,
+      );
+    },
+    onSuccess: async () => {
+      await navigate(-1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+      }, 100); // 화면 위로 끌어올리기
 
-    setFormData((prev) => ({
-      ...prev,
-      havrutaDto: {
-        id: selectedHavruta.id ?? null,
-        classname: selectedHavruta.className || '', // 🔹 빈 문자열로 기본값 설정
-        professor: selectedHavruta.professor || '', // 🔹 빈 문자열로 기본값 설정
-      },
-    }));
-  };
+      setFormData({
+        title: '',
+        content: '',
+        category: havrutaCategory,
+        imageUrls: [],
+        havrutaDto: {
+          id: null,
+          classname: '',
+          professor: '',
+        },
+      });
+      setFile(null);
+    },
+
+    onError: (error) => {
+      console.error('게시글 작성 실패:', error);
+    },
+  });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

@@ -18,7 +18,7 @@ function UserDelete() {
       void navigate(`/main`);
     },
     onError: () => {
-      console.log('회원 탈퇴 실패');
+      console.error('회원 탈퇴 실패');
     },
   });
 

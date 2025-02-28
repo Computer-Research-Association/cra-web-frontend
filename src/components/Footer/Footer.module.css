@@ -6,7 +6,7 @@
 .footer {
   font-family: 'Pretendard SemiBold';
   border: none;
-  background-color: #2cb4db;
+  background-color: var(--color-primary);
   padding: 2.25rem 6rem;
   user-select: none;
 }
@@ -27,16 +27,16 @@
   font-size: 1.5625rem;
   padding: 0.5rem 0rem 1rem 0rem;
   p {
-    color: #bcedfb;
+    color: var(--color-secondary);
   }
   span {
-    color: #ffffff;
+    color: var(--color-white);
     padding-left: 0.4rem;
   }
 }
 .cra206 {
   font-size: 1.25rem;
-  color: #ffffff;
+  color: var(--color-white);
   padding-left: 0.4rem;
   margin-top: 1rem;
 }
@@ -52,7 +52,7 @@
   font-size: 1.25rem;
   padding: 1.5rem 0rem;
   p {
-    color: #ffffff;
+    color: var(--color-white);
   }
 }
 

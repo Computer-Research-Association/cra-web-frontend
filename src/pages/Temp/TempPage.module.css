@@ -4,12 +4,15 @@
   align-items: center;
   justify-content: center;
   font-family: 'Pretendard Bold';
+  margin-top: 15rem;
+  margin-bottom: 10rem;
 }
 
 .title {
   color: var(--color-primary);
   font-size: 30px;
   margin-top: 1rem;
+  text-align: center;
 }
 
 .content {
@@ -27,4 +30,22 @@
   border-radius: 10px;
   padding: 0.8rem 1.3rem;
   margin-top: 1.25rem;
+}
+
+@media (max-width: 620px) {
+  .container {
+    padding: 0 3rem;
+    margin-bottom: 5rem;
+  }
+
+  .title {
+    font-size: 25px;
+  }
+
+  .content {
+    font-size: 20px;
+  }
+  .link {
+    font-size: 18px;
+  }
 }

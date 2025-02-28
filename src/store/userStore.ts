@@ -7,22 +7,24 @@ interface UserState {
   term: string;
   githubId: string;
   imgUrl: string;
+  greetingMessage: string;
   setUser: (_user: Partial<UserState>) => void;
   resetUser: () => void;
 }
 
 export const useUserStore = create<UserState>((set) => ({
-  name: sessionStorage.getItem('name') || '',
-  email: sessionStorage.getItem('email') || '',
-  studentId: Number(sessionStorage.getItem('studentId')) || 0,
-  term: sessionStorage.getItem('term') || '',
-  githubId: sessionStorage.getItem('githubId') || '',
-  imgUrl: sessionStorage.getItem('imgUrl') || '',
+  name: localStorage.getItem('name') || '',
+  email: localStorage.getItem('email') || '',
+  studentId: Number(localStorage.getItem('studentId')) || 0,
+  term: localStorage.getItem('term') || '',
+  githubId: localStorage.getItem('githubId') || '',
+  imgUrl: localStorage.getItem('imgUrl') || '',
+  greetingMessage: localStorage.getItem('greetingMessage') || '',
 
   setUser: (user) => {
     set(user);
     Object.entries(user).forEach(([key, value]) => {
-      sessionStorage.setItem(key, value as string);
+      localStorage.setItem(key, value as string);
     });
   },
 
@@ -34,6 +36,7 @@ export const useUserStore = create<UserState>((set) => ({
       term: '',
       githubId: '',
       imgUrl: '',
+      greetingMessage: '',
     });
   },
 }));

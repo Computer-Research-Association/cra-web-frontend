@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
-import Icon from '~/assets/images/develop-icon.png';
+import Icon from '~/assets/images/develop-icon.png?format=webp&as=srcset';
 import styles from './TempPage.module.css';
 
 function ComingSoonPage() {
   return (
     <div className={styles.container}>
-      <img src={Icon} />
+      <img srcSet={Icon} loading="lazy" />
       <p className={styles.title}>업데이트 중입니다!</p>
       <p className={styles.content}>
         새로운 기능을 추가하고 있어요. 곧 만나볼 수 있어요!

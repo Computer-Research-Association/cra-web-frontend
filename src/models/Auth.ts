@@ -51,6 +51,7 @@ interface ResUserDetail {
   term: string;
   githubId: string;
   imgUrl: string;
+  greetingMessage: string;
 }
 
 interface ResponseLogin {

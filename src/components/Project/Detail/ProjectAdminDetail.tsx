@@ -19,7 +19,7 @@ const Bold = styled.b`
 
 function ProjectAdminDetail() {
   const currentUrl = window.location.href;
-  console.log(currentUrl);
+
   const id = currentUrl.substring(currentUrl.lastIndexOf('/') + 1);
   const projectId = Number(id);
 

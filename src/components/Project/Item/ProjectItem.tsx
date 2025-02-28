@@ -16,7 +16,7 @@ export default function ProjectItem({ project }: { project: Project }) {
           <img src={project.imageUrl} className={styles['project-picture']} />
         </div>
         <div className={styles['title']}>{project.serviceName}</div>
-        <div className={styles['content']}>{project.members}</div>
+        <div className={styles['content']}>{project.members.join(', ')}</div>
       </div>
       {modalIsOpen && (
         <ProjectModal projectId={project.id!} closeModal={closeModal} />

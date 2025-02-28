@@ -6,7 +6,11 @@ export default function ItemItem({ item }: { item: Item }) {
     <>
       <div className={styles['project-block']}>
         <div className={styles['project-picture']}>
-          <img src={item.imageUrl} className={styles['project-picture']} />
+          <img
+            src={item.imageUrl}
+            className={styles['project-picture']}
+            loading="lazy"
+          />
         </div>
         <div className={styles['title']}>{item.name}</div>
         <div className={styles['content']}>{item.description}</div>

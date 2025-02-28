@@ -6,12 +6,12 @@ export default function BoardItem({ board }: { board: Board }) {
   return (
     <Link
       to={`/${board.category}/view/${board.id}`}
-      className={styles['temp-link']}
+      className={styles.TempLink}
     >
-      <div className={styles['board-item-container']}>
+      <div className={styles.BoardItemContainer}>
         <div>
-          <div className={styles['board-title']}>{board.title}</div>
-          <div className={styles['board-created']}>
+          <div className={styles.BoardTitle}>{board.title}</div>
+          <div className={styles.BoardCreated}>
             {board.createdAt
               ? new Date(board.createdAt).toLocaleDateString('ko-KR', {
                   year: 'numeric',

@@ -21,6 +21,7 @@
   align-items: center;
   margin-top: 7.5rem;
   margin-bottom: 5rem;
+
   img {
     align-self: center;
     width: 550px;
@@ -40,11 +41,12 @@
 }
 
 .ProjectContext {
-  font-family: 'Pretendard' !important;
+  font-family: 'Pretendard Medium' !important;
   font-size: 20px !important;
+  padding: 0 1rem;
   p {
     padding: 0 5rem;
-    line-height: 3rem;
+    line-height: 2;
   }
   .ProjectStack {
     font-family: 'Pretendard Bold';
@@ -66,7 +68,7 @@
     font-size: 20px !important;
     margin-top: 2rem;
     &:hover {
-      color: var(--color-more-primary);
+      color: var(--color-white);
     }
   }
 }
@@ -139,6 +141,7 @@
   }
   .ProjectContext {
     p {
+      font-size: 15px !important;
       padding: 0;
     }
   }

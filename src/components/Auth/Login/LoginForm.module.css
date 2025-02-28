@@ -11,7 +11,7 @@
 .id input,
 .password input,
 .login input {
-  background-color: #fff;
+  background-color: var(--color-white);
   width: 100%;
   max-width: 640px; /* 기본 max-width 설정 */
   height: 68px;
@@ -49,7 +49,7 @@
 .id input::placeholder,
 .password input::placeholder {
   font-size: 20px;
-  color: var(--color-placeholder-text);
+  color: var(--color-dark-stroke);
 }
 
 .search-link {
@@ -94,7 +94,7 @@
   background-color: var(--color-primary);
   border: none;
   border-radius: 10px;
-  color: #ffffff;
+  color: var(--color-white);
   font-size: 30px;
   font-family: 'Pretendard Bold';
   margin-top: 40px;
@@ -108,5 +108,19 @@
   .login input {
     width: 100%;
     max-width: 100%; /* 작은 화면에서 너비 100% */
+  }
+}
+
+.PrivacyPolicy {
+  background-color: var(--color-primary);
+  font-size: 17px;
+  font-family: 'Pretendard SemiBold';
+  color: var(--color-white);
+  text-decoration: none;
+  padding: 0.6rem 0.65rem;
+  border-radius: 10px;
+  cursor: pointer;
+  &:hover {
+    background-color: var(--color-comment-blue);
   }
 }

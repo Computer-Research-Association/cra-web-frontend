@@ -1,4 +1,4 @@
-.board-item-container {
+.BoardItemContainer {
   width: 96%;
   display: flex;
   flex-direction: column;
@@ -6,25 +6,20 @@
   margin-left: 17px;
   justify-content: space-between;
   &:hover {
-    .board-title, .board-created {
+    .board-title,
+    .board-created {
       color: var(--color-primary);
     }
   }
 }
 
-.board-user-name {
-  line-height: 34px;
-  font-size: 16px;
-  color: var(--color-dark-text);
-}
-
-.temp-link {
+.TempLink {
   width: 100%;
   display: block;
   text-decoration: none;
 }
 
-.board-title {
+.BoardTitle {
   width: 100%;
   line-height: 34px;
   font-size: 18px;
@@ -37,18 +32,48 @@
   }
 }
 
-.board-created {
+.BoardCreated {
   float: right;
   display: inline;
   text-decoration: none;
-  color: #9b9b9b;
+  color: var(--color-brighter-text);
   font-size: 15px;
   font-family: 'Pretendard Medium';
   margin: 8px 0;
 }
 
-.board-content {
-  line-height: 32px;
-  font-size: 15px;
-  color: var(--color-dark-text);
+@media (max-width: 1200px) {
+  .BoardTitle {
+    font-size: 17px;
+  }
+  .BoardCreated {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 1000px) {
+  .BoardTitle {
+    font-size: 16.5px;
+  }
+  .BoardCreated {
+    font-size: 13.5px;
+  }
+}
+
+@media (max-width: 788px) {
+  .BoardTitle {
+    font-size: 16px;
+  }
+  .BoardCreated {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 600px) {
+  .BoardTitle {
+    font-size: 15.5px;
+  }
+  .BoardCreated {
+    font-size: 12.5px;
+  }
 }

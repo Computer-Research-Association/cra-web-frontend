@@ -7,7 +7,7 @@ export const createBoardsView = async (id: number): Promise<Board> => {
     const response = await authClient.post<Board>(`/board/view/${id}`);
     return response.data;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     throw error;
   }
 };

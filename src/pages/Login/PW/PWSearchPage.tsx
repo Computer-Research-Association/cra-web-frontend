@@ -80,13 +80,13 @@ const Input = styled.div`
   }
 
   input.error {
-    border-color: red;
+    border-color: var(--color-error);
   }
 
   div.error {
     margin-top: 0.25rem;
     margin-left: 0.25rem;
-    color: red;
+    color: var(--color-error);
     font-size: 1rem;
   }
 `;
@@ -109,7 +109,7 @@ const ResetButton = styled.button`
   justify-content: center;
 
   &:disabled {
-    background-color: gray;
+    background-color: var(--color-gray-text);
     cursor: default;
     opacity: 0.6;
   }
@@ -117,7 +117,7 @@ const ResetButton = styled.button`
 
 const Comment = styled.div`
   font-size: 10px;
-  color: #b1b1b1;
+  color: var(--color-brighter-border);
   margin-top: 10px;
 `;
 
@@ -161,10 +161,10 @@ function PasswordResetForm() {
       }
     } catch (error: unknown) {
       if (error instanceof AxiosError) {
-        console.log('Full error:', error);
-        console.log('Error response:', error.response);
-        console.log('Error status:', error.response?.status);
-        console.log('Error data:', error.response?.data);
+        console.error('Full error:', error);
+        console.error('Error response:', error.response);
+        console.error('Error status:', error.response?.status);
+        console.error('Error data:', error.response?.data);
 
         const status = error.response?.status;
         const errorData = error.response?.data as { message?: string };
@@ -189,10 +189,10 @@ function PasswordResetForm() {
           }
         }
       } else if (error instanceof Error) {
-        console.log('Error message:', error.message);
+        console.error('Error message:', error.message);
         safeOpenModal('오류가 발생했습니다. 잠시 후 다시 시도해 주세요.');
       } else {
-        console.log('Unknown error:', error);
+        console.error('Unknown error:', error);
         safeOpenModal('예기치 않은 오류가 발생했습니다.');
       }
     } finally {

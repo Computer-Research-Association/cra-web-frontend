@@ -40,7 +40,7 @@ const LoginBtn = styled.button`
   background-color: var(--color-primary);
   border: none;
   border-radius: 1rem;
-  color: #ffffff;
+  color: var(--color-white);
   font-size: 2rem;
   padding: 1rem 5rem;
   font-family: 'Pretendard Bold';
@@ -52,7 +52,7 @@ function PWResetCompletePage() {
   const navigate = useNavigate();
   return (
     <Container>
-      <Img src={BlueCheck} />
+      <Img src={BlueCheck} loading="lazy" />
       <Title>비밀번호 변경 완료</Title>
       <Content>비밀번호 변경이 완료되었습니다.</Content>
       <LoginBtn onClick={() => navigate('/login')}>로그인 바로하기</LoginBtn>

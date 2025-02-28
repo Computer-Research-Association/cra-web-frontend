@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import craIconBlue from '~/assets/images/cra-logo-blue.png';
+import craIconBlue from '~/assets/images/cra-logo-blue.png?format=webp&as=srcset';
 import { useAuthStore } from '~/store/authStore.ts';
 import { useUIStore } from '~/store/uiStore.ts';
 import UserModal from '~/components/Modal/User/MyUser/UserModal';
@@ -39,14 +39,25 @@ export default function HeaderMain() {
     }
   };
 
+  const resetPage = () => {
+    {
+      sessionStorage.setItem('currentPage', '0');
+    }
+  };
+
   // const handleMyInfo = () => {
   //   navigate('/in  fo');
   // };
   return (
     <div className={styles['header-main']}>
-      <Link to="/">
-        {/* <Link to="/main"> */}
-        <img src={craIconBlue} alt="크라 아이콘" className={styles.logo} />
+      {/* <Link to="/"> */}
+      <Link to="/main">
+        <img
+          srcSet={craIconBlue}
+          alt="크라 아이콘"
+          className={styles.logo}
+          loading="lazy"
+        />
       </Link>
 
       <button
@@ -65,9 +76,9 @@ export default function HeaderMain() {
           {[
             { path: '/notice', label: 'Notice' },
             { path: '/academic', label: 'Academic' },
+            { path: '/havruta', label: 'Havruta' },
             { path: '/book', label: 'Book' },
             { path: '/item', label: 'Item' },
-            { path: '/havruta', label: 'Havruta' },
             { path: '/project', label: 'Project' },
           ].map(({ path, label }) => (
             <li key={path}>
@@ -76,7 +87,10 @@ export default function HeaderMain() {
                 className={`${styles['link']} ${styles['navbar-link']} ${
                   location.pathname.startsWith(path) ? styles.active : ''
                 }`}
-                onClick={toggleMenu}
+                onClick={() => {
+                  toggleMenu();
+                  resetPage();
+                }}
               >
                 {label}
               </Link>
@@ -88,7 +102,7 @@ export default function HeaderMain() {
           {isAuthenticated ? (
             <>
               <img
-                src={imgUrl}
+                srcSet={imgUrl}
                 className={styles.profile}
                 onClick={openModal}
               />
@@ -110,7 +124,12 @@ export default function HeaderMain() {
       <div className={styles['desktop-authbutton']}>
         {isAuthenticated ? (
           <>
-            <img src={imgUrl} className={styles.profile} onClick={openModal} />
+            <img
+              srcSet={imgUrl}
+              className={styles.profile}
+              onClick={openModal}
+              loading="lazy"
+            />
             {/* <p>{name}</p> */}
             {/* <button className={styles.authbutton}>내정보</button> */}
           </>

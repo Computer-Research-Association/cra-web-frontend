@@ -17,6 +17,10 @@ import { getBoardById } from '~/api/board';
 import createLike from '~/api/like';
 import { BiLike } from 'react-icons/bi';
 import { LuEye } from 'react-icons/lu';
+import BoardUserModal from '~/components/Modal/User/OtherUser/BoardUserModal';
+import { useAuthStore } from '~/store/authStore';
+
+const DEFAULT_PROFILE = import.meta.env.VITE_DEFAULT_IMG as string;
 
 const extractFileName = (fileUrl: string) => {
   const decodedUrl = decodeURIComponent(fileUrl);
@@ -27,13 +31,16 @@ const extractFileName = (fileUrl: string) => {
 export default function HavrutaBoardDetailItem({
   board,
   category,
-  commentCount,
 }: {
   board: Board;
   category: number;
-  commentCount: number;
 }) {
   const [viewCnt, setViewCnt] = useState(board.view);
+
+  const [modalOpen, setModalOpen] = useState(false);
+  const openModal = () => setModalOpen(true);
+  const closeModal = () => setModalOpen(false);
+  const email = useAuthStore.getState().email;
 
   useEffect(() => {
     const viewed = localStorage.getItem(`viewed_${board.id}`);
@@ -45,7 +52,7 @@ export default function HavrutaBoardDetailItem({
         })
         .then((updatedBoard) => {
           setViewCnt(updatedBoard.view as number);
-          console.log('Updated view count:', updatedBoard.view);
+          console.error('Updated view count:', updatedBoard.view);
         })
         .catch((err) => console.error('조회수 업데이트 실패:', err));
     }
@@ -58,7 +65,6 @@ export default function HavrutaBoardDetailItem({
     const fetchLikeStatus = async () => {
       try {
         const response = await getBoardById(board.id as number);
-        console.log('Fetched board data:', response);
         setLikeCnt(response.likeCount ?? 0);
         setIsLiked(response.viewerLiked ?? false);
       } catch (error) {
@@ -71,7 +77,7 @@ export default function HavrutaBoardDetailItem({
   const handleLike = async () => {
     try {
       const data = await createLike(board.id as number, !isLiked);
-      console.log('Response from like API:', data);
+      console.error('Response from like API:', data);
 
       // API 응답을 바로 반영
       setIsLiked(data.liked);
@@ -121,9 +127,25 @@ export default function HavrutaBoardDetailItem({
         <Divider />
         <div className={styles['content-body']}>
           <div className={styles['nav']}>
-            <div>
+            <div className={styles.writter}>
               <span className={styles['nav-title']}>작성자 | </span>
-              <span className={styles['nav-content']}>{board.userId}</span>
+              <div>
+                <img
+                  src={
+                    board.resUserDetailDto.imgUrl
+                      ? board.resUserDetailDto.imgUrl
+                      : DEFAULT_PROFILE
+                  }
+                  className={styles.profile}
+                  onClick={openModal}
+                />
+                {modalOpen && (
+                  <BoardUserModal closeModal={closeModal} board={board} />
+                )}
+              </div>
+              <span className={styles['nav-content']}>
+                {board.resUserDetailDto.name}
+              </span>
             </div>
             <div>
               <span className={styles['nav-title']}>작성일 | </span>
@@ -132,13 +154,17 @@ export default function HavrutaBoardDetailItem({
               </span>
             </div>
             <div className={styles['fix-button']}>
-              <Link
-                to={`/${CATEGORY_STRINGS_EN[category]}/edit/${board.id}`}
-                className={styles['link']}
-              >
-                <FaRegEdit size={22} />
-              </Link>
-              <BoardDelete id={board.id!} category={category} />
+              {email === board.resUserDetailDto.email && (
+                <>
+                  <Link
+                    to={`/${CATEGORY_STRINGS_EN[category]}/edit/${board.id}`}
+                    className={styles['link']}
+                  >
+                    <FaRegEdit size={22} />
+                  </Link>
+                  <BoardDelete id={board.id!} category={category} />
+                </>
+              )}
             </div>
           </div>
           <div className={styles['content-title']}>{board.title}</div>
@@ -178,14 +204,14 @@ export default function HavrutaBoardDetailItem({
               </span>
               <span className={styles.viewContainer}>
                 <FaRegComment />
-                <span>{commentCount}</span>
+                <span>{board.resListCommentDtos?.length}</span>
               </span>
             </div>
           </div>
         </div>
         <div className={styles['footer']}>
           <HeightSpacer space={20} />
-          <CommentList id={board.id!} />
+          <CommentList board={board} />
           <CommentWrite parentId={undefined} />
         </div>
       </div>

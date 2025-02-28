@@ -13,12 +13,13 @@ authClient.interceptors.request.use(
   async (config) => {
     // 토큰들을 sessionStorage에서 가져오기
     const accessToken = sessionStorage.getItem('accessToken');
-    const refreshToken = sessionStorage.getItem('refreshToken');
+    const refreshToken = localStorage.getItem('refreshToken');
     const userId = useAuthStore.getState().userId as number; // 상태에서 userId 가져오기
 
     if (accessToken && refreshToken) {
       // exp는 JWT의 만료시간 (초 단위)를 나타냄
       const decoded: { exp: number } = jwtDecode(accessToken);
+
       // 밀리초 단위로 시간을 반환하는 Data.now()와 비교하기 위해 * 1000 을 해서 비교
       const isTokenExpired = decoded.exp * 1000 < Date.now();
       // isTokenExpired 이 True면 토큰이 만료된거고 False면 아직 유효함
@@ -36,7 +37,7 @@ authClient.interceptors.request.use(
           config.headers.Authorization = `Bearer ${newAccessToken}`;
         } catch (error) {
           // refreshToken 재발급 실패 시 로그아웃 처리 해버리기
-          sessionStorage.clear();
+          localStorage.clear();
           console.error('Session Error:', error);
           throw new Error('Session expired, please log in again');
         }

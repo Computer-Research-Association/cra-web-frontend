@@ -1,0 +1,84 @@
+/* ------------------------------------------------------------------------------------------------------------ */
+
+.recruit-content {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  h2 {
+    padding-bottom: clamp(10px, 5vw, 100px);
+    font-size: clamp(25px, 3vw, 3vw);
+    color: var(--color-white);
+    font-family: 'Pretendard Bold';
+  }
+}
+
+.recruit-contentDetail {
+  display: flex;
+  flex-direction: column;
+  color: black; /* 기본 글씨 색상 변경 */
+}
+
+.recruit-outline {
+  background: white; /* 흰색 블록 */
+  border-radius: 10px;
+  padding: clamp(15px, 2.5vw, 25px); /* 살짝 넉넉한 여백 */
+  margin-bottom: clamp(15px, 2vw, 25px); /* 섹션 간 간격 */
+  width: clamp(250px, 50vw, 700px); /* 더 넓은 너비 */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* 살짝 입체감 추가 */
+
+  h3 {
+    padding: clamp(10px, 1vw, 1vw);
+    font-size: clamp(16px, 1.8vw, 32px);
+    font-family: 'Pretendard ExtraBold';
+    color: black; /* 제목도 검은색 */
+    margin: 0; /* 기본 마진 제거 */
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  li {
+    display: flex;
+    align-items: center;
+    font-size: clamp(10px, 1.3vw, 16px);
+    line-height: clamp(12px, 1.8vw, 20px);
+    font-family: 'Pretendard Medium';
+    color: black; /* 검은색 글씨 */
+    margin-bottom: clamp(8px, 0.8vw, 16px);
+    padding-left: 1.4vw;
+  }
+
+  li:hover {
+    color: var(--color-primary); /* 호버 시 금색으로 변경 */
+    transform: translateX(5px); /* 약간 오른쪽으로 이동하는 효과 */
+  }
+
+  li::before {
+    content: '•'; /* 금색 느낌의 별 이모지로 변경 */
+    font-size: clamp(12px, 1.5vw, 18px);
+    margin-right: 0.8vw;
+    color: var(--color-primary); /* 금색으로 별 색상 변경 */
+    animation: pulse 1.5s infinite ease-in-out; /* 깜빡이는 애니메이션 효과 */
+  }
+}
+
+/* 별 깜빡임 애니메이션 */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* ------------------------------------------------------------------------------------------------------------ */

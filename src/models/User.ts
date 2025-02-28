@@ -9,6 +9,7 @@ interface User {
   createdAt?: Date;
   updatedAt?: Date;
   imageUrl?: string;
+  greetingMessage: string;
 }
 
 interface UserPassWord {

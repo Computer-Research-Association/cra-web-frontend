@@ -23,15 +23,15 @@
 }
 
 .board-wrapper:hover {
-  background-color: #f1f1f1;
+  background-color: var(--color-hover-white);
 }
 
 .loading {
-  color: #555;
+  color: var(--color-loading-black);
 }
 
 .error {
-  color: red;
+  color: var(--color-error);
 }
 
 .board-list-footer {
@@ -46,5 +46,11 @@
   width: 131px;
 }
 .divider {
-  border: 1px solid #c1c1c1;
+  border: 1px solid var(--color-dark-stroke);
+}
+
+@media (max-width: 1280px) {
+  .container {
+    max-width: 966px;
+  }
 }

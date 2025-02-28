@@ -1,16 +1,16 @@
-// ------------------------------배포용 route------------------------------------
-// // import { createRouter } from '@tanstack/react-router';
+//------------------------------배포용 route------------------------------------
+// import { createRouter } from '@tanstack/react-router';
 // import { rootRoute } from './__root.tsx';
 // import { HomeRoute, introRoute } from './introRoutes.ts';
 // import { recruitRoute } from './recruitRoute.ts';
-// // import { comingSoonRoute } from './tempRoutes.ts';
+// import { comingSoonRoute } from './tempRoutes.ts';
 
 // export const routes = createRouter({
 //   routeTree: rootRoute.addChildren([
 //     HomeRoute,
 //     introRoute,
 //     recruitRoute,
-//     // comingSoonRoute,
+//     comingSoonRoute,
 //   ]),
 // });
 //-------------------------------------------------------------------------------
@@ -27,7 +27,12 @@ import { HomeRoute, introRoute } from './introRoutes.ts';
 import { recruitRoute } from './recruitRoute.ts';
 import { mainRoute } from './mainRoute.ts';
 import { loginRoute } from './loginRoute.ts';
-import { registerRoute, registerWelcomeRoute } from './registerRoutes.ts';
+import {
+  registerRoute,
+  registerWelcomeRoute,
+  registerInfoRoute,
+  privacyPolicyRoute,
+} from './registerRoutes.ts';
 import {
   idSerachRoute,
   idCompleteRoute,
@@ -39,7 +44,7 @@ import {
   noticeRoute,
   noticeViewRoute,
   noticeEditRoute,
-  noticeWriteRoute,
+  adminNoticeWriteRoute,
 } from './noticeRoutes.ts';
 import {
   academicRoute,
@@ -87,6 +92,7 @@ import {
   userImageRoute,
 } from './userRoutes.ts';
 // import { comingSoonRoute, WIPRoute } from './tempRoutes.ts';
+import { swaggerRoute } from './swaggerRoutes.ts';
 
 export const routes = createRouter({
   routeTree: rootRoute.addChildren([
@@ -101,6 +107,8 @@ export const routes = createRouter({
     loginRoute,
     registerRoute,
     registerWelcomeRoute,
+    registerInfoRoute,
+    privacyPolicyRoute,
     idSerachRoute,
     idCompleteRoute,
     pwSearchRoute,
@@ -109,7 +117,7 @@ export const routes = createRouter({
     noticeRoute,
     noticeViewRoute,
     noticeEditRoute,
-    noticeWriteRoute,
+    adminNoticeWriteRoute,
     academicRoute,
     academicViewRoute,
     academicEditRoute,
@@ -142,6 +150,7 @@ export const routes = createRouter({
     userInfoRoute,
     userDeleteRoute,
     userImageRoute,
+    swaggerRoute,
     // comingSoonRoute,
     // WIPRoute,
   ]),

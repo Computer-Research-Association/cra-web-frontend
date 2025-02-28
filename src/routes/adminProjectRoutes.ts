@@ -1,11 +1,13 @@
 import { createRoute } from '@tanstack/react-router';
 import { lazy } from 'react';
 import { rootRoute } from './__root';
+import { requireAuth } from '~/components/Auth/Decode/authCheck.tsx';
 
 export const adminProjectRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/admin/project',
   component: lazy(() => import('~/pages/Board/Project/ProjectAdminPage.tsx')),
+  beforeLoad: requireAuth,
 });
 
 export const adminProjectDetailRoute = createRoute({
@@ -14,6 +16,7 @@ export const adminProjectDetailRoute = createRoute({
   component: lazy(
     () => import('~/pages/Board/Project/ProjectAdminDetailPage.tsx'),
   ),
+  beforeLoad: requireAuth,
 });
 
 export const adminProjectUpdateRoute = createRoute({
@@ -22,6 +25,7 @@ export const adminProjectUpdateRoute = createRoute({
   component: lazy(
     () => import('~/pages/Board/Project/ProjectAdminEditPage.tsx'),
   ),
+  beforeLoad: requireAuth,
 });
 
 export const adminProjectCreateRoute = createRoute({
@@ -30,4 +34,5 @@ export const adminProjectCreateRoute = createRoute({
   component: lazy(
     () => import('~/pages/Board/Project/ProjectAdminWritePage.tsx'),
   ),
+  beforeLoad: requireAuth,
 });

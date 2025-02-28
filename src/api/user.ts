@@ -4,16 +4,14 @@ import { authClient } from './auth/authClient';
 // 유저 정보 수정
 export const updateUser = async (user: User): Promise<User> => {
   try {
-    console.log('보낼 데이터:', user);
     const response = await authClient.put<User>(`/user/info`, user, {
       headers: {
         'Content-Type': 'application/json',
       },
     });
-    console.log('응답 데이터:', response.data);
     return response.data;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     throw error;
   }
 };
@@ -23,7 +21,7 @@ export const deleteUser = async () => {
   try {
     await authClient.delete(`/user`);
   } catch (error) {
-    console.log(error);
+    console.error(error);
     throw error;
   }
 };
@@ -36,7 +34,7 @@ export const changeUserPassword = async (): Promise<UserPassWord> => {
     );
     return response.data;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     throw error;
   }
 };
@@ -68,7 +66,6 @@ export const uploadProfileImage = async (blob: File): Promise<string> => {
     const imageUrl = response.data;
     return imageUrl;
   } catch (error) {
-    console.error('이미지 업로드 실패:', error);
     alert('이미지 업로드 실패');
     throw error;
   }

@@ -48,7 +48,7 @@ const RegisterInputForm = styled.form`
   max-width: 600px;
   background-color: var(--color-white);
   border-radius: 1rem;
-  padding: 4rem 2rem;
+  padding: 3rem 2rem;
 
   @media (max-width: 768px) {
     padding: 3rem 1.5rem;
@@ -103,13 +103,13 @@ const Input = styled.div`
   }
 
   input.error {
-    border-color: red;
+    border-color: var(--color-error);
   }
 
   div.error {
     margin-top: 0.25rem;
     margin-left: 0.25rem;
-    color: red;
+    color: var(--color-error);
     font-size: 1rem;
   }
 `;
@@ -350,12 +350,9 @@ function RegisterForm() {
     e.preventDefault();
     setUserName(formData.username);
     setName(formData.name);
-    console.log(formData.username);
-    console.log(formData.name);
 
     if (submitLoading) return;
     setSubmitLoading(true);
-
     // Check if any field is empty
     // 모든 필드가 채워졌는지 확인
     for (const key in formData) {
@@ -430,7 +427,7 @@ function RegisterForm() {
       await signUp(requestBody);
       setIsModalOpen(true); // 모달 열기
       setModalMessage('회원가입이 완료되었습니다.');
-      void navigate('/welcome');
+      void navigate('/register/complete');
     } catch (error) {
       if (error instanceof Error) {
         setIsModalOpen(true); // 모달 열기
@@ -605,7 +602,7 @@ function RegisterForm() {
           errorMessage={errorMessages['code']}
         />
 
-        {error && <p style={{ color: 'red' }}>{error}</p>}
+        {error && <p style={{ color: 'var(--color-error)' }}>{error}</p>}
 
         <SubmitBtn type="submit">
           {submitLoading ? <ClipLoader size={25} color="#fff" /> : '확인'}

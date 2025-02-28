@@ -76,7 +76,7 @@
   flex-direction: column;
   justify-content: center;
   margin-top: 5vw;
-  color: #3e3e3e;
+  color: var(--color-dark-text);
 }
 .content-description {
   font-family: 'Pretendard SemiBold';
@@ -102,20 +102,20 @@
   font-size: 2vw;
   border: none;
   background-color: transparent;
-  color: lightgray;
+  color: var(--color-dark-stroke);
   cursor: pointer;
 }
 
 .close-button:hover {
-  color: red;
+  color: var(--color-error);
 }
 
 /* URL Button */
 .url-button {
   font-size: clamp(0.5rem, 1.5vw, 1.5rem);
   font-family: 'Pretendard Semibold';
-  background-color: #2cb4db;
-  color: white;
+  background-color: var(--color-primary);
+  color: var(--color-white);
   border-radius: 0.5rem;
   text-align: center;
   text-decoration: none;

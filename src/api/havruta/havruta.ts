@@ -8,7 +8,7 @@ export const getAllHavrutas = async () => {
     const response = await client.get<Havruta[]>(`/havruta`);
     return response.data;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     throw error;
   }
 };
@@ -19,7 +19,7 @@ export const getHavrutas = async () => {
     const response = await authClient.get<Havruta[]>(`/admin/havruta`);
     return response.data;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     throw error;
   }
 };
@@ -34,7 +34,7 @@ export const getHavrutaById = async (id: number) => {
       createdAt: havruta.createdAt ? new Date(havruta.createdAt) : new Date(),
     };
   } catch (error) {
-    console.log(error);
+    console.error(error);
     throw error;
   }
 };
@@ -48,7 +48,7 @@ export const createHavruta = async (havruta: Havruta) => {
     });
     return response.data;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     throw error;
   }
 };
@@ -67,7 +67,7 @@ export const updateHavruta = async (havruta: Havruta) => {
 
     return response.data;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     throw error;
   }
 };
@@ -77,7 +77,7 @@ export const deleteHavruta = async (id: number): Promise<Havruta> => {
     const response = await authClient.delete<Havruta>(`/admin/havruta/${id}`);
     return response.data;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     throw error;
   }
 };

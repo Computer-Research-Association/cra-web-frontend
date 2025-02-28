@@ -1,0 +1,117 @@
+.recruit-main {
+  background: black;
+  height: 100vh;
+}
+
+.recruit-banner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 5rem;
+  margin-top: 5rem;
+}
+
+#title {
+  color: var(--color-white);
+  font-size: clamp(40px, 7vw, 7vw);
+  font-weight: 978;
+  letter-spacing: -1px;
+  line-height: clamp(30px, 5vw, 5vw);
+  font-family: 'Archivo Black';
+  margin-bottom: 1rem;
+}
+
+#content {
+  color: var(--color-white-blue-text);
+  font-size: clamp(14px, 2.9vw, 2.9vw);
+  padding: clamp(1rem, 2.5vw, 2.5rem) 0rem;
+  font-family: 'Pretendard Bold';
+  text-shadow:
+    0 0 20px rgba(255, 255, 255, 0.6),
+    0 0 30px rgba(255, 255, 255, 0.4);
+}
+
+.recruit-apply1 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 0rem 1rem 0rem;
+
+  h1 {
+    padding-top: 10px;
+    padding-bottom: 3vw;
+    font-size: 3vw;
+    color: var(--color-white);
+    font-family: 'Pretendard Bold';
+  }
+
+  .button-style {
+    padding: clamp(10px, 1vw, 1vw) clamp(20px, 15vw, 15vw);
+    font-size: clamp(15px, 2vw, 2vw);
+    font-family: 'Pretendard Bold';
+    color: var(--color-white);
+    background: var(--color-primary);
+    border: none;
+    border-radius: 25px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: all 0.3s ease-in-out; /* 부드러운 전환 효과 */
+  }
+
+  .button-style:hover {
+    transform: scale(1.05);
+  }
+}
+
+/*--------------------------------------------------------*/
+.vector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 3.25rem 0rem;
+  cursor: pointer;
+}
+
+.vector img {
+  width: clamp(30px, 4vw, 4vw);
+  height: clamp(15px, 2vw, 2vw);
+  animation: highwayEffect 1.5s infinite ease-in-out;
+  opacity: 0;
+}
+
+.vector img:nth-child(1) {
+  animation-delay: 0s;
+}
+.vector img:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.vector img:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes highwayEffect {
+  0% {
+    transform: translateY(-10px) scale(0.8); /* 위에서 작게 시작 */
+    opacity: 0;
+  }
+  50% {
+    transform: translateY(5px) scale(1); /* 아래로 내려오면서 확대 */
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(10px) scale(0.8); /* 사라지듯 축소 */
+    opacity: 0;
+  }
+}
+
+.vector:hover {
+  transform: scale(1.05);
+}
+
+.interview {
+  color: white;
+  margin-top: 40px;
+  margin-left: 3px;
+  font-family: 'Pretendard';
+}

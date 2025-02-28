@@ -104,7 +104,6 @@ export default function HavrutaBoardEdit() {
         },
         file: fileToUpload ? [fileToUpload.name] : [],
       };
-      console.log(payload.board);
 
       return await updateBoards(payload.board, fileToUpload);
     },

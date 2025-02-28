@@ -6,8 +6,11 @@ import { getAllHavrutas } from '~/api/havruta/havruta';
 import HavrutaDelete from '~/components/Havruta/Havruta/Delete/HavrutaDelete';
 import styled from 'styled-components';
 import LoadingSpinner from '~/components/Common/LoadingSpinner';
+import { FaHome } from 'react-icons/fa';
 
-const Container = styled.div``;
+const Container = styled.div`
+  padding: 10rem;
+`;
 
 const Table = styled.table`
   width: 100%;
@@ -23,13 +26,13 @@ const Th = styled.th`
 `;
 
 const Td = styled.td`
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solidvar(--color-bright-stroke);
   padding: 10px;
 `;
 
 const ActionLink = styled(Link)`
   padding: 0.25rem 0.5rem;
-  color: #007bff;
+  color: var(--color-more-primary);
   text-decoration: none;
   &:hover {
     text-decoration: underline;
@@ -42,12 +45,16 @@ const DeleteButtonWrapper = styled.div`
 `;
 
 const CreateHavrutaLink = styled(Link)`
-  color: #2cb4db;
+  color: var(--color-primary);
   font-size: 1.25rem;
   text-decoration: none;
   &:hover {
     text-decoration: underline;
   }
+`;
+const Home = styled(Link)`
+  color: black;
+  margin-left: 95%;
 `;
 
 //클래스명 교수명 불러오기
@@ -65,7 +72,7 @@ function HavrutaList() {
     content = <div>에러가 발생했습니다!</div>;
   } else if (havrutaQuery.isSuccess) {
     if (havrutaQuery.data.length === 0) {
-      console.log('서버 통신 가능, 아직 데이터 없음');
+      console.error('서버 통신 가능, 아직 데이터 없음');
     } else {
       content = (
         <Table>
@@ -101,7 +108,10 @@ function HavrutaList() {
 
   return (
     <Container>
-      <h1>관리자 Havruta 페이지</h1>
+      <h1>관리자 하브루타 페이지</h1>
+      <Home to="/admin">
+        <FaHome size={30} />
+      </Home>
       {content}
       <CreateHavrutaLink to="./admin/havruta/write">
         새 하브루타 생성

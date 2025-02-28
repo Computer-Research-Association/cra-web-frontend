@@ -84,7 +84,6 @@ function ItemAdminEdit() {
   } else if (itemQuery.isError) {
     content = <div className="error">에러가 발생했습니다!</div>;
   } else if (itemQuery.isSuccess) {
-    console.log(formData);
     return (
       <div className={styles['container']}>
         <form onSubmit={HandleSubmit}>

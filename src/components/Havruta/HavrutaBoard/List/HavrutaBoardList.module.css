@@ -47,7 +47,7 @@
   padding-right: 17px;
   border-radius: 10px;
   border: 1px solid var(--color-dark-stroke);
-  background-color: #ffffff;
+  background-color: var(--color-white);
 }
 
 .board-wrapper {
@@ -60,15 +60,15 @@
 }
 
 .board-wrapper:hover {
-  background-color: #f1f1f1;
+  background-color: var(--color-hover-white);
 }
 
 .loading {
-  color: #555;
+  color: var(--color-loading-black);
 }
 
 .error {
-  color: red;
+  color: var(--color-error);
 }
 
 .board-list-footer {
@@ -87,7 +87,7 @@
   width: 5rem;
   padding: 10px 15px;
   background-color: var(--color-primary);
-  color: white;
+  color: var(--color-white);
   text-decoration: none;
   border-radius: 5px;
   transition: background-color 0.2s;
@@ -105,7 +105,7 @@
   height: 1.5rem;
   padding: 7.5px 5px;
   background-color: var(--color-primary);
-  color: white;
+  color: var(--color-white);
   text-decoration: none;
   border-radius: 10px;
   transition: background-color 0.2s;

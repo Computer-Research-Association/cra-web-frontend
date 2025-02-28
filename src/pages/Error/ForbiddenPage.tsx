@@ -4,6 +4,8 @@ import WhiteVector from '~/assets/images/Vector/Vector-white.png';
 import SkyBlueVector from '~/assets/images/Vector/Vector-skyblue.png';
 import styled from 'styled-components';
 
+const STATUSCODE = 403;
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -12,7 +14,7 @@ const Container = styled.div`
   margin-bottom: 20rem;
   font-family: 'Pretendard Bold';
   p {
-    color: #2cb4db;
+    color: var(--color-primary);
   }
   button {
     font-family: 'Pretendard Bold';
@@ -32,7 +34,7 @@ const Title = styled.p`
 `;
 
 const Context = styled.p`
-  color: #8c8c8c !important;
+  color: var(--color-context-gray) !important;
   font-size: 1.5625rem;
 `;
 
@@ -53,21 +55,21 @@ const Buttons = styled.div`
 `;
 
 const MainBtn = styled.button`
-  color: #2cb4db;
-  border: 2px solid #2cb4db;
+  color: var(--color-primary);
+  border: 2px solid var(--color-primary);
 `;
 
 const PrevBtn = styled.button`
-  background-color: #2cb4db;
-  color: #ffffff;
-  border: 2px solid #2cb4db;
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  border: 2px solid var(--color-primary);
 `;
 
 function NotFoundPage() {
   const navigate = useNavigate();
   return (
     <Container>
-      <HttpStatus statusCode={403} />
+      <HttpStatus statusCode={STATUSCODE} />
       <Content>
         <Title>Forbidden</Title>
         <Context>존재하지 않는 주소를 입력하셨거나,</Context>
@@ -77,11 +79,11 @@ function NotFoundPage() {
       </Content>
       <Buttons>
         <MainBtn onClick={() => navigate('/')}>
-          메인으로 <img src={SkyBlueVector} />
+          메인으로 <img src={SkyBlueVector} loading="lazy" />
         </MainBtn>
 
         <PrevBtn onClick={() => navigate(-1)}>
-          이전으로 <img src={WhiteVector} />
+          이전으로 <img src={WhiteVector} loading="lazy" />
         </PrevBtn>
       </Buttons>
     </Container>

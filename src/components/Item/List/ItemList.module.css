@@ -1,4 +1,4 @@
-.project-list-container {
+.container {
   display: grid;
   grid-template-columns: repeat(
     auto-fill,
@@ -6,7 +6,8 @@
   ); /* 기본적으로 최소 300px 크기, 화면 크기에 맞춰 열 개수 조정 */
   padding-top: 34px;
   padding-bottom: 10rem;
-  max-width: 1200px; /* 컨테이너 최대 너비 */
+  width: 100%;
+  max-width: 1086px;
   margin: 0 auto; /* 가로 중앙 정렬 */
 }
 
@@ -14,4 +15,15 @@
   background-color: white;
   margin-bottom: 100px;
   margin-top: 34px;
+}
+
+@media (max-width: 700px) {
+  .container {
+    grid-template-columns: repeat(auto-fill, minmax(30vw, 1fr));
+  }
+}
+@media (max-width: 480px) {
+  .container {
+    grid-template-columns: repeat(auto-fill, minmax(50vw, 1fr));
+  }
 }

@@ -14,10 +14,10 @@ const CommentUserModal = ({ closeModal, comment }: CommentUserModalProps) => {
   const gitHubLink = 'https://github.com/' + comment.resUserDetailDto.githubId;
 
   return (
-    <div className={styles.commentContainer}>
+    <div className={styles.boardContainer}>
       <Modal
-        className={styles.commentModalContent}
-        overlayClassName={styles.commentOverlay}
+        className={styles.boardModalContent}
+        overlayClassName={styles.boardOverlay}
         isOpen
         onRequestClose={closeModal}
       >
@@ -44,7 +44,7 @@ const CommentUserModal = ({ closeModal, comment }: CommentUserModalProps) => {
             </div>
           </div>
           <div className={styles['hanmadi']}>
-            {' 나의 한마디를 입력하세요. '}
+            {comment.resUserDetailDto.greetingMessage}
           </div>
         </div>
         <div className={styles['extra-info']}>

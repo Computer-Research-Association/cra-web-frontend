@@ -61,7 +61,11 @@ const Input = styled.div<{ error?: boolean; focused?: boolean }>`
     font-size: 1.25rem;
     border: 2px solid
       ${({ error, focused }) =>
-        error ? 'red' : focused ? 'black' : 'var(--color-dark-stroke)'};
+        error
+          ? 'var(--color-error)'
+          : focused
+            ? 'black'
+            : 'var(--color-dark-stroke)'};
     border-radius: 0.5rem;
     padding: 1.5rem 1rem;
     box-sizing: border-box;
@@ -77,7 +81,7 @@ const Input = styled.div<{ error?: boolean; focused?: boolean }>`
   div.error {
     margin-top: 0.25rem;
     margin-left: 0.25rem;
-    color: red;
+    color: var(--color-error);
     font-size: 1rem;
   }
 `;
