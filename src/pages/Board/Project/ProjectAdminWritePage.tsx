@@ -1,11 +1,7 @@
 import ProjectAdminWrite from '~/components/Project/Write/ProjectAdminWrite.tsx';
 
 function ProjectAdminWritePage() {
-  return (
-    <div>
-      <ProjectAdminWrite />
-    </div>
-  );
+  return <ProjectAdminWrite />;
 }
 
 export default ProjectAdminWritePage;

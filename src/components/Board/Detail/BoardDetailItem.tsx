@@ -34,18 +34,16 @@ const extractFileName = (fileUrl: string) => {
 export default function BoardDetailItem({
   board,
   category,
-  commentCount,
 }: {
   board: Board;
   category: number;
-  commentCount: number;
 }) {
   const [viewCnt, setViewCnt] = useState(board.view);
 
   const [modalOpen, setModalOpen] = useState(false);
   const openModal = () => setModalOpen(true);
   const closeModal = () => setModalOpen(false);
-  const userId = useAuthStore.getState().userId as number;
+  const email = useAuthStore.getState().email;
 
   useEffect(() => {
     const viewed = localStorage.getItem(`viewed_${board.id}`);
@@ -160,7 +158,7 @@ export default function BoardDetailItem({
               </span>
             </div>
             <div className={styles['fix-button']}>
-              {userId === board.userId && (
+              {email === board.resUserDetailDto.email && (
                 <>
                   <Link
                     to={`/${CATEGORY_STRINGS_EN[category]}/edit/${board.id}`}
@@ -210,14 +208,14 @@ export default function BoardDetailItem({
               </span>
               <span className={styles.viewContainer}>
                 <FaRegComment />
-                <span>{commentCount}</span>
+                <span>{board.resListCommentDtos?.length}</span>
               </span>
             </div>
           </div>
         </div>
         <div className={styles['footer']}>
           <HeightSpacer space={20} />
-          <CommentList id={board.id!} />
+          <CommentList board={board} />
           <CommentWrite parentId={undefined} />
         </div>
       </div>
