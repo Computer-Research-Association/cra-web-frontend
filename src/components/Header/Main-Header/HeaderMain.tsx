@@ -39,6 +39,12 @@ export default function HeaderMain() {
     }
   };
 
+  const resetPage = () => {
+    {
+      sessionStorage.setItem('currentPage', '0');
+    }
+  };
+
   // const handleMyInfo = () => {
   //   navigate('/in  fo');
   // };
@@ -81,7 +87,10 @@ export default function HeaderMain() {
                 className={`${styles['link']} ${styles['navbar-link']} ${
                   location.pathname.startsWith(path) ? styles.active : ''
                 }`}
-                onClick={toggleMenu}
+                onClick={() => {
+                  toggleMenu();
+                  resetPage();
+                }}
               >
                 {label}
               </Link>

@@ -78,8 +78,8 @@ function HavrutaBoardContainer() {
 
   const totalPage =
     selectedHavrutaId === null
-      ? havrutaBoardQuery.data?.totalPages || 1
-      : havrutaBoardByHavrutaIdQuery.data?.totalPages || 1;
+      ? havrutaBoardQuery.data?.totalPages || 0
+      : havrutaBoardByHavrutaIdQuery.data?.totalPages || 0;
 
   return (
     <HavrutaBoardList
