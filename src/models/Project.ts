@@ -9,10 +9,10 @@ export interface Project {
   teamName: string;
   serviceName: string;
   content: string;
-  gitHubUrl?: string;
-  serviceUrl?: string;
+  gitHubUrl: string;
+  serviceUrl: string;
   members: string[];
-  imageUrl: string;
+  imageUrl?: string;
   deleted?: boolean;
   createdAt?: Date;
   updatedAt?: Date;

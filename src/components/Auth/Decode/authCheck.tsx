@@ -15,6 +15,6 @@ export const requireAuth = () => {
   if (!userIsAdmin) {
     return redirect({ to: '/forbidden' });
   } else {
-    console.error('error');
+    console.log('환영합니다.');
   }
 };

@@ -7,6 +7,9 @@ import { useNavigate } from 'react-router-dom';
 import { useMarkdownEditor } from './Markdown.tsx';
 import { Editor } from '@toast-ui/react-editor';
 import styles from './BoardWrite.module.css';
+import BoardUploadSpinner from '~/components/Common/BoardUploadSpinner.tsx';
+import AlertModal from '~/components/Modal/Alert/AlertModal.tsx';
+import { useModalStore } from '~/store/modalStore.ts';
 
 interface BoardWriteProps {
   category: number;
@@ -17,7 +20,8 @@ export default function BoardWrite({ category }: BoardWriteProps) {
   const [errors, setErrors] = useState<{ title?: string; content?: string }>(
     {},
   );
-  const navigate = useNavigate();
+  const { isOpen: modalIsOpen, openModal, closeModal } = useModalStore();
+  const [modalMessage, setModalMessage] = useState('');
   const [formData, setFormData] = useState<{
     title: string;
     content: string;
@@ -69,7 +73,9 @@ export default function BoardWrite({ category }: BoardWriteProps) {
     },
     onSuccess: async () => {
       alert('게시글 작성 성공');
-      await navigate(-1);
+      const currentPath = window.location.pathname;
+      const basePath = currentPath.replace('/write', '');
+      window.location.href = basePath;
       setTimeout(() => {
         window.scrollTo(0, 0);
       }, 100);
@@ -120,10 +126,18 @@ export default function BoardWrite({ category }: BoardWriteProps) {
       setErrors((prev) => ({ ...prev, [name]: undefined }));
     }
   };
+  const IMAGE_MAX_SIZE = 20 * 1024 * 1024;
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length > 0) {
+    if (
+      e.target.files &&
+      e.target.files.length > 0 &&
+      e.target.files[0].size < IMAGE_MAX_SIZE
+    ) {
       setFile(e.target.files[0]);
+    } else {
+      openModal();
+      setModalMessage('파일 크기는 최대 20MB까지 가능합니다.');
     }
   };
 
@@ -141,6 +155,7 @@ export default function BoardWrite({ category }: BoardWriteProps) {
 
   return (
     <div className={styles['write-container']}>
+      {mutation.isPending && <BoardUploadSpinner />}
       <form className={styles['write-form']} onSubmit={handleSubmit}>
         <h2 className={styles['write-title']}>글쓰기</h2>
 
@@ -189,15 +204,16 @@ export default function BoardWrite({ category }: BoardWriteProps) {
             </button>
           </div>
         )}
-        <div className={styles['file-comment']}>
-          파일 업로드는 한 개만 가능합니다!
-        </div>
 
         <input
           className={styles['submit-button']}
           type="submit"
           value="게시글 작성"
+          disabled={mutation.isPending}
         />
+        {modalIsOpen && (
+          <AlertModal closeModal={closeModal} message={modalMessage} />
+        )}
       </form>
     </div>
   );
