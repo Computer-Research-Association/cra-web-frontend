@@ -12,7 +12,7 @@ export const authClient = axios.create({
 authClient.interceptors.request.use(
   async (config) => {
     // 토큰들을 sessionStorage에서 가져오기
-    const accessToken = localStorage.getItem('accessToken');
+    const accessToken = sessionStorage.getItem('accessToken');
     const refreshToken = localStorage.getItem('refreshToken');
     const userId = useAuthStore.getState().userId as number; // 상태에서 userId 가져오기
 
