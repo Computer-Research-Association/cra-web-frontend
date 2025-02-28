@@ -1,29 +1,53 @@
-.container {
+.bookBoardList {
   display: grid;
-  grid-template-columns: repeat(
-    auto-fill,
-    minmax(300px, 1fr)
-  ); /* 기본적으로 최소 300px 크기, 화면 크기에 맞춰 열 개수 조정 */
+  grid-template-columns: repeat(4, 1fr); /* 4열 고정 */
   padding-top: 34px;
-  padding-bottom: 10rem;
-  width: 100%;
-  max-width: 1086px;
-  margin: 0 auto; /* 가로 중앙 정렬 */
+  padding-bottom: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  gap: 1rem;
 }
 
-.background {
-  background-color: white;
-  margin-bottom: 100px;
-  margin-top: 34px;
+@media (max-width: 1300px) {
+  .bookBoardList {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
-@media (max-width: 700px) {
-  .container {
-    grid-template-columns: repeat(auto-fill, minmax(30vw, 1fr));
+@media (max-width: 900px) {
+  .bookBoardList {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
-@media (max-width: 480px) {
-  .container {
-    grid-template-columns: repeat(auto-fill, minmax(50vw, 1fr));
+
+@media (max-width: 600px) {
+  .bookBoardList {
+    grid-template-columns: repeat(1, 1fr);
   }
+}
+
+.itemBoardList {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3열 고정 */
+  padding-top: 34px;
+  padding-bottom: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  gap: 1rem;
+}
+
+@media (max-width: 1300px) {
+  .itemBoardList {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .itemBoardList {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+.pagination {
+  padding-bottom: 4.5rem;
 }
