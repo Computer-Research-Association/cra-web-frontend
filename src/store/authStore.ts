@@ -21,6 +21,7 @@ interface authStore {
   accessToken: string | null; // 로그인 성공 시 서버에서 발급한 Access Token 저장
   refreshToken: string | null; // Access Token이 만료되었을때, 새로운 토근을 발급받기 위한 Refresh Token을 저장
   isAuthenticated: boolean; // 현재 로그인 상태인가?
+  userId: number | null; // 현재 로그인된 사용자의 고유 Id 저장 (number 이거나 null)
 }
 
 // create로 Zustand 상태 정의
@@ -33,10 +34,12 @@ export const useAuthStore = create<authStore>()(
       accessToken: null,
       refreshToken: null,
       email: null,
+      userId: null,
 
       // 로그인 메서드
       login: async (data: Login) => {
         try {
+          console.log(data);
           // 로그인 Api를 호출하여 사용자 인증을 처리하고, 서버로부터 중요한 데이터를 반환
           const response = await loginApi(data);
           const { resTokenDto, resUserDetailDto } = response;
@@ -50,12 +53,14 @@ export const useAuthStore = create<authStore>()(
             accessToken: resTokenDto.accessToken,
             refreshToken: resTokenDto.refreshToken,
             email: resUserDetailDto.email,
+            userId: resTokenDto.userId,
           });
 
           // localStorage Storage에도 토큰을 저장하여 다른 Api 요청에서도 사용할 수 있게하기
           localStorage.setItem('refreshToken', resTokenDto.refreshToken);
 
           await useAuthStore.getState().reissueToken({
+            userId: resTokenDto.userId,
             refreshToken: resTokenDto.refreshToken,
           });
 
