@@ -1,11 +1,7 @@
-import ProjectAdminList from '~/components/Project/List/ProjectAdminList.tsx';
+import ProjectAdminContainer from '~/components/Project/ProjectAdminContainer';
 
 function ProjectAdminPage() {
-  return (
-    <div>
-      <ProjectAdminList />
-    </div>
-  );
+  return <ProjectAdminContainer />;
 }
 
 export default ProjectAdminPage;
