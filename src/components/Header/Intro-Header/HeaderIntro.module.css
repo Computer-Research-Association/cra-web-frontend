@@ -61,7 +61,7 @@
   }
   .Logo {
     width: 96px;
-    transform: translateY(0.25rem);
+    transform: translateY(0.45rem) translateX(2rem);
   }
   .NavbarLink {
     font-size: 1.25rem;
@@ -75,7 +75,7 @@
   }
   .Logo {
     width: 80px;
-    transform: translateX(-1.25rem);
+    transform: translateY(0.9rem) translateX(1.25rem);
   }
   .NavbarLink {
     font-size: 0.95rem;

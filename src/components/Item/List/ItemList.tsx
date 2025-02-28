@@ -1,37 +1,53 @@
-import { useQuery } from '@tanstack/react-query';
-import { getItems } from '~/api/item.ts';
-import { QUERY_KEY } from '~/api/queryKey.ts';
 import { Item } from '~/models/Item.ts';
-import ItemItem from '~/components/Item/Item/ItemItem.tsx';
-import styles from '~/components/Item/List/ItemList.module.css';
-import LoadingSpinner from '~/components/Common/LoadingSpinner';
+import Pagination from '~/components/Pagination/Pagination';
+import ItemItem from '../Item/ItemItem';
+import { ITEM_CATEGORY_STRINGS } from '~/constants/item_category_strings';
+import styles from './ItemList.module.css';
 
-export default function ItemList({ itemCategory }: { itemCategory: number }) {
-  const ItemQuery = useQuery<Item[]>({
-    queryKey: QUERY_KEY.item.items(itemCategory),
-    queryFn: async () => getItems(itemCategory),
-  });
+interface ItemListProps {
+  category: number;
+  itemsQuery: Item[];
+  totalPages: number;
+  currentPage: number;
+  onPageChange: (_page: number) => void;
+}
 
-  let content;
-
-  if (ItemQuery.isLoading) {
-    content = <LoadingSpinner />;
-  } else if (ItemQuery.isError) {
-    content = <div className="error">에러가 발생했습니다!</div>;
-  } else if (ItemQuery.isSuccess) {
-    content =
-      ItemQuery.data.length === 0 ? (
-        <div className="empty">데이터가 없습니다.</div>
-      ) : (
-        <div className={styles['background']}>
-          <div className={styles['project-list-container']}>
-            {ItemQuery.data.map((ItemElement) => (
-              <ItemItem key={ItemElement.id} item={ItemElement} />
-            ))}
+export default function ItemList({
+  category,
+  itemsQuery,
+  totalPages,
+  currentPage,
+  onPageChange,
+}: ItemListProps) {
+  const renderBoardContent = () => {
+    if (itemsQuery != null) {
+      return itemsQuery
+        .filter((item) => item.id !== undefined)
+        .map((item, index) => (
+          <div key={`board-${item.id}`}>
+            <div className={styles['board-wrapper']}>
+              <ItemItem item={item} />
+            </div>
+            {index < itemsQuery.length - 1 && (
+              <div className={styles.divider}></div>
+            )}
           </div>
-        </div>
-      );
-  }
+        ));
+    }
+  };
 
-  return <div className={styles['content']}>{content}</div>;
+  return (
+    <div className={styles.container}>
+      <h2 className={styles.title}>{ITEM_CATEGORY_STRINGS[category]}</h2>
+      <div className={styles.boardList}>{renderBoardContent()}</div>
+      <div className={styles['board-list-footer']}>
+        <div className={styles['spacer']}></div>
+        <Pagination
+          totalPages={totalPages}
+          currentPage={currentPage}
+          onPageChange={onPageChange}
+        />
+      </div>
+    </div>
+  );
 }

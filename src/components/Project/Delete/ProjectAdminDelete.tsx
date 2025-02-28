@@ -7,7 +7,7 @@ import styled from 'styled-components';
 const DeleteButton = styled.button`
   background: none;
   border: none;
-  color: var(-color-delete);
+  color: var(--color-delete);
   cursor: pointer;
   text-decoration: none;
   &:hover {
@@ -22,7 +22,7 @@ function ProjectAdminDelete({ id }: { id: number }) {
     mutationFn: (id: number) => deleteProject(id),
     onSuccess: async () => {
       queryClient.setQueryData<Project[]>(
-        QUERY_KEY.project.projects(),
+        QUERY_KEY.project.projectById(id),
         (oldData) => {
           if (!oldData) return [];
           return oldData.filter((project) => project.id !== id);
@@ -30,7 +30,7 @@ function ProjectAdminDelete({ id }: { id: number }) {
       );
 
       await queryClient.invalidateQueries({
-        queryKey: QUERY_KEY.project.projects(),
+        queryKey: QUERY_KEY.project.projectById(id),
       });
     },
     onError: (error) => {

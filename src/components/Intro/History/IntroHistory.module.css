@@ -25,6 +25,7 @@
   align-items: start;
   width: 100%; /* 부모(.History)의 너비를 따름 */
   padding: 0 1rem;
+  list-style: none;
   box-sizing: border-box; /* 패딩이 너비에 포함되도록 */
 }
 
@@ -78,7 +79,7 @@
     font-size: 30px;
   }
   .HistoryUL {
-    padding-left: 0rem;
+    padding-left: 3.5rem;
     padding-right: 3.5rem;
     min-width: 0; /* min-width 제한 해제 */
   }
@@ -99,6 +100,8 @@
   }
   .HistoryUL {
     width: 100%; /* 부모(.History)의 너비를 따름 */
-    padding-right: 2rem; /* 패딩 조정 */
+
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
   }
 }

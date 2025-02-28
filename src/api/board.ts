@@ -1,20 +1,21 @@
-import { Board } from '~/models/Board.ts';
+import { Board, BoardPageList } from '~/models/Board.ts';
 import { client } from './client.ts';
 import { authClient } from './auth/authClient.ts';
 import { UpdateBoard } from '~/models/Board.ts';
 
 // [GET]
-export const getBoardCountByCategory = async (category: number) => {
-  try {
-    const response = await client.get<Board[]>(`/board/${category}`);
-    return response.data;
-  } catch (error) {
-    console.error(error);
-    throw error;
-  }
-};
+// export const getBoardCountByCategory = async (category: number) => {
+//   try {
+//     const response = await client.get<Board[]>(`/board/${category}`);
+//     return response.data;
+//   } catch (error) {
+//     console.error(error);
+//     throw error;
+//   }
+// };
 
 // [GET] by Pagination
+// orderBy: 0번 날짜순, 1번 좋아요순
 export const getBoardsByCategory = async (
   category: number,
   page: number = 1,
@@ -22,7 +23,7 @@ export const getBoardsByCategory = async (
   orderBy: number = 0,
 ) => {
   try {
-    const response = await client.get<Board[]>(
+    const response = await client.get<BoardPageList>(
       `/board/${category}/page/${page}`,
       {
         params: {
@@ -76,7 +77,9 @@ export const createBoards = async (board: Board, file: File | null) => {
       headers: {
         'Content-type': 'multipart/form-data',
       },
+      timeout: 3000000,
     });
+    console.log('Response:', response);
 
     return response.data;
   } catch (error) {
