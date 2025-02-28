@@ -1,16 +1,22 @@
 import styled, { keyframes } from 'styled-components';
 
 const spin = keyframes`
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  `;
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+`;
 
 const Container = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.7); /* 흰색 배경에 투명도 적용 */
+  backdrop-filter: blur(3px); /* 배경 흐림 효과 추가 */
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  padding: 20px;
+  align-items: center;
+  z-index: 9999; /* 최상위에 표시되도록 z-index 높게 설정 */
 `;
 
 const Spinner = styled.div`
@@ -23,7 +29,7 @@ const Spinner = styled.div`
   margin-bottom: 10px;
 `;
 
-const LoadingSpinner = () => {
+const BoardUploadSpinner = () => {
   return (
     <Container>
       <Spinner />
@@ -31,4 +37,4 @@ const LoadingSpinner = () => {
   );
 };
 
-export default LoadingSpinner;
+export default BoardUploadSpinner;
