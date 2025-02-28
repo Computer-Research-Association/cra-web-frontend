@@ -12,6 +12,6 @@ export const adminRoute = createRoute({
 
 export const superAdminRoute = createRoute({
   getParentRoute: () => rootRoute,
-  path: '/super-admin',
+  path: '/admin/code',
   component: lazy(() => import('~/pages/Admin/SuperAdminPage.tsx')),
 });
