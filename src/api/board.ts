@@ -77,7 +77,9 @@ export const createBoards = async (board: Board, file: File | null) => {
       headers: {
         'Content-type': 'multipart/form-data',
       },
+      timeout: 3000000,
     });
+    console.log('Response:', response);
 
     return response.data;
   } catch (error) {
