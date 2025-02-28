@@ -44,7 +44,7 @@ import {
   noticeRoute,
   noticeViewRoute,
   noticeEditRoute,
-  noticeWriteRoute,
+  adminNoticeWriteRoute,
 } from './noticeRoutes.ts';
 import {
   academicRoute,
@@ -117,7 +117,7 @@ export const routes = createRouter({
     noticeRoute,
     noticeViewRoute,
     noticeEditRoute,
-    noticeWriteRoute,
+    adminNoticeWriteRoute,
     academicRoute,
     academicViewRoute,
     academicEditRoute,

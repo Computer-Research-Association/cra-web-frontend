@@ -55,18 +55,22 @@ export default function BoardList({
       <h2 className={styles.title}>{CATEGORY_STRINGS[category]} 게시판</h2>
       <div className={styles.boardList}>{renderBoardContent()}</div>
       <div className={styles['board-list-footer']}>
-        <div className={styles['spacer']}></div>
+        <div className={styles['spacer']} />
         <Pagination
           totalPages={totalPages}
           currentPage={currentPage}
           onPageChange={onPageChange}
         />
-        <Link
-          className={styles.WriteLink}
-          to={`/${CATEGORY_STRINGS_EN[category]}/write`}
-        >
-          글쓰기
-        </Link>
+        {CATEGORY_STRINGS[category] === '학술' ? (
+          <Link
+            className={styles.WriteLink}
+            to={`/${CATEGORY_STRINGS_EN[category]}/write`}
+          >
+            글쓰기
+          </Link>
+        ) : (
+          <div className={styles['spacer']} />
+        )}
       </div>
     </div>
   );
