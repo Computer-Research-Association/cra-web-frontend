@@ -29,7 +29,6 @@ interface ResSignUp {
 }
 
 interface ReissueToken {
-  userId: number;
   refreshToken: string;
 }
 
