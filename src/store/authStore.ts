@@ -39,7 +39,6 @@ export const useAuthStore = create<authStore>()(
       // 로그인 메서드
       login: async (data: Login) => {
         try {
-          console.log(data);
           // 로그인 Api를 호출하여 사용자 인증을 처리하고, 서버로부터 중요한 데이터를 반환
           const response = await loginApi(data);
           const { resTokenDto, resUserDetailDto } = response;
@@ -59,6 +58,7 @@ export const useAuthStore = create<authStore>()(
           // localStorage Storage에도 토큰을 저장하여 다른 Api 요청에서도 사용할 수 있게하기
           localStorage.setItem('refreshToken', resTokenDto.refreshToken);
 
+          console.log('로그인 리이슈 성공');
           await useAuthStore.getState().reissueToken({
             userId: resTokenDto.userId,
             refreshToken: resTokenDto.refreshToken,
