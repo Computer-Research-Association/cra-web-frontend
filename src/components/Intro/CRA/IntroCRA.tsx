@@ -16,20 +16,20 @@ function IntroCRA() {
     <div className={styles.cra}>
       {!isMobile ? (
         <>
-          {/* Computer Research Assoication */}
+          {/* Computer Research Association */}
           <div className={styles.title}>
             <span className={styles.CapLetter}>C</span>
             <p>omputer</p>
             <span className={styles.CapLetter}>R</span>
             <p>esearch</p>
             <span className={styles.CapLetter}>A</span>
-            <p>ssoication</p>
+            <p>ssociation</p>
           </div>
         </>
       ) : (
         <>
           <>
-            {/* Computer Research Assoication */}
+            {/* Computer Research Association */}
             <div className={styles.CRAtitle}>
               <div className={styles.CRATitleContent}>
                 <span className={styles.CapLetter}>C</span>
@@ -41,7 +41,7 @@ function IntroCRA() {
               </div>
               <div className={styles.CRATitleContent}>
                 <span className={styles.CapLetter}>A</span>
-                <p>ssoication</p>
+                <p>ssociation</p>
               </div>
             </div>
           </>
