@@ -31,7 +31,7 @@
   grid-template-columns: repeat(3, 1fr); /* 3열 고정 */
   padding-top: 34px;
   padding-bottom: 2rem;
-  max-width: 1200px;
+  max-width: 1000px;
   margin: 0 auto;
   gap: 1rem;
 }
