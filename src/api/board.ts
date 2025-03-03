@@ -1,5 +1,5 @@
 import { Board, BoardPageList } from '~/models/Board.ts';
-import { client } from './client.ts';
+// import { client } from './client.ts';
 import { authClient } from './auth/authClient.ts';
 import { UpdateBoard } from '~/models/Board.ts';
 
@@ -23,7 +23,7 @@ export const getBoardsByCategory = async (
   orderBy: number = 0,
 ) => {
   try {
-    const response = await client.get<BoardPageList>(
+    const response = await authClient.get<BoardPageList>(
       `/board/${category}/page/${page}`,
       {
         params: {

@@ -29,6 +29,7 @@ export interface Board {
     term?: string;
     githubId?: string;
     imgUrl?: string;
+    greetingMessage?: string;
   };
   havrutaDto: {
     id?: 0;

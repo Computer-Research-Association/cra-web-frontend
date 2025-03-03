@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import ProjectDelete from '../Delete/ProjectAdminDelete.tsx';
 import { Project } from '~/models/Project.ts';
 import Pagination from '~/components/Pagination/Pagination.tsx';
+import { FaHome } from 'react-icons/fa';
 
 const Container = styled.div`
   padding: 10rem;
@@ -50,6 +51,11 @@ const Td = styled.td`
   padding: 10px;
 `;
 
+const Home = styled(Link)`
+  color: black;
+  margin-left: 95%;
+`;
+
 interface ProjectListProps {
   projects: Project[];
   totalPages: number;
@@ -66,6 +72,9 @@ function ProjectAdminList({
   return (
     <Container>
       <h1>관리자 프로젝트 페이지</h1>
+      <Home to="/admin">
+        <FaHome size={30} />
+      </Home>
       <BoardTable>
         <thead>
           <tr>

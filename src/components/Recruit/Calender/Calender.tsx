@@ -7,7 +7,7 @@ function Calender() {
       <div className={styles['calender-line']}>
         <div className={styles['calender-box']}>
           <h3>서류 접수</h3>
-          <p>2025.2.26.(목)</p>
+          <p>2025.2.26.(수)</p>
           <p>~ 3.12.(수)</p>
         </div>
         <div className={styles['calender-box']}>

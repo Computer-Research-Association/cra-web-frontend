@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
 import { reissueToken } from './authApi.ts';
-import { useAuthStore } from '~/store/authStore';
 
 // axios 인터셉터를 사용하여 api 요청 시 토큰을 자동으로 갱신하는 기능
 export const authClient = axios.create({
@@ -12,9 +11,8 @@ export const authClient = axios.create({
 authClient.interceptors.request.use(
   async (config) => {
     // 토큰들을 sessionStorage에서 가져오기
-    const accessToken = localStorage.getItem('accessToken');
+    const accessToken = sessionStorage.getItem('accessToken');
     const refreshToken = localStorage.getItem('refreshToken');
-    const userId = useAuthStore.getState().userId as number; // 상태에서 userId 가져오기
 
     if (accessToken && refreshToken) {
       // exp는 JWT의 만료시간 (초 단위)를 나타냄
@@ -27,7 +25,6 @@ authClient.interceptors.request.use(
         try {
           // 토큰 만료 시 refreshToken을 사용하여 새로운 accessToken을 발급
           const { accessToken: newAccessToken } = await reissueToken({
-            userId,
             refreshToken,
           });
           // 새로운 accessToken을 세션에 저장
@@ -35,6 +32,10 @@ authClient.interceptors.request.use(
           // 서버에서 토큰 검증을 위해 헤더에 newAccessToken을 Bearer Token으로 보내어 검증
 
           config.headers.Authorization = `Bearer ${newAccessToken}`;
+          console.log(
+            'Updated Authorization Header:',
+            config.headers.Authorization,
+          );
         } catch (error) {
           // refreshToken 재발급 실패 시 로그아웃 처리 해버리기
           localStorage.clear();

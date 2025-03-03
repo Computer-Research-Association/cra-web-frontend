@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import Pagination from '~/components/Pagination/Pagination';
 import { ITEM_CATEGORY_STRINGS_EN } from '~/constants/item_category_strings_en';
 import { ITEM_CATEGORY_STRINGS } from '~/constants/item_category_strings';
+import { FaHome } from 'react-icons/fa';
 
 const Container = styled.div`
   padding: 10rem;
@@ -51,6 +52,10 @@ const Td = styled.td`
   border-bottom: 1px solid var(--color-bright-stroke);
   padding: 10px;
 `;
+const Home = styled(Link)`
+  color: black;
+  margin-left: 95%;
+`;
 
 interface ItemListProps {
   category: number;
@@ -70,6 +75,9 @@ function ItemAdminList({
   return (
     <Container>
       <h1>관리자 {ITEM_CATEGORY_STRINGS[category]} 페이지</h1>
+      <Home to="/admin">
+        <FaHome size={30} />
+      </Home>
       <BoardTable>
         <thead>
           <tr>
