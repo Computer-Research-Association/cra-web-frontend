@@ -1,0 +1,24 @@
+.search-container {
+  display: flex;
+  justify-content: right;
+}
+
+.search-input {
+  width: 100%;
+  max-width: 200px;
+  padding: 10px 14px;
+  padding-left: 40px; /* 아이콘 공간 확보 */
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px;
+  outline: none;
+  transition: all 0.3s ease-in-out;
+  background: url('/public/favicon-32x32.png') no-repeat 12px center;
+  background-size: 20px;
+  background-color: white;
+}
+
+.search-input:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
+}

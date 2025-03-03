@@ -9,3 +9,9 @@ export const adminRoute = createRoute({
   component: lazy(() => import('~/pages/Admin/AdminPage.tsx')),
   beforeLoad: requireAuth,
 });
+
+export const superAdminRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/admin/code',
+  component: lazy(() => import('~/pages/Admin/SuperAdminPage.tsx')),
+});

@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { QUERY_KEY } from '~/api/queryKey.ts';
 import { getBoardById } from '~/api/board.ts';
-import { getCommentsCountByCategory } from '~/api/comment.ts';
+// import { getCommentsCountByCategory } from '~/api/comment.ts';
 import { Board } from '~/models/Board.ts';
 import { CATEGORY } from '~/constants/category.ts';
 import HavrutaBoardDetailItem from './Item/HavrutaBoardDetailIItem.tsx';
@@ -26,11 +26,11 @@ export default function HavrutaBoardDetail() {
     retry: false,
   });
 
-  const commentCountQuery = useQuery<number>({
-    queryKey: QUERY_KEY.comment.commentsCountById(boardId),
-    queryFn: async () => getCommentsCountByCategory(boardId),
-    retry: false,
-  });
+  // const commentCountQuery = useQuery<number>({
+  //   queryKey: QUERY_KEY.comment.commentsCountById(boardId),
+  //   queryFn: async () => getCommentsCountByCategory(boardId),
+  //   retry: false,
+  // });
 
   useEffect(() => {
     if (hasNavigated.current) return;
@@ -70,17 +70,16 @@ export default function HavrutaBoardDetail() {
     }
   });
 
-  if (boardQuery.isFetching || commentCountQuery.isFetching) {
+  if (boardQuery.isFetching) {
     return <LoadingSpinner />;
   }
 
-  if (boardQuery.isSuccess && commentCountQuery.isSuccess) {
+  if (boardQuery.isSuccess) {
     return (
       <div className={styles['full-width']}>
         <HavrutaBoardDetailItem
           board={boardQuery.data}
           category={havrutaCategory}
-          commentCount={commentCountQuery.data}
         />
       </div>
     );
