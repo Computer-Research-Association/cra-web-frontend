@@ -60,6 +60,7 @@ export const useAuthStore = create<authStore>()(
 
           console.log('로그인 리이슈 성공');
           await useAuthStore.getState().reissueToken({
+            userId: resTokenDto.userId,
             refreshToken: resTokenDto.refreshToken,
           });
 
