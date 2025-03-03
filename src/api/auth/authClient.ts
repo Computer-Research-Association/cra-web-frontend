@@ -27,8 +27,8 @@ authClient.interceptors.request.use(
         if (isTokenExpired) {
           // 토큰 만료 시 refreshToken을 사용하여 새로운 accessToken을 발급
           const { accessToken: newAccessToken } = await reissueToken({
-            userId,
             refreshToken,
+            userId,
           });
 
           // 새로운 accessToken을 세션에 저장
