@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { createBoards } from '~/api/board.ts';
@@ -54,6 +54,88 @@ export default function HavrutaBoardWrite() {
     queryFn: async () => getAllHavrutas(),
   });
 
+  useEffect(() => {
+    const savedHavrutaId = sessionStorage.getItem('havruta');
+    if (savedHavrutaId && havrutaQuery.data) {
+      const selectedHavruta = havrutaQuery.data.find(
+        (h) => h.id === parseInt(savedHavrutaId, 10),
+      );
+      if (selectedHavruta) {
+        setFormData((prev) => ({
+          ...prev,
+          havrutaDto: {
+            id: selectedHavruta.id ?? null,
+            classname: selectedHavruta.className,
+            professor: selectedHavruta.professor,
+          },
+        }));
+      }
+    }
+  }, [havrutaQuery.data]);
+
+  const handleSelectHavruta = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedHavrutaId = parseInt(e.target.value, 10);
+    const selectedHavruta = havrutaQuery.data?.find(
+      (h) => h.id === selectedHavrutaId,
+    );
+
+    if (!selectedHavruta) {
+      console.error('선택한 하브루타 과목을 찾을 수 없습니다.');
+      return;
+    }
+
+    setFormData((prev) => ({
+      ...prev,
+      havrutaDto: {
+        id: selectedHavruta.id ?? null,
+        classname: selectedHavruta.className || '', // 🔹 빈 문자열로 기본값 설정
+        professor: selectedHavruta.professor || '', // 🔹 빈 문자열로 기본값 설정
+      },
+    }));
+  };
+
+  const validateForm = () => {
+    const newErrors: { title?: string; content?: string } = {};
+    let isValid = true;
+
+    if (!formData.title.trim()) {
+      newErrors.title = '제목을 입력해주세요.';
+      isValid = false;
+    }
+
+    const content = editorRef.current?.getInstance().getMarkdown() || '';
+    if (!content.trim()) {
+      newErrors.content = '내용을 입력해주세요.';
+      isValid = false;
+    }
+
+    setErrors(newErrors);
+    return isValid;
+  };
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: name === 'imageUrls' ? value.split(',') : value,
+    }));
+    if (errors[name as keyof typeof errors]) {
+      setErrors((prev) => ({ ...prev, [name]: undefined }));
+    }
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      setFile(e.target.files[0]);
+    }
+  };
+
+  const handleRemoveFile = () => {
+    setFile(null);
+  };
+
   const mutation = useMutation({
     mutationFn: async () => {
       const content = editorRef.current.getInstance().getMarkdown();
@@ -108,69 +190,6 @@ export default function HavrutaBoardWrite() {
       console.error('게시글 작성 실패:', error);
     },
   });
-
-  const validateForm = () => {
-    const newErrors: { title?: string; content?: string } = {};
-    let isValid = true;
-
-    if (!formData.title.trim()) {
-      newErrors.title = '제목을 입력해주세요.';
-      isValid = false;
-    }
-
-    const content = editorRef.current?.getInstance().getMarkdown() || '';
-    if (!content.trim()) {
-      newErrors.content = '내용을 입력해주세요.';
-      isValid = false;
-    }
-
-    setErrors(newErrors);
-    return isValid;
-  };
-
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
-  ) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: name === 'imageUrls' ? value.split(',') : value,
-    }));
-    if (errors[name as keyof typeof errors]) {
-      setErrors((prev) => ({ ...prev, [name]: undefined }));
-    }
-  };
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length > 0) {
-      setFile(e.target.files[0]);
-    }
-  };
-
-  const handleRemoveFile = () => {
-    setFile(null);
-  };
-
-  const handleSelectHavruta = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedHavrutaId = parseInt(e.target.value, 10);
-    const selectedHavruta = havrutaQuery.data?.find(
-      (h) => h.id === selectedHavrutaId,
-    );
-
-    if (!selectedHavruta) {
-      console.error('선택한 하브루타 과목을 찾을 수 없습니다.');
-      return;
-    }
-
-    setFormData((prev) => ({
-      ...prev,
-      havrutaDto: {
-        id: selectedHavruta.id ?? null,
-        classname: selectedHavruta.className || '', // 🔹 빈 문자열로 기본값 설정
-        professor: selectedHavruta.professor || '', // 🔹 빈 문자열로 기본값 설정
-      },
-    }));
-  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

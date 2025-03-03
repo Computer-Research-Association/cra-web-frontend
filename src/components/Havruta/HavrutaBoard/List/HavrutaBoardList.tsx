@@ -28,20 +28,24 @@ export default function HavrutaBoardList({
   onHavrutaChange,
 }: HavrutaBoardListProps) {
   const renderBoardContent = () => {
-    if (havrutaBoardQuery != null) {
-      return havrutaBoardQuery
-        .filter((havrutaBoard) => havrutaBoard.id !== undefined)
-        .map((havrutaBoard, index) => (
-          <div key={`havruta-${havrutaBoard.id}`}>
-            <div className={styles['board-wrapper']}>
-              <HavrutaBoardItem havrutaBoard={havrutaBoard} />
-            </div>
-            {index < havrutaBoardQuery.length - 1 && (
-              <div className={styles.divider}></div>
-            )}
-          </div>
-        ));
+    if (!havrutaBoardQuery || havrutaBoardQuery.length === 0) {
+      return (
+        <div className={styles.container}>게시물이 존재하지 않습니다.</div>
+      );
     }
+
+    return havrutaBoardQuery
+      .filter((havrutaBoard) => havrutaBoard.id !== undefined)
+      .map((havrutaBoard, index) => (
+        <div key={`havruta-${havrutaBoard.id}`}>
+          <div className={styles['board-wrapper']}>
+            <HavrutaBoardItem havrutaBoard={havrutaBoard} />
+          </div>
+          {index < havrutaBoardQuery.length - 1 && (
+            <div className={styles.divider}></div>
+          )}
+        </div>
+      ));
   };
 
   return (

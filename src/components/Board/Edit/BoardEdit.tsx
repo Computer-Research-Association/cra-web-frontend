@@ -9,6 +9,7 @@ import { QUERY_KEY } from '~/api/queryKey';
 import { useMarkdownEditor } from '../Write/Markdown';
 import { Editor } from '@toast-ui/react-editor';
 import styles from './BoardEdit.module.css';
+import LoadingSpinner from '~/components/Common/LoadingSpinner';
 
 interface BoardEditProps {
   category: number;
