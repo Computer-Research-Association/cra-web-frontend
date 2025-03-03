@@ -8,13 +8,21 @@
   gap: 1rem;
 }
 
-@media (max-width: 700px) {
+/* 반응형 조정 */
+@media (max-width: 900px) {
   .project-list-container {
-    grid-template-columns: repeat(auto-fill, minmax(30vw, 1fr));
+    grid-template-columns: repeat(2, 1fr);
   }
 }
-@media (max-width: 480px) {
+
+@media (max-width: 600px) {
   .project-list-container {
-    grid-template-columns: repeat(auto-fill, minmax(50vw, 1fr));
+    grid-template-columns: 1fr;
   }
+}
+
+.content {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
 }
