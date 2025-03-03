@@ -1,36 +1,38 @@
+.container {
+  max-width: 1100px;
+}
+
 .project-list-container {
   display: flex;
+  flex-wrap: wrap;
   gap: 1rem; /* 아이템 간 가로/세로 간격 */
   justify-content: flex-start; /* 왼쪽 정렬 */
   padding: 2rem;
   margin-bottom: 4rem;
 }
 .project-block {
-  flex-basis: calc(33.33% - 1rem); /* 각 아이템의 너비를 균등하게 설정 */
   aspect-ratio: 1.3 / 1.1;
-  background-color: var(--color-white);
-  border-radius: 10px;
-  border: 1.5px solid var(--color-dark-stroke);
+  background-color: white;
   display: flex;
   flex-direction: column;
   padding: 12px;
   cursor: pointer;
-  margin-bottom: 1rem; /* 아래쪽 간격 */
+  border-radius: 5%;
 }
 
 .project-block:hover {
-  transform: scale(1.01); /* 약간 확대 */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
+  transform: scale(1.01);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* 이미지 */
 .project-picture {
+  display: flex;
+  margin: 0 auto;
   width: 100%;
   height: 100%;
-  border: 1px solid var(--color-dark-stroke);
-  border-radius: 10px;
-  background-color: var(--color-dark-stroke);
-  margin-bottom: 10px;
+  object-fit: cover;
+  overflow: hidden;
 }
 
 /* 제목 */
@@ -48,7 +50,8 @@
   color: var(--color-dark-stroke);
   text-align: left;
   padding-left: 10px;
-  font-size: clamp(9px, 1vw, 1vw);
+  font-size: clamp(12px, 1vw, 16px); /* 더 읽기 쉬운 크기로 조정 */
+  flex-grow: 1; /* 남은 공간을 채우도록 */
 }
 
 .borrow {
