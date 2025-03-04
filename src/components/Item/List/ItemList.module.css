@@ -31,12 +31,12 @@
   grid-template-columns: repeat(3, 1fr); /* 3열 고정 */
   padding-top: 34px;
   padding-bottom: 2rem;
-  max-width: 1000px;
+  max-width: 1200px;
   margin: 0 auto;
-  gap: 1rem;
+  gap: 2rem;
 }
 
-@media (max-width: 1300px) {
+@media (max-width: 1200px) {
   .itemBoardList {
     grid-template-columns: repeat(2, 1fr);
   }
