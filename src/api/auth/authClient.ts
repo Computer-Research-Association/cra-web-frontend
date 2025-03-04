@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
 import { reissueToken } from './authApi.ts';
+import { useAuthStore } from '~/store/authStore.ts';
 
 // axios 인터셉터를 사용하여 api 요청 시 토큰을 자동으로 갱신하는 기능
 export const authClient = axios.create({
@@ -13,6 +14,7 @@ authClient.interceptors.request.use(
     // 토큰들을 sessionStorage & localStorage에서 가져오기
     const accessToken = sessionStorage.getItem('accessToken');
     const refreshToken = localStorage.getItem('refreshToken');
+    const userId = useAuthStore.getState().userId as number;
 
     if (accessToken && refreshToken) {
       try {
@@ -26,6 +28,7 @@ authClient.interceptors.request.use(
           // 토큰 만료 시 refreshToken을 사용하여 새로운 accessToken을 발급
           const { accessToken: newAccessToken } = await reissueToken({
             refreshToken,
+            userId,
           });
 
           // 새로운 accessToken을 세션에 저장
@@ -52,10 +55,12 @@ authClient.interceptors.response.use(
     if (error.response?.status === 401) {
       try {
         const refreshToken = localStorage.getItem('refreshToken');
+        const userId = useAuthStore.getState().userId as number;
 
         if (refreshToken) {
           // 401 발생 시 refreshToken으로 새로운 accessToken 발급
           const { accessToken: newAccessToken } = await reissueToken({
+            userId,
             refreshToken,
           });
 

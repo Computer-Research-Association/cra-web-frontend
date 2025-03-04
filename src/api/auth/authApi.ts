@@ -1,5 +1,5 @@
 import axios from 'axios';
-// import { AuthClient } from '~/api/client.ts';
+import { AuthClient } from '~/api/client.ts';
 import {
   ReqSignUp,
   ResSignUp,
@@ -12,7 +12,7 @@ import { authClient } from './authClient';
 
 export const login = async (data: Login): Promise<ResponseLogin> => {
   try {
-    const response = await authClient.post<ResponseLogin>('/auth/login', data);
+    const response = await AuthClient.post<ResponseLogin>('/auth/login', data);
     return response.data;
   } catch (error) {
     console.error('Reissue Token API Error:', error);
@@ -22,7 +22,7 @@ export const login = async (data: Login): Promise<ResponseLogin> => {
 
 export const signUp = async (data: ReqSignUp): Promise<ResSignUp | null> => {
   try {
-    const response = await authClient.post<ResSignUp>('/auth/signup', data);
+    const response = await AuthClient.post<ResSignUp>('/auth/signup', data);
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error) && error.response) {
@@ -49,7 +49,7 @@ export const reissueToken = async (
   data: ReissueToken,
 ): Promise<ResTokenDto> => {
   try {
-    const response = await authClient.post<ResTokenDto>(
+    const response = await AuthClient.post<ResTokenDto>(
       '/auth/reissue-token',
       data,
     );
