@@ -19,6 +19,11 @@ export default function ItemList({
   currentPage,
   onPageChange,
 }: ItemListProps) {
+  // category 값에 따라 다른 클래스명 사용
+  const getBoardListClassName = () => {
+    return category === 0 ? styles.itemBoardList : styles.bookBoardList;
+  };
+
   const renderBoardContent = () => {
     if (itemsQuery != null) {
       return itemsQuery
@@ -26,7 +31,7 @@ export default function ItemList({
         .map((item, index) => (
           <div key={`board-${item.id}`}>
             <div className={styles['board-wrapper']}>
-              <ItemItem item={item} />
+              <ItemItem category={category} item={item} />
             </div>
             {index < itemsQuery.length - 1 && (
               <div className={styles.divider}></div>
@@ -39,14 +44,15 @@ export default function ItemList({
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>{ITEM_CATEGORY_STRINGS[category]}</h2>
-      <div className={styles.boardList}>{renderBoardContent()}</div>
+      <div className={getBoardListClassName()}>{renderBoardContent()}</div>
       <div className={styles['board-list-footer']}>
-        <div className={styles['spacer']}></div>
-        <Pagination
-          totalPages={totalPages}
-          currentPage={currentPage}
-          onPageChange={onPageChange}
-        />
+        <div className={styles.pagination}>
+          <Pagination
+            totalPages={totalPages}
+            currentPage={currentPage}
+            onPageChange={onPageChange}
+          />
+        </div>
       </div>
     </div>
   );

@@ -1,14 +1,22 @@
 import { Item } from '~/models/Item.ts';
 import styles from '~/components/Item/Item/ItemItem.module.css';
 
-export default function ItemItem({ item }: { item: Item }) {
+interface ItemItemProps {
+  item: Item;
+  category: number;
+}
+
+export default function ItemItem({ item, category }: ItemItemProps) {
+  const getBoardListClassName = () => {
+    return category === 0 ? styles.itemPicture : styles.bookPicture;
+  };
   return (
     <>
       <div className={styles['project-block']}>
-        <div className={styles['project-picture']}>
+        <div className={styles['picture-background']}>
           <img
             src={item.imageUrl}
-            className={styles['project-picture']}
+            className={getBoardListClassName()}
             loading="lazy"
           />
         </div>

@@ -42,6 +42,7 @@ export default function HeaderMain() {
   const resetPage = () => {
     {
       sessionStorage.setItem('currentPage', '0');
+      sessionStorage.removeItem('havruta');
     }
   };
 

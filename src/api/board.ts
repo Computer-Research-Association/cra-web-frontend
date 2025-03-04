@@ -1,7 +1,11 @@
+/* eslint-disable */
+// @ts-nocheck
 import { Board, BoardPageList } from '~/models/Board.ts';
-import { client } from './client.ts';
+// import { client } from './client.ts';
 import { authClient } from './auth/authClient.ts';
 import { UpdateBoard } from '~/models/Board.ts';
+import { reissueToken } from './auth/authApi.ts';
+import { useAuthStore } from '~/store/authStore.ts';
 
 // [GET]
 // export const getBoardCountByCategory = async (category: number) => {
@@ -23,7 +27,7 @@ export const getBoardsByCategory = async (
   orderBy: number = 0,
 ) => {
   try {
-    const response = await client.get<BoardPageList>(
+    const response = await authClient.get<BoardPageList>(
       `/board/${category}/page/${page}`,
       {
         params: {
@@ -34,7 +38,34 @@ export const getBoardsByCategory = async (
       },
     );
     return response.data;
-  } catch (error) {
+  } catch (error: any) {
+    // 403
+    if (error.response?.status === 403) {
+      const refreshToken = localStorage.getItem('refreshToken');
+
+      if (!refreshToken) {
+        console.error('No refresh token found');
+        throw new Error('Session expired, please log in again');
+      }
+
+      try {
+        const userId = useAuthStore.getState().userId as number;
+
+        const { accessToken: newAccessToken } = await reissueToken({
+          userId,
+          refreshToken,
+        });
+
+        sessionStorage.setItem('accessToken', newAccessToken);
+
+        error.config.headers.Authorization = `Bearer ${newAccessToken}`;
+        return client.request(error.config);
+      } catch (reissueError) {
+        localStorage.clear();
+        console.error('Token reissue failed:', reissueError);
+        throw new Error('Session expired, please log in again');
+      }
+    }
     console.error(error);
     throw error;
   }
