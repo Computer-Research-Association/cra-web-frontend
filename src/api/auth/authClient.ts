@@ -13,7 +13,7 @@ authClient.interceptors.request.use(
   async (config) => {
     // 토큰들을 sessionStorage에서 가져오기
     const accessToken = sessionStorage.getItem('accessToken');
-    const refreshToken = sessionStorage.getItem('refreshToken');
+    const refreshToken = localStorage.getItem('refreshToken');
     const userId = useAuthStore.getState().userId as number; // 상태에서 userId 가져오기
 
     if (accessToken && refreshToken) {
@@ -37,7 +37,7 @@ authClient.interceptors.request.use(
           config.headers.Authorization = `Bearer ${newAccessToken}`;
         } catch (error) {
           // refreshToken 재발급 실패 시 로그아웃 처리 해버리기
-          sessionStorage.clear();
+          localStorage.clear();
           console.error('Session Error:', error);
           throw new Error('Session expired, please log in again');
         }
