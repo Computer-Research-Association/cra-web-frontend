@@ -5,8 +5,8 @@
 .project-list-container {
   display: flex;
   flex-wrap: wrap;
-  gap: 1rem; /* 아이템 간 가로/세로 간격 */
-  justify-content: flex-start; /* 왼쪽 정렬 */
+  gap: 1rem;
+  justify-content: flex-start;
   padding: 2rem;
   margin-bottom: 4rem;
 }
@@ -18,6 +18,8 @@
   padding: 12px;
   cursor: pointer;
   border-radius: 5%;
+  height: 280px; 
+  overflow: hidden;
 }
 
 .project-block:hover {
@@ -25,33 +27,36 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* 이미지 */
+.picture-background {
+  margin-bottom: 0.3rem;
+}
+
 .project-picture {
   display: flex;
   margin: 0 auto;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  width: 80%;
+  height: auto;
+  max-height: 200px;
+  object-fit: contain;
   overflow: hidden;
 }
 
-/* 제목 */
 .title {
   font-family: 'Pretendard SemiBold';
   font-size: 18px;
+  font-weight: 200;
   text-align: left;
   line-height: 30px;
   padding-left: 10px;
 }
 
-/* 내용 */
 .content {
   font-family: 'Pretendard Regular';
   color: var(--color-dark-stroke);
   text-align: left;
   padding-left: 10px;
-  font-size: clamp(12px, 1vw, 16px); /* 더 읽기 쉬운 크기로 조정 */
-  flex-grow: 1; /* 남은 공간을 채우도록 */
+  font-size: clamp(12px, 1vw, 16px);
+  flex-grow: 1;
 }
 
 .borrow {

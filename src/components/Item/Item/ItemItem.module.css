@@ -29,8 +29,9 @@
   display: flex;
   margin: 0 auto;
   width: 80%;
-  height: 250px;
-  object-fit: cover;
+  height: auto;
+  max-height: 200px;
+  object-fit: contain;
   overflow: hidden;
 }
 .bookPicture {
@@ -39,6 +40,24 @@
   width: 80%;
   height: 250px;
   object-fit: cover;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+.picture-background {
+  min-height: 200px; /* 최소 높이 보장 */
+  display: flex;
+  align-items: center; /* 이미지를 세로 중앙에 정렬 */
+  justify-content: center; /* 가로 중앙 정렬 */
+  width: 100%;
+}
+
+.project-background {
+  display: flex;
+  margin: 0 auto;
+  width: 80%;
+  height: auto;
+  max-height: 200px;
+  object-fit: contain;
   overflow: hidden;
 }
 

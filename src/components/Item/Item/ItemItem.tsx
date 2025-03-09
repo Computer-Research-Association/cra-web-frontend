@@ -13,7 +13,7 @@ export default function ItemItem({ item, category }: ItemItemProps) {
   return (
     <>
       <div className={styles['project-block']}>
-        <div>
+        <div className={styles['picture-background']}>
           <img
             src={item.imageUrl}
             className={getBoardListClassName()}
