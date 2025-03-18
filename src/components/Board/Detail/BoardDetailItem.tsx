@@ -12,7 +12,7 @@ import { dateFormat } from '~/utils/dateForm.ts';
 import { Viewer } from '@toast-ui/react-editor';
 import { FaRegEdit } from 'react-icons/fa';
 import { IoIosLink } from 'react-icons/io';
-import { LuEye } from 'react-icons/lu';
+import { LuEye, LuPin, LuPinOff } from 'react-icons/lu';
 import { BiLike } from 'react-icons/bi';
 import { FaRegComment } from 'react-icons/fa';
 import styles from './BoardDetailItem.module.css';
@@ -21,6 +21,7 @@ import { getBoardById } from '~/api/board';
 import createLike from '~/api/like';
 import BoardUserModal from '~/components/Modal/User/OtherUser/BoardUserModal';
 import { useAuthStore } from '~/store/authStore';
+import { createPinBoard, deletePinBoard } from '~/api/pin';
 
 const DEFAULT_PROFILE = import.meta.env.VITE_DEFAULT_IMG as string;
 
@@ -38,6 +39,7 @@ export default function BoardDetailItem({
   board: Board;
   category: number;
 }) {
+  console.log(board);
   const [viewCnt, setViewCnt] = useState(board.view);
 
   const [modalOpen, setModalOpen] = useState(false);
@@ -122,11 +124,30 @@ export default function BoardDetailItem({
     }
   };
 
+  const [isPinned, setIsPinned] = useState(!!board.pinedAt);
+
+  const handlePin = async () => {
+    try {
+      if (isPinned) {
+        await deletePinBoard(board.id as number);
+      } else {
+        await createPinBoard(board.id as number, category);
+      }
+
+      setIsPinned(!isPinned);
+    } catch (error) {
+      console.error('핀 처리 중 오류 발생:', error);
+    }
+  };
+
   return (
     <div className={styles['detail-container']}>
       <div className={styles['detail-content']}>
         <div className={styles['title']}>
           {CATEGORY_STRINGS[category]} 게시판
+          <div onClick={handlePin} style={{ cursor: 'pointer' }}>
+            {isPinned ? <LuPin size={20} /> : <LuPinOff size={20} />}
+          </div>
         </div>
         <Divider />
         <div className={styles['content-body']}>

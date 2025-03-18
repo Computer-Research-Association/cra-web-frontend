@@ -25,7 +25,7 @@ export const getBoardsByCategory = async (
   page: number = 1,
   perPage: number = 10,
   orderBy: number = 0,
-) => {
+): Promise<BoardPageList> => {
   try {
     const response = await authClient.get<BoardPageList>(
       `/board/${category}/page/${page}`,

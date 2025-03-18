@@ -10,6 +10,7 @@ import styles from './BoardWrite.module.css';
 import BoardUploadSpinner from '~/components/Common/BoardUploadSpinner.tsx';
 import AlertModal from '~/components/Modal/Alert/AlertModal.tsx';
 import { useModalStore } from '~/store/modalStore.ts';
+import { BiCheckbox, BiPin } from 'react-icons/bi';
 
 interface BoardWriteProps {
   category: number;
@@ -186,6 +187,7 @@ export default function BoardWrite({ category }: BoardWriteProps) {
         <label className={styles['file-button']} htmlFor="fileUpload">
           파일 선택
         </label>
+
         <input
           className={styles['file-input']}
           type="file"
