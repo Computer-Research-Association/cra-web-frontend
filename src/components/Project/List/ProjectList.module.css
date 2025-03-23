@@ -1,23 +1,25 @@
-.container {
+.boardList {
   display: grid;
-  grid-template-columns: repeat(
-    auto-fill,
-    minmax(23vw, 1fr)
-  ); /* 기본적으로 최소 300px 크기, 화면 크기에 맞춰 열 개수 조정 */
-  gap: 0.5rem;
+  grid-template-columns: repeat(3, 1fr); /* 3열 고정 */
   padding-top: 34px;
-  padding-bottom: 10rem;
-  max-width: 1200px; /* 컨테이너 최대 너비 */
-  margin: 0 auto; /* 가로 중앙 정렬 */
+  padding-bottom: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  gap: 1.5rem;
 }
 
-@media (max-width: 700px) {
-  .project-list-container {
-    grid-template-columns: repeat(auto-fill, minmax(30vw, 1fr));
+@media (max-width: 1200px) {
+  .boardList {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
-@media (max-width: 480px) {
-  .project-list-container {
-    grid-template-columns: repeat(auto-fill, minmax(50vw, 1fr));
+
+@media (max-width: 850px) {
+  .boardList {
+    grid-template-columns: 1fr;
   }
+}
+
+.pagination {
+  padding-bottom: 4.5rem;
 }

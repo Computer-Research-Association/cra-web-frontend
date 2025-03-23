@@ -39,11 +39,13 @@ export default function ProjectList({
       <div className={styles.boardList}>{renderBoardContent()}</div>
       <div className={styles['board-list-footer']}>
         <div className={styles['spacer']}></div>
-        <Pagination
-          totalPages={totalPages}
-          currentPage={currentPage}
-          onPageChange={onPageChange}
-        />
+        <div className={styles.pagination}>
+          <Pagination
+            totalPages={totalPages}
+            currentPage={currentPage}
+            onPageChange={onPageChange}
+          />
+        </div>
       </div>
     </div>
   );
