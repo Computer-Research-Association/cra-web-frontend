@@ -176,7 +176,7 @@
 }
 
 .delete {
-  background-color: var(--color-pink) !important;
+  background-color: var(--color-dark-stroke) !important;
 }
 
 .link {
@@ -221,8 +221,7 @@
 .preview {
   width: 20rem;
   height: 20rem;
-  border-radius: 40%;
-  border: 1px solid var(--color-bright-text);
+  border-radius: 1rem;
   object-fit: cover;
 }
 

@@ -26,12 +26,12 @@ export default function MainPage() {
         </Link>
         <MainBoardList category={CATEGORY.NOTICE} />
       </div>
-      <div className={styles['notice-section']}>
+      {/* <div className={styles['notice-section']}>
         <Link to="/academic" className={styles.link}>
           학술 게시판 내용
         </Link>
         <MainBoardList category={CATEGORY.ACADEMIC} />
-      </div>
+      </div> */}
     </div>
   );
 }
