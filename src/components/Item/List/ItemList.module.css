@@ -8,6 +8,14 @@
   gap: 1rem;
 }
 
+.title {
+  margin-left: 10px;
+  padding-bottom: 34px;
+  font-size: 40px;
+  font-family: 'Pretendard Bold';
+  color: var(--color-bright-text);
+}
+
 @media (max-width: 1300px) {
   .bookBoardList {
     grid-template-columns: repeat(3, 1fr);
