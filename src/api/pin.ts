@@ -29,12 +29,9 @@ export const getPinBoard = async (): Promise<Board[]> => {
   }
 };
 
-export const deletePinBoard = async (pinId: number): Promise<Board> => {
+export const deletePinBoard = async (pinId: number) => {
   try {
-    const response = await authClient.delete<Board>(
-      `/admin/board/pin/${pinId}`,
-    );
-    return response.data;
+    await authClient.delete<Board>(`/admin/board/pin/${pinId}`);
   } catch (error) {
     console.error('error', error);
     throw error;

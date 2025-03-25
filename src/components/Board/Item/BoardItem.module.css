@@ -40,6 +40,14 @@
   color: var(--color-dark-text);
   margin-top: 5px;
 }
+.pined {
+  line-height: 34px;
+  font-size: 18px;
+  font-family: 'Pretendard SemiBold';
+  text-decoration: none;
+  color: var(--color-primary);
+  margin-top: 5px;
+}
 
 .board-content {
   line-height: 32px;

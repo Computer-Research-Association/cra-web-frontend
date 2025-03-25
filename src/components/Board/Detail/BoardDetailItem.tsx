@@ -22,6 +22,7 @@ import createLike from '~/api/like';
 import BoardUserModal from '~/components/Modal/User/OtherUser/BoardUserModal';
 import { useAuthStore } from '~/store/authStore';
 import { createPinBoard, deletePinBoard } from '~/api/pin';
+import isAdmin from '~/components/Auth/Decode/adminCheck';
 
 const DEFAULT_PROFILE = import.meta.env.VITE_DEFAULT_IMG as string;
 
@@ -124,29 +125,38 @@ export default function BoardDetailItem({
     }
   };
 
-  const [isPinned, setIsPinned] = useState(!!board.pinedAt);
-
+  console.log(board.id);
   const handlePin = async () => {
     try {
-      if (isPinned) {
-        await deletePinBoard(board.id as number);
+      const boardId = Number(board.id);
+      console.log('Board ID:', boardId);
+      console.log('isPinned:', board.isPined); // 현재 상태 확인
+      console.log('pinId:', board.pidId); // 현재 상태 확인
+
+      if (board.isPined) {
+        await deletePinBoard(board.pidId as number);
       } else {
         await createPinBoard(board.id as number, category);
       }
-
-      setIsPinned(!isPinned);
     } catch (error) {
       console.error('핀 처리 중 오류 발생:', error);
     }
   };
+
+  const { accessToken } = useAuthStore.getState();
+  const token = accessToken as string;
 
   return (
     <div className={styles['detail-container']}>
       <div className={styles['detail-content']}>
         <div className={styles['title']}>
           {CATEGORY_STRINGS[category]} 게시판
-          <div onClick={handlePin} style={{ cursor: 'pointer' }}>
-            {isPinned ? <LuPin size={20} /> : <LuPinOff size={20} />}
+          <div style={{ cursor: 'pointer' }}>
+            {isAdmin(token) && (
+              <div onClick={handlePin}>
+                {board.isPined ? <LuPin size={20} /> : <LuPinOff size={20} />}
+              </div>
+            )}
           </div>
         </div>
         <Divider />

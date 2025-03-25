@@ -34,7 +34,7 @@ export default function BoardItem({
     board.content.length > 40
       ? `${board.content.substring(0, 40)}...`
       : board.content;
-
+  console.log(board);
   return (
     <Link
       to={`${CATEGORY_STRINGS_EN[category]}/view/${board.id}`}
@@ -67,7 +67,11 @@ export default function BoardItem({
             </div>
           </div>
           <div className={styles['board-title']}>
-            <div className={styles['board-title']}>{board.title}</div>
+            <div
+              className={`${styles['board-title']} ${board.isPined ? styles['pinned'] : ''}`}
+            >
+              {board.title}
+            </div>
           </div>
         </div>
         <div className={styles['board-content']}>{truncatedContent}</div>

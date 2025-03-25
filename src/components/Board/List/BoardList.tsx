@@ -35,6 +35,7 @@ export default function BoardList({
   const [loading, setLoading] = useState(false);
   const [totalPagesFromServer, setTotalPagesFromServer] = useState(totalPages); // 서버에서 받은 totalPages 상태
   const [isSearching, setIsSearching] = useState(false); // 검색 중인지 여부를 판단하는 상태
+
   const { data: pinBoards } = useQuery<Board[]>({
     queryKey: ['pinBoards'],
     queryFn: getPinBoard,
@@ -61,6 +62,7 @@ export default function BoardList({
           searchTerm,
           category,
         );
+        console.log('검색 API 응답 데이터:', result);
 
         if (searchTerm.trim() === '') {
           setFilteredBoards(boardsQuery); // 검색어 없으면 전체 게시물
@@ -71,6 +73,7 @@ export default function BoardList({
               board.content.toLowerCase().includes(searchTerm),
           );
           setTotalPagesFromServer(result.totalPages as number); // 서버에서 받아온 totalPages 설정
+          console.log(totalPagesFromServer);
           setFilteredBoards(filteredBoards); // 필터링된 게시물
         }
       } catch (error) {
@@ -92,13 +95,13 @@ export default function BoardList({
 
       // 필터링된 게시물에서 핀된 게시물과 일반 게시물 분리
       const pinnedBoards = filteredBoards.filter((board) =>
-        pinnedBoardIds.includes(board.boardId),
+        pinnedBoardIds.includes(board.id),
       );
-      console.log(pinnedBoardIds);
+
       const normalBoards = filteredBoards.filter(
-        (board) => !pinnedBoardIds.includes(board.boardId),
+        (board) => !pinnedBoardIds.includes(board.id),
       );
-      console.log(normalBoards);
+
       const combinedBoards = [...pinnedBoards, ...normalBoards];
 
       return combinedBoards.map((board, index) => (

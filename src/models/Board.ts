@@ -3,6 +3,7 @@ import { Comment } from './Comment';
 export interface BoardPageList {
   resListBoardDtos?: Board[];
   totalPages?: number;
+  totalBoards?: number;
 }
 
 export interface Board {
@@ -16,6 +17,8 @@ export interface Board {
   createdAt?: Date;
   updatedAt?: Date;
   pinedAt?: Date;
+  isPined?: boolean;
+  pidId?: number;
 
   // havrutaId?: number;
   likeCount?: number;
