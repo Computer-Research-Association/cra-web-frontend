@@ -62,7 +62,6 @@ export default function BoardList({
           searchTerm,
           category,
         );
-        console.log('검색 API 응답 데이터:', result);
 
         if (searchTerm.trim() === '') {
           setFilteredBoards(boardsQuery); // 검색어 없으면 전체 게시물
@@ -73,7 +72,7 @@ export default function BoardList({
               board.content.toLowerCase().includes(searchTerm),
           );
           setTotalPagesFromServer(result.totalPages as number); // 서버에서 받아온 totalPages 설정
-          console.log(totalPagesFromServer);
+
           setFilteredBoards(filteredBoards); // 필터링된 게시물
         }
       } catch (error) {
@@ -121,12 +120,14 @@ export default function BoardList({
 
   return (
     <div className={styles.container}>
-      <ListSearch
-        searchTerm={searchTerm}
-        setSearchTerm={setSearchTerm}
-        onKeyDown={handleSearch}
-      />
-      <h2 className={styles.title}>{CATEGORY_STRINGS[category]} 게시판</h2>
+      <h2 className={styles.title}>
+        {CATEGORY_STRINGS[category]} 게시판
+        <ListSearch
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+          onKeyDown={handleSearch}
+        />
+      </h2>
       <div className={styles.boardList}>{renderBoardContent()}</div>
       <div className={styles['board-list-footer']}>
         <div className={styles['spacer']} />

@@ -107,7 +107,10 @@ function ItemAdminList({
                 </ActionLink>
                 |
                 <DeleteButtonWrapper>
-                  <ItemAdminDelete id={itemElement.id!} />
+                  <ItemAdminDelete
+                    id={itemElement.id!}
+                    currentPage={currentPage}
+                  />
                 </DeleteButtonWrapper>
               </Td>
             </tr>

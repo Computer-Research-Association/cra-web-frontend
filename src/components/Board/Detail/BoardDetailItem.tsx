@@ -40,7 +40,6 @@ export default function BoardDetailItem({
   board: Board;
   category: number;
 }) {
-  console.log(board);
   const [viewCnt, setViewCnt] = useState(board.view);
 
   const [modalOpen, setModalOpen] = useState(false);
@@ -125,14 +124,8 @@ export default function BoardDetailItem({
     }
   };
 
-  console.log(board.id);
   const handlePin = async () => {
     try {
-      const boardId = Number(board.id);
-      console.log('Board ID:', boardId);
-      console.log('isPinned:', board.isPined); // 현재 상태 확인
-      console.log('pinId:', board.pidId); // 현재 상태 확인
-
       if (board.isPined) {
         await deletePinBoard(board.pidId as number);
       } else {
