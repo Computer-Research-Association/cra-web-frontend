@@ -128,8 +128,10 @@ export default function BoardDetailItem({
     try {
       if (board.isPined) {
         await deletePinBoard(board.pidId as number);
+        console.log('고정 취소');
       } else {
         await createPinBoard(board.id as number, category);
+        console.log('고정');
       }
     } catch (error) {
       console.error('핀 처리 중 오류 발생:', error);
@@ -138,7 +140,7 @@ export default function BoardDetailItem({
 
   const { accessToken } = useAuthStore.getState();
   const token = accessToken as string;
-
+  console.log(board.id);
   return (
     <div className={styles['detail-container']}>
       <div className={styles['detail-content']}>

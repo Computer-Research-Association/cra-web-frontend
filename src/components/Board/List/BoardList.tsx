@@ -18,6 +18,7 @@ import { getPinBoard } from '~/api/pin';
 interface BoardListProps {
   category: number;
   boardsQuery: Board[];
+  pinnedBoards: Board[];
   totalPages: number;
   currentPage: number;
   onPageChange: (_page: number) => void;
@@ -26,6 +27,7 @@ interface BoardListProps {
 export default function BoardList({
   category,
   boardsQuery,
+  pinnedBoards,
   totalPages,
   currentPage,
   onPageChange,
@@ -67,6 +69,7 @@ export default function BoardList({
           setFilteredBoards(boardsQuery); // 검색어 없으면 전체 게시물
         } else {
           const filteredBoards = result.resListBoardDtos.filter(
+            //null 일때 처리해주면 빨간줄 사라짐.
             (board) =>
               board.title.toLowerCase().includes(searchTerm) ||
               board.content.toLowerCase().includes(searchTerm),
@@ -106,7 +109,11 @@ export default function BoardList({
       return combinedBoards.map((board, index) => (
         <div key={`board-${board.id}`}>
           <div className={styles['board-wrapper']}>
-            <BoardItem board={board} category={category} />
+            <BoardItem
+              board={board}
+              category={category}
+              pinnedBoards={pinnedBoards}
+            />
           </div>
           {index < combinedBoards.length - 1 && (
             <div className={styles.divider}></div>

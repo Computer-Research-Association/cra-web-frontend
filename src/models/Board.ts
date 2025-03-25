@@ -2,6 +2,7 @@ import { Comment } from './Comment';
 
 export interface BoardPageList {
   resListBoardDtos?: Board[];
+  resBoardPinDtos?: Board[];
   totalPages?: number;
   totalBoards?: number;
 }

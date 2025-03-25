@@ -11,9 +11,11 @@ const DEFAULT_PROFILE = import.meta.env.VITE_DEFAULT_IMG as string;
 export default function BoardItem({
   board,
   category,
+  pinnedBoards,
 }: {
   board: Board;
   category: number;
+  pinnedBoards: Board[];
 }) {
   // const [commentCnt, setCommentCnt] = useState<number | null>(null);
 
@@ -34,7 +36,9 @@ export default function BoardItem({
     board.content.length > 40
       ? `${board.content.substring(0, 40)}...`
       : board.content;
-  console.log(board);
+
+  const isPinned = pinnedBoards.some((pinned) => pinned.id === board.id);
+
   return (
     <Link
       to={`${CATEGORY_STRINGS_EN[category]}/view/${board.id}`}
@@ -50,7 +54,9 @@ export default function BoardItem({
             }
             className={styles.profile}
           />
-          <div className={styles['board-user-name']}>
+          <div
+            className={`${styles['board-user-name']} ${isPinned ? styles['pined-user'] : ''}`}
+          >
             {board.resUserDetailDto.name}
             <div className={styles['board-info']}>
               <span>{board.createdAt?.toString().substring(0, 10)}</span>
@@ -66,9 +72,9 @@ export default function BoardItem({
               </span>
             </div>
           </div>
-          <div className={styles['board-title']}>
+          <div>
             <div
-              className={`${styles['board-title']} ${board.isPined ? styles['pinned'] : ''}`}
+              className={`${styles['board-title']} ${isPinned ? styles['pined'] : ''}`}
             >
               {board.title}
             </div>
