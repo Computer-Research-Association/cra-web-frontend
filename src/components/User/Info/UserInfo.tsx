@@ -79,9 +79,7 @@ function UserInfo() {
       </div>
       <div className={styles.buttons}>
         <button onClick={handleChangeImage}>프로필 사진 변경</button>
-        <button className={styles.edit} onClick={handleUpdate}>
-          유저 정보 수정
-        </button>
+        <button onClick={handleUpdate}>유저 정보 수정</button>
         <button className={styles.delete} onClick={handleDelete}>
           회원 탈퇴
         </button>
