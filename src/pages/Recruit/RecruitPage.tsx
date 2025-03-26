@@ -77,7 +77,9 @@ export default function RecruitPage() {
         <h1>CRA와 함께 성장하고 싶다면</h1>
         {/* 리크루팅 링크 변경 */}
         <Link to={RECRUITLINK}>
-          <button className={styles['button-style']}>지원하기</button>
+          <button className={styles['button-style']}>
+            지원 기간이 아닙니다
+          </button>
         </Link>
       </div>
     </div>
