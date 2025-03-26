@@ -53,47 +53,24 @@ export default function UserList() {
     setError(null);
 
     try {
-      console.log(`API 요청 시작: 페이지 ${page}`);
-
       const response = await authClient.get<UserListResponse>(
-        `/api/admin/account/users/page/${page}`,
-        { params: { perPage: 10, page: page } },
+        `/admin/account/users/page/${page}`,
+        { params: { perPage: 10 } },
       );
-
-      console.log('완전한 응답 객체:', response);
-      console.log('응답 상태:', response.status);
-
-      // 응답 데이터 구조 디버깅
-      if (!response.data) {
-        console.warn('응답 데이터가 없습니다.');
-        setError('응답 데이터가 없습니다.');
-        setUsers([]);
-        return;
-      }
 
       const userList = response.data.resUserAdminDetailDtos || [];
       const totalPagesCount = response.data.totalPages || 0;
 
-      console.log('파싱된 사용자 목록:', userList);
-      console.log('파싱된 총 페이지 수:', totalPagesCount);
-
       setUsers(userList);
       setTotalPages(totalPagesCount);
     } catch (error) {
-      // 더 상세한 에러 처리
       if (axios.isAxiosError(error)) {
         const axiosError = error as AxiosError;
-        console.error('Axios 오류:', {
-          message: axiosError.message,
-          status: axiosError.response?.status,
-          data: axiosError.response?.data,
-        });
         setError(axiosError.message);
       } else {
         console.error('알 수 없는 오류:', error);
         setError('사용자 목록을 불러오는 중 오류가 발생했습니다.');
       }
-
       setUsers([]);
       setTotalPages(0);
     } finally {
@@ -106,7 +83,20 @@ export default function UserList() {
   };
 
   const renderUserRoles = (roles: UserRoles) => {
-    return roles.authorities.map((role) => role.authority).join(', ');
+    const hasAdmin = roles.authorities.some(
+      (role) => role.authority === 'ROLE_ADMIN',
+    );
+    const hasUser = roles.authorities.some(
+      (role) => role.authority === 'ROLE_USER',
+    );
+
+    if (hasAdmin && hasUser) {
+      return 'Admin';
+    } else if (hasUser) {
+      return 'User';
+    } else {
+      return roles.authorities.map((role) => role.authority).join(', '); // 기본적으로 모든 역할 표시
+    }
   };
 
   const renderUserList = () => {
@@ -139,12 +129,14 @@ export default function UserList() {
           <div className={styles.userDetails}>
             <h3>{user.name}</h3>
             <p>Email: {user.email}</p>
-            <p>Student ID: {user.studentId}</p>
-            <p>Term: {user.term}</p>
+            <p>학번: {user.studentId}</p>
+            <p>기수: {user.term}</p>
             <p>GitHub: {user.githubId}</p>
-            <p>Roles: {renderUserRoles(user.roles)}</p>
+            <p>권한: {renderUserRoles(user.roles)}</p>
             {user.greetingMessage && (
-              <p className={styles.greetingMessage}>{user.greetingMessage}</p>
+              <p className={styles.greetingMessage}>
+                {`\n                나의 한마디: ${user.greetingMessage}\n              `}
+              </p>
             )}
           </div>
         </div>
