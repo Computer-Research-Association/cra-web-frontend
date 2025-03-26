@@ -31,6 +31,9 @@ export default function AdminSideBar() {
         <Link to="/admin">관리자 홈</Link>
       </MenuItem> */}
       <MenuItem>
+        <Link to="/admin/allusers">유저 전체 정보</Link>
+      </MenuItem>
+      <MenuItem>
         <Link to="/admin/notice/write">공지글 쓰기</Link>
       </MenuItem>
       <MenuItem>

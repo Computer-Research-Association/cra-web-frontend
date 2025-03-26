@@ -32,6 +32,7 @@ import { Route as AdminProjectRoutesImport } from './routes/adminProjectRoutes'
 import { Route as AdminItemRoutesImport } from './routes/adminItemRoutes'
 import { Route as AdminHavrutaRoutesImport } from './routes/adminHavrutaRoutes'
 import { Route as AdminBookRoutesImport } from './routes/adminBookRoutes'
+import { Route as AdminAllUsersImport } from './routes/adminAllUsers'
 import { Route as AcademicRoutesImport } from './routes/academicRoutes'
 
 // Create/Update Routes
@@ -162,6 +163,12 @@ const AdminBookRoutesRoute = AdminBookRoutesImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const AdminAllUsersRoute = AdminAllUsersImport.update({
+  id: '/adminAllUsers',
+  path: '/adminAllUsers',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const AcademicRoutesRoute = AcademicRoutesImport.update({
   id: '/academicRoutes',
   path: '/academicRoutes',
@@ -177,6 +184,13 @@ declare module '@tanstack/react-router' {
       path: '/academicRoutes'
       fullPath: '/academicRoutes'
       preLoaderRoute: typeof AcademicRoutesImport
+      parentRoute: typeof rootRoute
+    }
+    '/adminAllUsers': {
+      id: '/adminAllUsers'
+      path: '/adminAllUsers'
+      fullPath: '/adminAllUsers'
+      preLoaderRoute: typeof AdminAllUsersImport
       parentRoute: typeof rootRoute
     }
     '/adminBookRoutes': {
@@ -333,6 +347,7 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/academicRoutes': typeof AcademicRoutesRoute
+  '/adminAllUsers': typeof AdminAllUsersRoute
   '/adminBookRoutes': typeof AdminBookRoutesRoute
   '/adminHavrutaRoutes': typeof AdminHavrutaRoutesRoute
   '/adminItemRoutes': typeof AdminItemRoutesRoute
@@ -358,6 +373,7 @@ export interface FileRoutesByFullPath {
 
 export interface FileRoutesByTo {
   '/academicRoutes': typeof AcademicRoutesRoute
+  '/adminAllUsers': typeof AdminAllUsersRoute
   '/adminBookRoutes': typeof AdminBookRoutesRoute
   '/adminHavrutaRoutes': typeof AdminHavrutaRoutesRoute
   '/adminItemRoutes': typeof AdminItemRoutesRoute
@@ -384,6 +400,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/academicRoutes': typeof AcademicRoutesRoute
+  '/adminAllUsers': typeof AdminAllUsersRoute
   '/adminBookRoutes': typeof AdminBookRoutesRoute
   '/adminHavrutaRoutes': typeof AdminHavrutaRoutesRoute
   '/adminItemRoutes': typeof AdminItemRoutesRoute
@@ -411,6 +428,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/academicRoutes'
+    | '/adminAllUsers'
     | '/adminBookRoutes'
     | '/adminHavrutaRoutes'
     | '/adminItemRoutes'
@@ -435,6 +453,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/academicRoutes'
+    | '/adminAllUsers'
     | '/adminBookRoutes'
     | '/adminHavrutaRoutes'
     | '/adminItemRoutes'
@@ -459,6 +478,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/academicRoutes'
+    | '/adminAllUsers'
     | '/adminBookRoutes'
     | '/adminHavrutaRoutes'
     | '/adminItemRoutes'
@@ -485,6 +505,7 @@ export interface FileRouteTypes {
 
 export interface RootRouteChildren {
   AcademicRoutesRoute: typeof AcademicRoutesRoute
+  AdminAllUsersRoute: typeof AdminAllUsersRoute
   AdminBookRoutesRoute: typeof AdminBookRoutesRoute
   AdminHavrutaRoutesRoute: typeof AdminHavrutaRoutesRoute
   AdminItemRoutesRoute: typeof AdminItemRoutesRoute
@@ -510,6 +531,7 @@ export interface RootRouteChildren {
 
 const rootRouteChildren: RootRouteChildren = {
   AcademicRoutesRoute: AcademicRoutesRoute,
+  AdminAllUsersRoute: AdminAllUsersRoute,
   AdminBookRoutesRoute: AdminBookRoutesRoute,
   AdminHavrutaRoutesRoute: AdminHavrutaRoutesRoute,
   AdminItemRoutesRoute: AdminItemRoutesRoute,
@@ -544,6 +566,7 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/academicRoutes",
+        "/adminAllUsers",
         "/adminBookRoutes",
         "/adminHavrutaRoutes",
         "/adminItemRoutes",
@@ -569,6 +592,9 @@ export const routeTree = rootRoute
     },
     "/academicRoutes": {
       "filePath": "academicRoutes.ts"
+    },
+    "/adminAllUsers": {
+      "filePath": "adminAllUsers.ts"
     },
     "/adminBookRoutes": {
       "filePath": "adminBookRoutes.ts"

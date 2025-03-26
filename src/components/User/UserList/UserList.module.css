@@ -1,0 +1,68 @@
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.title {
+  font-size: 36px;
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.userList {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.userCard {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.userImage {
+  width: 100px;
+  height: 100px; 
+  border-radius: 50%;
+  object-fit: cover;
+  align-items: center;
+  align-content: center;
+}
+
+.userDetails h3 {
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.userDetails p {
+  margin: 5px 0;
+  color: #666;
+}
+
+.greetingMessage {
+  color: #888;
+  margin-top: 10px;
+}
+
+.loading {
+  text-align: center;
+  font-size: 18px;
+  color: #666;
+  margin-top: 50px;
+}
+
+.paginationContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
