@@ -4,7 +4,7 @@ import styles from './ListSearch.module.css'; // 스타일 임포트
 interface ListSearchProps {
   searchTerm: string;
   setSearchTerm: React.Dispatch<React.SetStateAction<string>>;
-  onKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void; // 이거 왜 뜨는지 모르겠음
+  onKeyDown: (_e: React.KeyboardEvent<HTMLInputElement>) => void; // 이거 왜 뜨는지 모르겠음
 }
 
 const ListSearch: React.FC<ListSearchProps> = ({

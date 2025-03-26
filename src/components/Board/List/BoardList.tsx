@@ -32,38 +32,46 @@ export default function BoardList({
   currentPage,
   onPageChange,
 }: BoardListProps) {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [filteredBoards, setFilteredBoards] = useState<Board[]>([]); // Board[] 타입으로 초기값을 빈 배열로 설정
+  const [searchTerm, setSearchTerm] = useState(() => {
+    const savedSearchTerm = sessionStorage.getItem('searchTerm');
+    return savedSearchTerm || '';
+  });
+
+  // searchTerm이 변경될 때마다 sessionStorage에 값을 저장
+  useEffect(() => {
+    sessionStorage.setItem('searchTerm', searchTerm);
+  }, [searchTerm]);
+  const [filteredBoards, setFilteredBoards] = useState<Board[]>([]);
   const [loading, setLoading] = useState(false);
-  const [totalPagesFromServer, setTotalPagesFromServer] = useState(totalPages); // 서버에서 받은 totalPages 상태
-  const [isSearching, setIsSearching] = useState(false); // 검색 중인지 여부를 판단하는 상태
+  const [totalPagesFromServer, setTotalPagesFromServer] = useState(totalPages);
+  const [isSearching, setIsSearching] = useState(false);
 
   const { data: pinBoards } = useQuery<Board[]>({
     queryKey: ['pinBoards'],
     queryFn: getPinBoard,
   });
 
-  // "Enter" 키를 눌렀을 때만 검색 실행
   useEffect(() => {
     if (searchTerm.trim() === '') {
-      // 검색어가 비어있으면 전체 게시물을 설정
       setFilteredBoards(boardsQuery);
-      setIsSearching(false); // 검색 중이 아님
+      setIsSearching(false);
     } else {
-      setIsSearching(true); // 검색 중
+      setIsSearching(true);
     }
   }, [searchTerm, boardsQuery]);
 
+  //----------------------------나중에 뭔가 깔끔하게 하기기----------------------------------------
   const handleSearch = async (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       setLoading(true);
       onPageChange(0);
       try {
         const result: BoardPageList = await searchBoard(
-          0,
+          currentPage,
           searchTerm,
           category,
         );
+        // const filterCategory = result.resListBoardDtos?.[0]?.category;
 
         if (searchTerm.trim() === '') {
           setFilteredBoards(boardsQuery); // 검색어 없으면 전체 게시물
@@ -73,8 +81,8 @@ export default function BoardList({
               board.title.toLowerCase().includes(searchTerm) ||
               board.content.toLowerCase().includes(searchTerm),
           );
-          setTotalPagesFromServer(result.totalPages as number); // 서버에서 받아온 totalPages 설정
 
+          setTotalPagesFromServer(result.totalPages as number); // 서버에서 받아온 totalPages 설정
           setFilteredBoards(filteredBoards ?? []); // 필터링된 게시물
         }
       } catch (error) {
@@ -85,6 +93,37 @@ export default function BoardList({
     }
   };
 
+  //---------------------------------------------------------------------------------
+  useEffect(() => {
+    if (searchTerm.trim() !== '') {
+      setLoading(true);
+      const fetchSearchResults = async () => {
+        try {
+          const result: BoardPageList = await searchBoard(
+            currentPage,
+            searchTerm,
+            category,
+          ); // 현재 페이지로 검색
+          const filteredBoards = result.resListBoardDtos?.filter(
+            (board) =>
+              board.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+              board.content.toLowerCase().includes(searchTerm.toLowerCase()),
+          );
+          setTotalPagesFromServer(result.totalPages as number);
+          setFilteredBoards(filteredBoards ?? []);
+        } catch (error) {
+          console.error('검색 중 오류 발생:', error);
+        } finally {
+          setLoading(false);
+        }
+      };
+      void fetchSearchResults();
+    } else {
+      setFilteredBoards(boardsQuery); // 검색어가 없으면 전체 게시물 표시
+    }
+  }, [currentPage, category]); // 페이지 변경 시에도 검색어를 기반으로 결과를 갱신
+
+  //---------------------------------------------------------------------------------
   const renderBoardContent = () => {
     if (loading) {
       return <LoadingSpinner />;
@@ -116,7 +155,11 @@ export default function BoardList({
         </div>
       ));
     } else {
-      return <p>검색 결과가 없습니다.</p>;
+      return (
+        <div>
+          <div className={styles['no-result']}>검색 결과가 없습니다.</div>
+        </div>
+      );
     }
   };
 
