@@ -62,6 +62,7 @@ import {
   havrutaWriteRoute,
 } from './havrutaRoutes.ts';
 import { adminRoute, superAdminRoute } from './adminRoute.ts';
+import { adminAllUsers } from './adminAllUsers.ts';
 import {
   adminBookRoute,
   adminBookDetailRoute,
@@ -131,6 +132,7 @@ export const routes = createRouter({
     havrutaWriteRoute,
     adminRoute,
     superAdminRoute,
+    adminAllUsers,
     adminBookRoute,
     adminBookDetailRoute,
     adminBookUpdateRoute,
