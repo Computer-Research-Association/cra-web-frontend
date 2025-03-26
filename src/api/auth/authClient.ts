@@ -52,7 +52,7 @@ authClient.interceptors.request.use(
 authClient.interceptors.response.use(
   (response) => response,
   async (error) => {
-    if (error.response?.status === 401) {
+    if (error.response?.status === 403) {
       try {
         const refreshToken = localStorage.getItem('refreshToken');
         const userId = useAuthStore.getState().userId as number;

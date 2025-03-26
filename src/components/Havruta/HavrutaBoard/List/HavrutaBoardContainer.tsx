@@ -51,7 +51,7 @@ function HavrutaBoardContainer() {
     queryFn: async () =>
       selectedHavrutaId !== null
         ? getHavrutaBoardsByHavrutaId(selectedHavrutaId, currentPage)
-        : Promise.resolve({ resListBoardDtoList: [], totalPages: 0 }), // 빈 데이터 반환
+        : Promise.resolve({ resListBoardDtos: [], totalPages: 0 }), // 빈 데이터 반환
     enabled: selectedHavrutaId !== null, // selectedHavrutaId가 null이 아닐 때만 실행
   });
 
@@ -66,12 +66,12 @@ function HavrutaBoardContainer() {
 
   const havrutaBoards = Array.isArray(
     selectedHavrutaId === null
-      ? havrutaBoardQuery.data?.resListBoardDtoList
-      : havrutaBoardByHavrutaIdQuery.data?.resListBoardDtoList,
+      ? havrutaBoardQuery.data?.resListBoardDtos
+      : havrutaBoardByHavrutaIdQuery.data?.resListBoardDtos,
   )
     ? selectedHavrutaId === null
-      ? havrutaBoardQuery.data?.resListBoardDtoList
-      : havrutaBoardByHavrutaIdQuery.data?.resListBoardDtoList
+      ? havrutaBoardQuery.data?.resListBoardDtos
+      : havrutaBoardByHavrutaIdQuery.data?.resListBoardDtos
     : [];
 
   // 전체 게시물 개수 또는 과목별 게시물 개수 계산

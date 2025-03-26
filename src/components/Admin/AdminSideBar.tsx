@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 const Menu = styled.ul`
   display: flex;
-  width: 20%;
+  width: 25%;
   flex-direction: column;
   background-color: rgb(255, 255, 255);
   border-radius: 1rem;

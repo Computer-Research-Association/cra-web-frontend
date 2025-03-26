@@ -8,6 +8,14 @@
   gap: 1.5rem;
 }
 
+.title {
+  margin-left: 10px;
+  padding-bottom: 34px;
+  font-size: 40px;
+  font-family: 'Pretendard Bold';
+  color: var(--color-bright-text);
+}
+
 @media (max-width: 1200px) {
   .boardList {
     grid-template-columns: repeat(2, 1fr);

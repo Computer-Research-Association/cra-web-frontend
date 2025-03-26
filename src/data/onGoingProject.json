@@ -1,7 +1,7 @@
 {
-  "onGoingData": [
+  "data": [
     {
-      "image": "CRA_MALLANG",
+      "image": "https://lkyoung-bucket.s3.ap-northeast-2.amazonaws.com/assets/intro_page/project/craweb.png?format=webp&as=srcset",
       "title": "말랑 타격대",
       "description": [
         "자원을 모아 건물을 짓고, 유닛을 생산해 전략적으로 상대 본진을 파괴하는 실시간 전략 게임입니다.",
@@ -11,7 +11,7 @@
       "stack": "Unity, Photon Server"
     },
     {
-      "image": "CRA_WEB",
+      "image": "https://lkyoung-bucket.s3.ap-northeast-2.amazonaws.com/assets/intro_page/project/mallang.jpg?format=webp&as=srcset",
       "title": "CRA 웹페이지",
       "description": [
         "CRA의 새로운 페이지를 제작하는 웹 개발 프로젝트입니다.",
@@ -21,7 +21,7 @@
       "stack": "React, Spring Boot, MySQL, AWS"
     },
     {
-      "image": "CRA_ASSISTANT",
+      "image": "https://lkyoung-bucket.s3.ap-northeast-2.amazonaws.com/assets/intro_page/project/crassistant.png?format=webp&as=srcset",
       "title": "Coding Roadmap Assistant",
       "description": [
         "AI 기반의 코딩 보조 도우미 서비스입니다.",
