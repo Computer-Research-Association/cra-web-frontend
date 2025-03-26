@@ -31,8 +31,8 @@ export default function MainBoardList({ category }: { category: number }) {
 
   if (boardsQuery.isLoading) {
     content = <LoadingSpinner />;
-  } else if (boardsQuery.isSuccess && boardsQuery.data?.resListBoardDtoList) {
-    content = boardsQuery.data.resListBoardDtoList
+  } else if (boardsQuery.isSuccess && boardsQuery.data?.resListBoardDtos) {
+    content = boardsQuery.data.resListBoardDtos
       .slice(0, 5)
       .map((board, index) => {
         if (board.id === undefined) return null;
@@ -41,7 +41,7 @@ export default function MainBoardList({ category }: { category: number }) {
             <div className={styles['board-wrapper']}>
               <MainBoardItem board={board} />
             </div>
-            {index < boardsQuery.data.resListBoardDtoList.length - 6 && (
+            {index < boardsQuery.data.resListBoardDtos.length - 6 && (
               <div className={styles['divider']} />
             )}
           </div>

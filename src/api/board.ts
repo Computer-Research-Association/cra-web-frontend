@@ -25,7 +25,7 @@ export const getBoardsByCategory = async (
   page: number = 1,
   perPage: number = 10,
   orderBy: number = 0,
-) => {
+): Promise<BoardPageList> => {
   try {
     const response = await authClient.get<BoardPageList>(
       `/board/${category}/page/${page}`,
@@ -110,7 +110,6 @@ export const createBoards = async (board: Board, file: File | null) => {
       },
       timeout: 3000000,
     });
-    console.log('Response:', response);
 
     return response.data;
   } catch (error) {

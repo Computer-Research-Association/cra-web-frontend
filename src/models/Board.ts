@@ -1,19 +1,26 @@
 import { Comment } from './Comment';
 
 export interface BoardPageList {
-  resListBoardDtoList?: Board;
+  resListBoardDtos?: Board[];
+  resBoardPinDtos?: Board[];
   totalPages?: number;
+  totalBoards?: number;
 }
 
 export interface Board {
   id?: number;
   userId?: number;
+  boardId?: number;
   title: string;
   category: number;
   content: string;
   imageUrls?: string[];
   createdAt?: Date;
   updatedAt?: Date;
+  pinedAt?: Date;
+  isPined?: boolean;
+  pidId?: number;
+
   // havrutaId?: number;
   likeCount?: number;
   viewerLiked?: boolean;

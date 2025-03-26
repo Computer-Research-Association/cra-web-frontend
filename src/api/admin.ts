@@ -17,7 +17,7 @@ export const getSignUpCodes = async (length: number): Promise<SignUpCode[]> => {
     );
     return response.data;
   } catch (error) {
-    console.log('가입 코드 가져오기 에러:', error);
+    console.error('가입 코드 가져오기 에러:', error);
     throw error;
   }
 };

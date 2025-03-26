@@ -141,3 +141,25 @@
 .divider {
   border: 1px solid var(--color-dark-stroke);
 }
+
+.no-result {
+  text-align: center;
+  font-size: 20px;
+  color: var(--color-primary);
+  font-weight: 'Pretendard Bold';
+  padding: 20px;
+  width: 50%;
+  margin: 20px auto;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

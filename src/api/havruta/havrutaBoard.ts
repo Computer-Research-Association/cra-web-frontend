@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { Board, BoardPageList } from '~/models/Board';
-import { client } from '~/api/client.ts';
 import { authClient } from '~/api/auth/authClient.ts';
 
 // 페이지네이션 적용된 하브루타 게시물 모두 가져오기
@@ -10,7 +9,7 @@ export const getHavrutaBoards = async (
   orderBy: number = 0,
 ) => {
   try {
-    const response = await client.get<BoardPageList>(
+    const response = await authClient.get<BoardPageList>(
       `/board/havruta/page/${page}`,
       {
         params: {
@@ -35,7 +34,7 @@ export const getHavrutaBoardsByHavrutaId = async (
   orderBy: number = 0,
 ) => {
   try {
-    const response = await client.get<BoardPageList>(
+    const response = await authClient.get<BoardPageList>(
       `/board/havruta/${havrutaId}/page/${page}`,
       {
         params: {
@@ -55,7 +54,7 @@ export const getHavrutaBoardsByHavrutaId = async (
 // 하브루타 게시물 상세보기
 export const getHavrutaBoardById = async (id: number) => {
   try {
-    const response = await client.get<Board>(`/board/view/${id}`);
+    const response = await authClient.get<Board>(`/board/view/${id}`);
     const havruta = response.data;
 
     return {
