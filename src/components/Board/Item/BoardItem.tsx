@@ -11,11 +11,11 @@ const DEFAULT_PROFILE = import.meta.env.VITE_DEFAULT_IMG as string;
 export default function BoardItem({
   board,
   category,
-  pinnedBoards,
+  pinned,
 }: {
   board: Board;
   category: number;
-  pinnedBoards: Board[];
+  pinned: Board[];
 }) {
   // const [commentCnt, setCommentCnt] = useState<number | null>(null);
 
@@ -37,7 +37,7 @@ export default function BoardItem({
       ? `${board.content.substring(0, 40)}...`
       : board.content;
 
-  const isPinned = pinnedBoards.some((pinned) => pinned.id === board.id);
+  const isPinned = pinned.some((pin) => pin.id === board.id);
 
   return (
     <Link

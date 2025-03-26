@@ -22,7 +22,7 @@ function BoardContainer({ category }: { category: number }) {
     : [];
   const totalPage = boardsQuery.data?.totalPages || 1;
 
-  const pinnedBoards = Array.isArray(boardsQuery.data?.resBoardPinDtos)
+  const pinned = Array.isArray(boardsQuery.data?.resBoardPinDtos)
     ? boardsQuery.data.resBoardPinDtos
     : [];
 
@@ -30,7 +30,7 @@ function BoardContainer({ category }: { category: number }) {
     <BoardList
       category={category}
       boardsQuery={boards}
-      pinnedBoards={pinnedBoards}
+      pinned={pinned}
       totalPages={totalPage}
       currentPage={currentPage}
       onPageChange={setCurrentPage}

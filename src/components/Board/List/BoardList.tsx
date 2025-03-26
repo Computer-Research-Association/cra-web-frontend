@@ -18,7 +18,7 @@ import { getPinBoard } from '~/api/pin';
 interface BoardListProps {
   category: number;
   boardsQuery: Board[];
-  pinnedBoards: Board[];
+  pinned: Board[];
   totalPages: number;
   currentPage: number;
   onPageChange: (_page: number) => void;
@@ -27,7 +27,7 @@ interface BoardListProps {
 export default function BoardList({
   category,
   boardsQuery,
-  pinnedBoards,
+  pinned,
   totalPages,
   currentPage,
   onPageChange,
@@ -68,15 +68,14 @@ export default function BoardList({
         if (searchTerm.trim() === '') {
           setFilteredBoards(boardsQuery); // 검색어 없으면 전체 게시물
         } else {
-          const filteredBoards = result.resListBoardDtos.filter(
-            //null 일때 처리해주면 빨간줄 사라짐.
+          const filteredBoards = result.resListBoardDtos?.filter(
             (board) =>
               board.title.toLowerCase().includes(searchTerm) ||
               board.content.toLowerCase().includes(searchTerm),
           );
           setTotalPagesFromServer(result.totalPages as number); // 서버에서 받아온 totalPages 설정
 
-          setFilteredBoards(filteredBoards); // 필터링된 게시물
+          setFilteredBoards(filteredBoards ?? []); // 필터링된 게시물
         }
       } catch (error) {
         console.error('검색 중 오류 발생:', error);
@@ -109,11 +108,7 @@ export default function BoardList({
       return combinedBoards.map((board, index) => (
         <div key={`board-${board.id}`}>
           <div className={styles['board-wrapper']}>
-            <BoardItem
-              board={board}
-              category={category}
-              pinnedBoards={pinnedBoards}
-            />
+            <BoardItem board={board} category={category} pinned={pinned} />
           </div>
           {index < combinedBoards.length - 1 && (
             <div className={styles.divider}></div>
@@ -127,14 +122,12 @@ export default function BoardList({
 
   return (
     <div className={styles.container}>
-      <h2 className={styles.title}>
-        {CATEGORY_STRINGS[category]} 게시판
-        <ListSearch
-          searchTerm={searchTerm}
-          setSearchTerm={setSearchTerm}
-          onKeyDown={handleSearch}
-        />
-      </h2>
+      <h2 className={styles.title}>{CATEGORY_STRINGS[category]} 게시판</h2>
+      <ListSearch
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+        onKeyDown={handleSearch}
+      />
       <div className={styles.boardList}>{renderBoardContent()}</div>
       <div className={styles['board-list-footer']}>
         <div className={styles['spacer']} />
