@@ -30,7 +30,7 @@ export default function HavrutaBoardList({
   const renderBoardContent = () => {
     if (!havrutaBoardQuery || havrutaBoardQuery.length === 0) {
       return (
-        <div className={styles.container}>게시물이 존재하지 않습니다.</div>
+        <div className={styles['no-result']}>게시물이 존재하지 않습니다.</div>
       );
     }
 

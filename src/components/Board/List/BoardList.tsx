@@ -63,7 +63,7 @@ export default function BoardList({
     } else {
       return (
         <div>
-          <div className={styles['no-result']}>검색 결과가 없습니다.</div>
+          <div className={styles['no-result']}>게시물이 존재하지 않습니다.</div>
         </div>
       );
     }
