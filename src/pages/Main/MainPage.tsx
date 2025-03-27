@@ -33,12 +33,15 @@ export default function MainPage() {
 
       <div className={styles['notice-section']}>
         <div className={styles['search']}>
-          <ListSearch
-            searchTerm={searchTerm}
-            setSearchTerm={setSearchTerm}
-            onKeyDown={handleSearch}
-          />
+          {localStorage.getItem('studentId') ? (
+            <ListSearch
+              searchTerm={searchTerm}
+              setSearchTerm={setSearchTerm}
+              onKeyDown={handleSearch}
+            />
+          ) : null}
         </div>
+
         <Link to="/notice" className={styles.link}>
           동아리 공지사항
         </Link>
