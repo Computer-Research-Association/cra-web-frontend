@@ -1,7 +1,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import histories from '~/Data/histories.json';
+import histories from "src/data/histories.json";
 
 import React, { useState, useRef } from 'react';
 import styles from './IntroHistory.module.css';
