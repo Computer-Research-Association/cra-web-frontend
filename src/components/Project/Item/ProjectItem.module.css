@@ -18,7 +18,7 @@
   padding: 12px;
   cursor: pointer;
   border-radius: 5%;
-  height: 280px; 
+  height: 280px;
   overflow: hidden;
 }
 
@@ -45,15 +45,16 @@
   font-family: 'Pretendard SemiBold';
   font-size: 18px;
   font-weight: 200;
-  text-align: left;
+  text-align: center;
   line-height: 30px;
   padding-left: 10px;
+  margin-top: 10%;
 }
 
 .content {
   font-family: 'Pretendard Regular';
   color: var(--color-dark-stroke);
-  text-align: left;
+  text-align: center;
   padding-left: 10px;
   font-size: clamp(12px, 1vw, 16px);
   flex-grow: 1;
