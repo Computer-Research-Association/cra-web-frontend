@@ -1,4 +1,4 @@
-import { UseQueryResult } from '@tanstack/react-query';
+// import { UseQueryResult } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 import { Board } from '~/models/Board.ts';
 import { CATEGORY_STRINGS } from '~/constants/category_strings.ts';
@@ -6,11 +6,15 @@ import { CATEGORY_STRINGS_EN } from '~/constants/category_strings_en.ts';
 import BoardItem from '~/components/Board/Item/BoardItem.tsx';
 import Pagination from '~/components/Pagination/Pagination.tsx';
 import styles from './BoardList.module.css';
-import LoadingSpinner from '~/components/Common/LoadingSpinner';
+import { useQuery } from '@tanstack/react-query';
+import { getPinBoard } from '~/api/pin';
+
+// import LoadingSpinner from '~/components/Common/LoadingSpinner';
 
 interface BoardListProps {
   category: number;
-  boardsQuery: UseQueryResult<Board[], unknown>;
+  boardsQuery: Board[];
+  pinned: Board[];
   totalPages: number;
   currentPage: number;
   onPageChange: (_page: number) => void;
@@ -19,32 +23,49 @@ interface BoardListProps {
 export default function BoardList({
   category,
   boardsQuery,
+  pinned,
   totalPages,
   currentPage,
   onPageChange,
 }: BoardListProps) {
+  const { data: pinBoards } = useQuery<Board[]>({
+    queryKey: ['pinBoards'],
+    queryFn: getPinBoard,
+  });
+
   const renderBoardContent = () => {
-    if (boardsQuery.isLoading) return <LoadingSpinner />;
+    if (boardsQuery.length > 0) {
+      const pinnedBoardIds = pinBoards
+        ? pinBoards.map((board) => board.boardId)
+        : [];
 
-    if (totalPages === 0)
-      return <div className={styles.noBoards}>현재 게시물이 없습니다.</div>;
+      // 필터링된 게시물에서 핀된 게시물과 일반 게시물 분리
+      const pinnedBoards = boardsQuery.filter((board) =>
+        pinnedBoardIds.includes(board.id),
+      );
 
-    if (boardsQuery.isError)
-      return <div className={styles.error}>에러가 발생했습니다!</div>;
+      const normalBoards = boardsQuery.filter(
+        (board) => !pinnedBoardIds.includes(board.id),
+      );
 
-    if (boardsQuery.isSuccess) {
-      return boardsQuery.data
-        .filter((board) => board.id !== undefined)
-        .map((board, index) => (
-          <div key={`board-${board.id}`}>
-            <div className={styles['board-wrapper']}>
-              <BoardItem board={board} category={category} />
-            </div>
-            {index < boardsQuery.data.length - 1 && (
-              <div className={styles.divider}></div>
-            )}
+      const combinedBoards = [...pinnedBoards, ...normalBoards];
+
+      return combinedBoards.map((board, index) => (
+        <div key={`board-${board.id}`}>
+          <div className={styles['board-wrapper']}>
+            <BoardItem board={board} category={category} pinned={pinned} />
           </div>
-        ));
+          {index < combinedBoards.length - 1 && (
+            <div className={styles.divider}></div>
+          )}
+        </div>
+      ));
+    } else {
+      return (
+        <div>
+          <div className={styles['no-result']}>게시물이 존재하지 않습니다.</div>
+        </div>
+      );
     }
   };
 
@@ -53,18 +74,22 @@ export default function BoardList({
       <h2 className={styles.title}>{CATEGORY_STRINGS[category]} 게시판</h2>
       <div className={styles.boardList}>{renderBoardContent()}</div>
       <div className={styles['board-list-footer']}>
-        <div className={styles['spacer']}></div>
+        <div className={styles['spacer']} />
         <Pagination
           totalPages={totalPages}
           currentPage={currentPage}
           onPageChange={onPageChange}
         />
-        <Link
-          className={styles.WriteLink}
-          to={`/${CATEGORY_STRINGS_EN[category]}/write`}
-        >
-          글쓰기
-        </Link>
+        {CATEGORY_STRINGS[category] === '학술' ? (
+          <Link
+            className={styles.WriteLink}
+            to={`/${CATEGORY_STRINGS_EN[category]}/write`}
+          >
+            글쓰기
+          </Link>
+        ) : (
+          <div className={styles['spacer']} />
+        )}
       </div>
     </div>
   );

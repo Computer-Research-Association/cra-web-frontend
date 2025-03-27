@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware'; // localStorage 또는 sessionStorage에 자동으로 저장 및 복원
+import { persist } from 'zustand/middleware'; // localStorage 또는 localStorage 자동으로 저장 및 복원
 import { ReqSignUp, ReissueToken, Login, ResTokenDto } from '~/models/Auth';
 // authStore interface의 메소드명과 겹쳐서 이름 변경해주기 ("___Api")
 import {
@@ -17,10 +17,11 @@ interface authStore {
   signUp: (_data: ReqSignUp) => Promise<void>; // 새로운 사용자 등록 처리
   reissueToken: (_data: ReissueToken) => Promise<void>; // 저장된 Refresh Token으로 새로운 Access, Refresh Token 받는 요청 처리
   logout: () => Promise<void>; // 로그아웃 처리 (상태 초기화, 토큰 제거)
-  userId: number | null; // 현재 로그인된 사용자의 고유 Id 저장 (number 이거나 null)
+  email: string | null; // 현재 로그인된 사용자의 고유 Id 저장 (number 이거나 null)
   accessToken: string | null; // 로그인 성공 시 서버에서 발급한 Access Token 저장
   refreshToken: string | null; // Access Token이 만료되었을때, 새로운 토근을 발급받기 위한 Refresh Token을 저장
   isAuthenticated: boolean; // 현재 로그인 상태인가?
+  userId: number | null; // 현재 로그인된 사용자의 고유 Id 저장 (number 이거나 null)
 }
 
 // create로 Zustand 상태 정의
@@ -32,6 +33,7 @@ export const useAuthStore = create<authStore>()(
       isAuthenticated: false,
       accessToken: null,
       refreshToken: null,
+      email: null,
       userId: null,
 
       // 로그인 메서드
@@ -49,12 +51,14 @@ export const useAuthStore = create<authStore>()(
             isAuthenticated: true, // 로그인 성공 시 true로 변경하여 인증 상태를 갱신
             accessToken: resTokenDto.accessToken,
             refreshToken: resTokenDto.refreshToken,
+            email: resUserDetailDto.email,
             userId: resTokenDto.userId,
           });
 
-          // Session Storage에도 토큰을 저장하여 다른 Api 요청에서도 사용할 수 있게하기
-          sessionStorage.setItem('refreshToken', resTokenDto.refreshToken);
+          // localStorage Storage에도 토큰을 저장하여 다른 Api 요청에서도 사용할 수 있게하기
+          localStorage.setItem('refreshToken', resTokenDto.refreshToken);
 
+          // console.log('로그인 리이슈 성공');
           await useAuthStore.getState().reissueToken({
             userId: resTokenDto.userId,
             refreshToken: resTokenDto.refreshToken,
@@ -76,7 +80,7 @@ export const useAuthStore = create<authStore>()(
             isAuthenticated: false,
           });
           useUserStore.getState().resetUser();
-          sessionStorage.clear();
+          localStorage.clear();
           console.error('Error During Login: ', error);
           throw error;
         }
@@ -98,22 +102,21 @@ export const useAuthStore = create<authStore>()(
         try {
           // 토근 재발급 Api를 호출하여 새로운 ResponseToken(accessToken, refreshToken, userId)을 받음
           const response: ResTokenDto = await reissueTokenApi(data);
-          const newRefreshToken = sessionStorage.getItem(
+          const newRefreshToken = localStorage.getItem(
             'refreshToken',
           ) as string;
 
           set({
             accessToken: response.accessToken,
             refreshToken: newRefreshToken,
-            userId: response.userId,
           });
 
-          // Session Storage를 갱신해서 최신 인증 정보 유지
+          // localStorage 를 갱신해서 최신 인증 정보 유지
           sessionStorage.setItem('accessToken', response.accessToken);
-          sessionStorage.setItem('refreshToken', newRefreshToken);
+          localStorage.setItem('refreshToken', newRefreshToken);
         } catch (error) {
           useUserStore.getState().resetUser();
-          sessionStorage.clear();
+          localStorage.clear();
           throw error;
         }
       },
@@ -123,6 +126,7 @@ export const useAuthStore = create<authStore>()(
         try {
           await logOutApi();
           sessionStorage.clear();
+          localStorage.clear();
         } catch (error) {
           console.error('Logout Error:', error);
           throw error;
@@ -131,12 +135,12 @@ export const useAuthStore = create<authStore>()(
             isAuthenticated: false,
             accessToken: null,
             refreshToken: null,
-            userId: null,
+            email: null,
           });
           useUserStore.getState().resetUser();
           sessionStorage.removeItem('accessToken');
-          sessionStorage.removeItem('refreshToken');
-          sessionStorage.removeItem('userId');
+          localStorage.removeItem('refreshToken');
+          localStorage.removeItem('userId');
         }
       },
     }),
@@ -146,13 +150,13 @@ export const useAuthStore = create<authStore>()(
       name: 'auth-storage',
       storage: {
         getItem: <T>(name: string): T | null => {
-          const str = sessionStorage.getItem(name);
+          const str = localStorage.getItem(name);
           return str ? (JSON.parse(str) as T) : null;
         },
         setItem: (name: string, value) => {
-          sessionStorage.setItem(name, JSON.stringify(value));
+          localStorage.setItem(name, JSON.stringify(value));
         },
-        removeItem: (name: string) => sessionStorage.removeItem(name),
+        removeItem: (name: string) => localStorage.removeItem(name),
       },
     },
   ),

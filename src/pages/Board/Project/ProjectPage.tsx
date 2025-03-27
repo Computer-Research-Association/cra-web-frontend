@@ -1,11 +1,5 @@
-import ProjectList from '~/components/Project/List/ProjectList.tsx';
-import styles from '../Project/ProjectPage.module.css';
+import ProjectContainer from '~/components/Project/ProjectContainer';
 
 export default function ProjectPage() {
-  return (
-    <div className={styles['project-section']}>
-      <p>프로젝트</p>
-      <ProjectList />
-    </div>
-  );
+  return <ProjectContainer />;
 }

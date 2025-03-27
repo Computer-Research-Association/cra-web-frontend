@@ -20,6 +20,7 @@ interface Comment {
     term: string;
     githubId: string;
     imgUrl: string;
+    greetingMessage: string;
   };
 }
 

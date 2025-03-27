@@ -6,8 +6,11 @@ import { getAllHavrutas } from '~/api/havruta/havruta';
 import HavrutaDelete from '~/components/Havruta/Havruta/Delete/HavrutaDelete';
 import styled from 'styled-components';
 import LoadingSpinner from '~/components/Common/LoadingSpinner';
+import { FaHome } from 'react-icons/fa';
 
-const Container = styled.div``;
+const Container = styled.div`
+  padding: 10rem;
+`;
 
 const Table = styled.table`
   width: 100%;
@@ -48,6 +51,10 @@ const CreateHavrutaLink = styled(Link)`
   &:hover {
     text-decoration: underline;
   }
+`;
+const Home = styled(Link)`
+  color: black;
+  margin-left: 95%;
 `;
 
 //클래스명 교수명 불러오기
@@ -101,7 +108,10 @@ function HavrutaList() {
 
   return (
     <Container>
-      <h1>관리자 Havruta 페이지</h1>
+      <h1>관리자 하브루타 페이지</h1>
+      <Home to="/admin">
+        <FaHome size={30} />
+      </Home>
       {content}
       <CreateHavrutaLink to="./admin/havruta/write">
         새 하브루타 생성
