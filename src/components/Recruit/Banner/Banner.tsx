@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import Vector from '~/assets/images/Vector/Arrow-Vector.png?format=webp&as=srcset';
 import Vector2 from '~/assets/images/Vector/Arrow-Vector2.png?format=webp&as=srcset';
 import styles from './Banner.module.css';

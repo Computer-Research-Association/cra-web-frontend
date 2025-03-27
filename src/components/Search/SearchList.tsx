@@ -23,7 +23,6 @@ interface SearchListProps {
 
 export default function SearchList({
   category,
-  boardsQuery,
   pinned,
   totalPages,
   currentPage,
