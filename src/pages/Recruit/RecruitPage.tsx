@@ -1,11 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
 import Cra from '~/components/Recruit/CRA/Cra';
 import styles from './RecruitPage.module.css';
 import Banner from '~/components/Recruit/Banner/Banner';
 import Talent from '~/components/Recruit/Talent/Talent';
 import Calender from '~/components/Recruit/Calender/Calender';
-import RecruitButton from '~/components/Recruit/Banner/RecruitButton'
+import RecruitButton from '~/components/Recruit/Banner/RecruitButton';
 
 export default function RecruitPage() {
   const recruitTalentRef = useRef<HTMLDivElement>(null);
