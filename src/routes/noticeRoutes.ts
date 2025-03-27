@@ -1,24 +1,34 @@
-import { createRoute } from '@tanstack/react-router';
+import { createRoute, redirect } from '@tanstack/react-router';
 import { lazy } from 'react';
 import { rootRoute } from './__root';
-import { requireAuth } from '~/components/Auth/Decode/authCheck';
+import { useAuthStore } from '~/store/authStore';
+
+const requireAuth = () => {
+  const { isAuthenticated } = useAuthStore.getState();
+  if (!isAuthenticated) {
+    return redirect({ to: '/login' });
+  }
+};
 
 export const noticeRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/notice',
   component: lazy(() => import('~/pages/Board/Notice/NoticePage.tsx')),
+  beforeLoad: requireAuth,
 });
 
 export const noticeViewRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/notice/view/$id',
   component: lazy(() => import('~/pages/Board/Notice/NoticeDetailPage.tsx')),
+  beforeLoad: requireAuth,
 });
 
 export const noticeEditRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/notice/edit/$id',
   component: lazy(() => import('~/pages/Board/Notice/NoticeEditPage.tsx')),
+  beforeLoad: requireAuth,
 });
 
 export const adminNoticeWriteRoute = createRoute({
