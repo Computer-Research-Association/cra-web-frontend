@@ -37,7 +37,8 @@ export default function IntroPage() {
       <IntroProjects />
 
       <button className={styles.goToRecruitBtn} onClick={scrollToRecruit}>
-        지원하러 가기
+        {/* 지원하러 가기 */}
+        지원이 마감되었습니다
       </button>
     </div>
   );

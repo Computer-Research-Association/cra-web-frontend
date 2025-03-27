@@ -30,7 +30,10 @@ function Banner({
         </p>
         <div ref={titleRef} className={styles['recruit-apply1']}>
           <Link to={RECRUITLINK}>
-            <button className={styles['button-style']}>지원하기</button>
+            <button className={styles['button-style']}>
+              지원 기간이 아닙니다
+              {/* 지원하기 */}
+            </button>
           </Link>
         </div>
         <div className={styles['vector']} onClick={scrollToSection}>

@@ -1,13 +1,23 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { CATEGORY } from '~/constants/category.ts';
 import MainBoardList from './MainBoardList.tsx';
 import CRANG from '~/assets/images/Status_Crang.png';
 import CRANGHOVER from '~/assets/images/crang1_hover.gif';
 import styles from './MainPage.module.css';
-import { useState } from 'react';
+import React, { useState } from 'react';
+import ListSearch from '~/components/Board/List/ListSearch.tsx';
 
 export default function MainPage() {
   const [imgSrc, setImgSrc] = useState<string>(CRANG);
+  const [searchTerm, setSearchTerm] = useState<string>('');
+  const navigate = useNavigate();
+
+  const handleSearch = async (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      // Enter 눌렀을 때 검색 결과 페이지로 이동
+      await navigate(`/search?term=${searchTerm}`);
+    }
+  };
 
   return (
     <div className={styles.container}>
@@ -20,7 +30,15 @@ export default function MainPage() {
           />
         </div>
       </div>
+
       <div className={styles['notice-section']}>
+        <div className={styles['search']}>
+          <ListSearch
+            searchTerm={searchTerm}
+            setSearchTerm={setSearchTerm}
+            onKeyDown={handleSearch}
+          />
+        </div>
         <Link to="/notice" className={styles.link}>
           동아리 공지사항
         </Link>
