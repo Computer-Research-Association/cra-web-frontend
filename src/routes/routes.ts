@@ -55,12 +55,12 @@ import {
 import { bookRoute } from './bookRoute.ts';
 import { itemRoute } from './itemRoute.ts';
 import { projectRoute } from './projectRoute.ts';
-import {
-  havrutaRoute,
-  havrutaViewRoute,
-  havrutaEditRoute,
-  havrutaWriteRoute,
-} from './havrutaRoutes.ts';
+// import {
+//   havrutaRoute,
+//   havrutaViewRoute,
+//   havrutaEditRoute,
+//   havrutaWriteRoute,
+// } from './havrutaRoutes.ts';
 import { adminRoute, superAdminRoute } from './adminRoute.ts';
 import { adminAllUsers } from './adminAllUsers.ts';
 import {
@@ -75,11 +75,11 @@ import {
   adminItemUpdateRoute,
   adminItemCreateRoute,
 } from './adminItemRoutes.ts';
-import {
-  adminHavrutaRoute,
-  adminHavrutaUpdateRoute,
-  adminHavrutaCreateRoute,
-} from './adminHavrutaRoutes.ts';
+// import {
+//   adminHavrutaRoute,
+//   adminHavrutaUpdateRoute,
+//   adminHavrutaCreateRoute,
+// } from './adminHavrutaRoutes.ts';
 import {
   adminProjectRoute,
   adminProjectDetailRoute,
@@ -127,10 +127,10 @@ export const routes = createRouter({
     bookRoute,
     itemRoute,
     projectRoute,
-    havrutaRoute,
-    havrutaViewRoute,
-    havrutaEditRoute,
-    havrutaWriteRoute,
+    // havrutaRoute,
+    // havrutaViewRoute,
+    // havrutaEditRoute,
+    // havrutaWriteRoute,
     adminRoute,
     superAdminRoute,
     adminAllUsers,
@@ -142,9 +142,9 @@ export const routes = createRouter({
     adminItemDetailRoute,
     adminItemUpdateRoute,
     adminItemCreateRoute,
-    adminHavrutaRoute,
-    adminHavrutaUpdateRoute,
-    adminHavrutaCreateRoute,
+    // adminHavrutaRoute,
+    // adminHavrutaUpdateRoute,
+    // adminHavrutaCreateRoute,
     adminProjectRoute,
     adminProjectDetailRoute,
     adminProjectUpdateRoute,
