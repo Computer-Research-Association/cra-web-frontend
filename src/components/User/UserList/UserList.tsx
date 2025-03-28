@@ -3,6 +3,9 @@ import axios, { AxiosError } from 'axios';
 import styles from './UserList.module.css';
 import Pagination from '~/components/Pagination/Pagination';
 import { authClient } from '~/api/auth/authClient';
+import LoadingSpinner from '~/components/Common/LoadingSpinner';
+
+const DEFAULT_PROFILE = import.meta.env.VITE_DEFAULT_IMG as string;
 
 interface UserRole {
   authority: string;
@@ -101,7 +104,7 @@ export default function UserList() {
 
   const renderUserList = () => {
     if (isLoading) {
-      return <div className={styles.loading}>Loading...</div>;
+      return <LoadingSpinner />;
     }
 
     if (error) {
@@ -122,7 +125,7 @@ export default function UserList() {
       <div key={user.userId} className={styles.userCard}>
         <div className={styles.userInfo}>
           <img
-            src={user.imgUrl || '/default-profile.png'}
+            src={user.imgUrl ? user.imgUrl : DEFAULT_PROFILE}
             alt={`${user.name}'s profile`}
             className={styles.userImage}
           />
