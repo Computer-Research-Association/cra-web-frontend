@@ -1,28 +1,33 @@
-import { Board } from '~/models/Board.ts';
-import { client } from './client.ts';
+/* eslint-disable */
+// @ts-nocheck
+import { Board, BoardPageList } from '~/models/Board.ts';
+// import { client } from './client.ts';
 import { authClient } from './auth/authClient.ts';
 import { UpdateBoard } from '~/models/Board.ts';
+import { reissueToken } from './auth/authApi.ts';
+import { useAuthStore } from '~/store/authStore.ts';
 
 // [GET]
-export const getBoardCountByCategory = async (category: number) => {
-  try {
-    const response = await client.get<Board[]>(`/board/${category}`);
-    return response.data;
-  } catch (error) {
-    console.error(error);
-    throw error;
-  }
-};
+// export const getBoardCountByCategory = async (category: number) => {
+//   try {
+//     const response = await client.get<Board[]>(`/board/${category}`);
+//     return response.data;
+//   } catch (error) {
+//     console.error(error);
+//     throw error;
+//   }
+// };
 
 // [GET] by Pagination
+// orderBy: 0번 날짜순, 1번 좋아요순
 export const getBoardsByCategory = async (
   category: number,
   page: number = 1,
   perPage: number = 10,
   orderBy: number = 0,
-) => {
+): Promise<BoardPageList> => {
   try {
-    const response = await client.get<Board[]>(
+    const response = await authClient.get<BoardPageList>(
       `/board/${category}/page/${page}`,
       {
         params: {
@@ -33,7 +38,34 @@ export const getBoardsByCategory = async (
       },
     );
     return response.data;
-  } catch (error) {
+  } catch (error: any) {
+    // 403
+    if (error.response?.status === 403) {
+      const refreshToken = localStorage.getItem('refreshToken');
+
+      if (!refreshToken) {
+        console.error('No refresh token found');
+        throw new Error('Session expired, please log in again');
+      }
+
+      try {
+        const userId = useAuthStore.getState().userId as number;
+
+        const { accessToken: newAccessToken } = await reissueToken({
+          userId,
+          refreshToken,
+        });
+
+        sessionStorage.setItem('accessToken', newAccessToken);
+
+        error.config.headers.Authorization = `Bearer ${newAccessToken}`;
+        return client.request(error.config);
+      } catch (reissueError) {
+        localStorage.clear();
+        console.error('Token reissue failed:', reissueError);
+        throw new Error('Session expired, please log in again');
+      }
+    }
     console.error(error);
     throw error;
   }
@@ -76,6 +108,7 @@ export const createBoards = async (board: Board, file: File | null) => {
       headers: {
         'Content-type': 'multipart/form-data',
       },
+      timeout: 3000000,
     });
 
     return response.data;

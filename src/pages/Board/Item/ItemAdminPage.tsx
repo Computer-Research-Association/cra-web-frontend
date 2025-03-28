@@ -1,6 +1,7 @@
-import ItemAdminList from '~/components/Item/List/ItemAdminList.tsx';
+import ItemAdminContainer from '~/components/Item/ItemAdminContainer';
+import { ITEMCATEGORY } from '~/constants/itemCategory';
 
 function ItemAdminPage() {
-  return <ItemAdminList />;
+  return <ItemAdminContainer category={ITEMCATEGORY.ITEM} />;
 }
 export default ItemAdminPage;

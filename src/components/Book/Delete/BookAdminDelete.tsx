@@ -16,14 +16,20 @@ const DeleteButton = styled.button`
   }
 `;
 
-function BookAdminDelete({ id }: { id: number }) {
+function BookAdminDelete({
+  id,
+  currentPage,
+}: {
+  id: number;
+  currentPage: number;
+}) {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
     mutationFn: (id: number) => deleteItem(id),
     onSuccess: async () => {
       queryClient.setQueryData<Item[]>(
-        QUERY_KEY.item.items(ITEMCATEGORY.BOOK),
+        QUERY_KEY.item.items(ITEMCATEGORY.BOOK, currentPage),
         (oldData) => {
           if (!oldData) return [];
           return oldData.filter((item) => item.id !== id);
@@ -31,10 +37,12 @@ function BookAdminDelete({ id }: { id: number }) {
       );
 
       await queryClient.invalidateQueries({
-        queryKey: QUERY_KEY.item.items(ITEMCATEGORY.BOOK),
+        queryKey: QUERY_KEY.item.items(ITEMCATEGORY.BOOK, currentPage),
       });
 
-      queryClient.getQueryData<Item[]>(QUERY_KEY.item.items(ITEMCATEGORY.BOOK));
+      queryClient.getQueryData<Item[]>(
+        QUERY_KEY.item.items(ITEMCATEGORY.BOOK, currentPage),
+      );
     },
     onError: (error) => {
       console.error('도서 삭제 실패', error);

@@ -16,14 +16,20 @@ const DeleteButton = styled.button`
   }
 `;
 
-function ItemAdminDelete({ id }: { id: number }) {
+function ItemAdminDelete({
+  id,
+  currentPage,
+}: {
+  id: number;
+  currentPage: number;
+}) {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
     mutationFn: (id: number) => deleteItem(id),
     onSuccess: async () => {
       queryClient.setQueryData<Item[]>(
-        QUERY_KEY.item.items(ITEMCATEGORY.ITEM),
+        QUERY_KEY.item.items(ITEMCATEGORY.ITEM, currentPage),
         (oldData) => {
           if (!oldData) return [];
           return oldData.filter((item) => item.id !== id);
@@ -31,11 +37,11 @@ function ItemAdminDelete({ id }: { id: number }) {
       );
 
       await queryClient.invalidateQueries({
-        queryKey: QUERY_KEY.item.items(ITEMCATEGORY.ITEM),
+        queryKey: QUERY_KEY.item.items(ITEMCATEGORY.ITEM, currentPage),
       });
 
       const updatedData = queryClient.getQueryData<Item[]>(
-        QUERY_KEY.item.items(ITEMCATEGORY.ITEM),
+        QUERY_KEY.item.items(ITEMCATEGORY.ITEM, currentPage),
       );
       console.log('Updated Cached Data:', updatedData);
     },

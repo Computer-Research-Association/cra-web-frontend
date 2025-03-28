@@ -1,9 +1,9 @@
 /* eslint-disable */
 // @ts-nocheck
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 
 import { colorSyntax, codeSyntaxHighlight, Prism } from '~/styles/toast-ui';
-// import { onUploadImage } from '~/api/board';
+import { onUploadImage } from '~/api/board';
 
 interface UseMarkdownEditorProps {
   initialContent?: string;
@@ -40,6 +40,32 @@ export const useMarkdownEditor = ({
   const editorRef = useRef<any>();
   const [content, setContent] = useState(initialContent);
   const [error, setError] = useState<string>();
+
+  useEffect(() => {
+    // Toast UI 에디터가 마운트된 후에 스타일 적용
+    const styleElement = document.createElement('style');
+    styleElement.textContent = `
+      .toastui-editor-popup-body li {
+        display: block !important;
+      }
+      
+      .toastui-editor-contents ol li, 
+      .toastui-editor-contents ul li {
+        display: list-item !important;
+      }
+      
+      .toastui-editor-md-preview ol li, 
+      .toastui-editor-md-preview ul li {
+        display: list-item !important;
+      }
+    `;
+    document.head.appendChild(styleElement);
+
+    return () => {
+      // 컴포넌트 언마운트 시 제거
+      document.head.removeChild(styleElement);
+    };
+  }, []);
 
   const handleEditorChange = () => {
     const newContent = editorRef.current?.getInstance().getMarkdown();
@@ -79,7 +105,7 @@ export const useMarkdownEditor = ({
     plugins: [[codeSyntaxHighlight, { highlighter: Prism }], colorSyntax],
     onChange: handleEditorChange,
     hooks: {
-      addImageBlobHook: async () => {},
+      addImageBlobHook: handleImageUpload,
     },
   };
 

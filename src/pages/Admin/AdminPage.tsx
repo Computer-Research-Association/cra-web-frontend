@@ -7,6 +7,7 @@ const Container = styled.div`
   justify-content: space-between;
   gap: 1rem;
   width: 60%;
+  margin-bottom: 10%;
 `;
 
 export default function AdminPage() {

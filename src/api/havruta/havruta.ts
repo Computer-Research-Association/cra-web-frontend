@@ -1,11 +1,10 @@
 import { Havruta } from '~/models/Havruta.ts';
-import { client } from '~/api/client.ts';
 import { authClient } from '~/api/auth/authClient.ts';
 
 // /api/havruta
 export const getAllHavrutas = async () => {
   try {
-    const response = await client.get<Havruta[]>(`/havruta`);
+    const response = await authClient.get<Havruta[]>(`/havruta`);
     return response.data;
   } catch (error) {
     console.error(error);

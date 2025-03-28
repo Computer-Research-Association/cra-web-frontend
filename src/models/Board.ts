@@ -1,18 +1,34 @@
+import { Comment } from './Comment';
+
+export interface BoardPageList {
+  resListBoardDtos?: Board[];
+  resBoardPinDtos?: Board[];
+  totalPages?: number;
+  totalBoards?: number;
+}
+
 export interface Board {
   id?: number;
   userId?: number;
+  boardId?: number;
   title: string;
   category: number;
   content: string;
   imageUrls?: string[];
   createdAt?: Date;
   updatedAt?: Date;
-  havrutaId?: number;
+  pinedAt?: Date;
+  isPined?: boolean;
+  pidId?: number;
+
+  // havrutaId?: number;
   likeCount?: number;
   viewerLiked?: boolean;
   likes: number;
   liked: boolean;
   view?: number;
+  fileUrl?: string;
+  commentCount?: number;
   resUserDetailDto: {
     name?: string;
     email?: string;
@@ -20,15 +36,15 @@ export interface Board {
     term?: string;
     githubId?: string;
     imgUrl?: string;
+    greetingMessage?: string;
   };
-  havrutaDto?: {
-    id?: number | null;
+  havrutaDto: {
+    id?: 0;
     classname?: string;
     professor?: string;
   };
-  fileUrl?: string;
+  resListCommentDtos?: Comment[];
 }
-
 export interface UpdateBoard {
   title: string;
   content: string;

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 const Menu = styled.ul`
   display: flex;
+  width: 25%;
   flex-direction: column;
   background-color: rgb(255, 255, 255);
   border-radius: 1rem;
@@ -26,20 +27,29 @@ const MenuItem = styled.li`
 export default function AdminSideBar() {
   return (
     <Menu>
-      <MenuItem>
+      {/* <MenuItem>
         <Link to="/admin">관리자 홈</Link>
+      </MenuItem> */}
+      <MenuItem>
+        <Link to="/admin/allusers">유저 전체 정보</Link>
+      </MenuItem>
+      <MenuItem>
+        <Link to="/admin/notice/write">공지글 쓰기</Link>
       </MenuItem>
       <MenuItem>
         <Link to="/admin/book">도서 관리</Link>
       </MenuItem>
       <MenuItem>
-        <Link to="/admin/item">물품 관리</Link>
+        <Link to="/admin/item">비품 관리</Link>
       </MenuItem>
       <MenuItem>
         <Link to="/admin/havruta">하브루타 과목 관리</Link>
       </MenuItem>
       <MenuItem>
         <Link to="/admin/project">프로젝트 관리</Link>
+      </MenuItem>
+      <MenuItem>
+        <Link to="/admin/code">가입코드 생성</Link>
       </MenuItem>
     </Menu>
   );

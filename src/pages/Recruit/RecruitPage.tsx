@@ -1,13 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
 import Cra from '~/components/Recruit/CRA/Cra';
 import styles from './RecruitPage.module.css';
 import Banner from '~/components/Recruit/Banner/Banner';
 import Talent from '~/components/Recruit/Talent/Talent';
 import Calender from '~/components/Recruit/Calender/Calender';
-
-const RECRUITLINK =
-  'https://docs.google.com/forms/d/e/1FAIpQLSd-Yq9rq7tTuYXyn_RnkEvQRXP7yYVJLAWhChnPnMKtRQqrsQ/viewform';
+import RecruitButton from '~/components/Recruit/Banner/RecruitButton';
 
 export default function RecruitPage() {
   const recruitTalentRef = useRef<HTMLDivElement>(null);
@@ -75,10 +72,7 @@ export default function RecruitPage() {
       <Calender />
       <div className={styles['recruit-apply']}>
         <h1>CRA와 함께 성장하고 싶다면</h1>
-        {/* 리크루팅 링크 변경 */}
-        <Link to={RECRUITLINK}>
-          <button className={styles['button-style']}>지원하기</button>
-        </Link>
+        <RecruitButton titleRef={titleRef} />
       </div>
     </div>
   );

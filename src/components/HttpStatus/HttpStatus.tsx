@@ -4,6 +4,23 @@ import styled from 'styled-components';
 const Status = styled.div`
   display: flex;
   user-select: none;
+
+  @media (max-width: 900px) {
+    scale: 80%;
+    transform: translateY(2.5rem);
+  }
+  @media (max-width: 720px) {
+    scale: 70%;
+    transform: translateY(5rem);
+  }
+  @media (max-width: 500px) {
+    scale: 60%;
+    transform: translateY(7rem);
+  }
+  @media (max-width: 400px) {
+    scale: 50%;
+    transform: translateY(10rem);
+  }
 `;
 
 const StatusNum = styled.p`

@@ -6,7 +6,7 @@
   z-index: 1000;
   width: 100%;
   background-color: var(--color-white);
-  font-family: 'Pretendard Bold';
+  font-family: 'Pretendard Medium';
   align-items: center;
   box-sizing: border-box;
   justify-content: space-between;
@@ -30,12 +30,12 @@
 
 li {
   display: inline;
-  padding: 0rem 1.5rem;
+  padding: 0rem 0.75rem;
 }
 
 .link {
   text-decoration: none;
-  font-size: 1.15rem;
+  font-size: 0.9rem;
 }
 
 .navbar-link {
@@ -73,6 +73,7 @@ li {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-left: 2rem;
   p {
     color: var(--color-bright-text) !important;
   }
@@ -102,11 +103,8 @@ li {
   .header-main {
     padding: 0.65rem 4rem;
   }
-  li {
-    padding: 0rem 1rem;
-  }
   .link {
-    font-size: 1rem;
+    font-size: 0.85rem;
   }
 }
 

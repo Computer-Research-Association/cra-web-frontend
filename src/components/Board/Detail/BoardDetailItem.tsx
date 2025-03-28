@@ -12,7 +12,7 @@ import { dateFormat } from '~/utils/dateForm.ts';
 import { Viewer } from '@toast-ui/react-editor';
 import { FaRegEdit } from 'react-icons/fa';
 import { IoIosLink } from 'react-icons/io';
-import { LuEye } from 'react-icons/lu';
+import { LuEye, LuPin, LuPinOff } from 'react-icons/lu';
 import { BiLike } from 'react-icons/bi';
 import { FaRegComment } from 'react-icons/fa';
 import styles from './BoardDetailItem.module.css';
@@ -21,6 +21,8 @@ import { getBoardById } from '~/api/board';
 import createLike from '~/api/like';
 import BoardUserModal from '~/components/Modal/User/OtherUser/BoardUserModal';
 import { useAuthStore } from '~/store/authStore';
+import { createPinBoard, deletePinBoard } from '~/api/pin';
+import isAdmin from '~/components/Auth/Decode/adminCheck';
 
 const DEFAULT_PROFILE = import.meta.env.VITE_DEFAULT_IMG as string;
 
@@ -34,18 +36,16 @@ const extractFileName = (fileUrl: string) => {
 export default function BoardDetailItem({
   board,
   category,
-  commentCount,
 }: {
   board: Board;
   category: number;
-  commentCount: number;
 }) {
   const [viewCnt, setViewCnt] = useState(board.view);
 
   const [modalOpen, setModalOpen] = useState(false);
   const openModal = () => setModalOpen(true);
   const closeModal = () => setModalOpen(false);
-  const userId = useAuthStore.getState().userId as number;
+  const email = useAuthStore.getState().email;
 
   useEffect(() => {
     const viewed = localStorage.getItem(`viewed_${board.id}`);
@@ -124,11 +124,35 @@ export default function BoardDetailItem({
     }
   };
 
+  const handlePin = async () => {
+    try {
+      if (board.isPined) {
+        await deletePinBoard(board.pidId as number);
+        console.log('고정 취소');
+      } else {
+        await createPinBoard(board.id as number, category);
+        console.log('고정');
+      }
+    } catch (error) {
+      console.error('핀 처리 중 오류 발생:', error);
+    }
+  };
+
+  const { accessToken } = useAuthStore.getState();
+  const token = accessToken as string;
+  console.log(board.id);
   return (
     <div className={styles['detail-container']}>
       <div className={styles['detail-content']}>
         <div className={styles['title']}>
           {CATEGORY_STRINGS[category]} 게시판
+          <div style={{ cursor: 'pointer' }}>
+            {isAdmin(token) && (
+              <div onClick={handlePin}>
+                {board.isPined ? <LuPin size={20} /> : <LuPinOff size={20} />}
+              </div>
+            )}
+          </div>
         </div>
         <Divider />
         <div className={styles['content-body']}>
@@ -160,7 +184,7 @@ export default function BoardDetailItem({
               </span>
             </div>
             <div className={styles['fix-button']}>
-              {userId === board.userId && (
+              {email === board.resUserDetailDto.email && (
                 <>
                   <Link
                     to={`/${CATEGORY_STRINGS_EN[category]}/edit/${board.id}`}
@@ -210,14 +234,14 @@ export default function BoardDetailItem({
               </span>
               <span className={styles.viewContainer}>
                 <FaRegComment />
-                <span>{commentCount}</span>
+                <span>{board.resListCommentDtos?.length}</span>
               </span>
             </div>
           </div>
         </div>
         <div className={styles['footer']}>
           <HeightSpacer space={20} />
-          <CommentList id={board.id!} />
+          <CommentList board={board} />
           <CommentWrite parentId={undefined} />
         </div>
       </div>

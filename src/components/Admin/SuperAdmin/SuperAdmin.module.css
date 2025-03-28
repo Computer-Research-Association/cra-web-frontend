@@ -1,0 +1,58 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 40vw;
+  font-family: 'Pretendard Medium';
+  font-size: 1.2rem;
+  background-color: #fff;
+  border-radius: 1rem;
+  padding: 4rem 10rem;
+  margin-top: 2rem;
+  margin-bottom: 6rem;
+}
+
+.title {
+  align-self: center;
+  font-size: 40px;
+  font-family: 'Pretendard Bold';
+  color: var(--color-bright-text);
+  margin-bottom: 3rem;
+}
+
+.input {
+  align-self: center;
+  margin-bottom: 2rem;
+  input {
+    text-align: center;
+    font-size: 32px;
+    width: 10rem;
+    border: 1px solid #c1c1c1;
+    font-family: 'Pretendard SemiBold';
+    border-radius: 10px;
+    height: 68px;
+  }
+}
+
+.button {
+  align-self: center;
+  button {
+    font-size: 24px;
+    font-family: 'Pretendard Bold';
+    background-color: #2cb4db;
+    color: white;
+    cursor: pointer;
+    border: none;
+    border-radius: 10px;
+    width: 10rem;
+    padding: 1rem 0;
+  }
+}
+
+.codeList {
+  align-self: center;
+  font-family: 'Pretendard Medium';
+}
+
+.code {
+  padding-top: 2rem;
+}

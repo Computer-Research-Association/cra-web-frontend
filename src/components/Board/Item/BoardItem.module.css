@@ -14,6 +14,14 @@
   display: flex;
   justify-content: space-between;
 }
+.pined-user {
+  line-height: 34px;
+  font-size: 16px;
+  font-family: 'Pretendard SemiBold';
+  color: var(--color-primary);
+  display: flex;
+  justify-content: space-between;
+}
 .board-info {
   font-family: 'Pretendard Medium';
   margin-right: 20px;
@@ -38,6 +46,14 @@
   font-family: 'Pretendard SemiBold';
   text-decoration: none;
   color: var(--color-dark-text);
+  margin-top: 5px;
+}
+.pined {
+  line-height: 34px;
+  font-size: 18px;
+  font-family: 'Pretendard SemiBold';
+  text-decoration: none;
+  color: var(--color-primary);
   margin-top: 5px;
 }
 

@@ -39,6 +39,13 @@ export default function HeaderMain() {
     }
   };
 
+  const resetPage = () => {
+    {
+      sessionStorage.setItem('currentPage', '0');
+      sessionStorage.removeItem('havruta');
+    }
+  };
+
   // const handleMyInfo = () => {
   //   navigate('/in  fo');
   // };
@@ -70,7 +77,6 @@ export default function HeaderMain() {
           {[
             { path: '/notice', label: 'Notice' },
             { path: '/academic', label: 'Academic' },
-            { path: '/havruta', label: 'Havruta' },
             { path: '/book', label: 'Book' },
             { path: '/item', label: 'Item' },
             { path: '/project', label: 'Project' },
@@ -81,7 +87,10 @@ export default function HeaderMain() {
                 className={`${styles['link']} ${styles['navbar-link']} ${
                   location.pathname.startsWith(path) ? styles.active : ''
                 }`}
-                onClick={toggleMenu}
+                onClick={() => {
+                  toggleMenu();
+                  resetPage();
+                }}
               >
                 {label}
               </Link>
@@ -111,30 +120,30 @@ export default function HeaderMain() {
             </p>
           )}
         </li>
+        <div className={styles['desktop-authbutton']}>
+          {isAuthenticated ? (
+            <>
+              <img
+                srcSet={imgUrl}
+                className={styles.profile}
+                onClick={openModal}
+                loading="lazy"
+              />
+              {/* <p>{name}</p> */}
+              {/* <button className={styles.authbutton}>내정보</button> */}
+            </>
+          ) : (
+            <>
+              <button className={styles.authbutton} onClick={handleLogin}>
+                로그인
+              </button>
+            </>
+          )}
+          {modalOpen && (
+            <UserModal closeModal={closeModal} handleLogout={handleLogout} />
+          )}
+        </div>
       </ul>
-      <div className={styles['desktop-authbutton']}>
-        {isAuthenticated ? (
-          <>
-            <img
-              srcSet={imgUrl}
-              className={styles.profile}
-              onClick={openModal}
-              loading="lazy"
-            />
-            {/* <p>{name}</p> */}
-            {/* <button className={styles.authbutton}>내정보</button> */}
-          </>
-        ) : (
-          <>
-            <button className={styles.authbutton} onClick={handleLogin}>
-              로그인
-            </button>
-          </>
-        )}
-        {modalOpen && (
-          <UserModal closeModal={closeModal} handleLogout={handleLogout} />
-        )}
-      </div>
     </div>
   );
 }

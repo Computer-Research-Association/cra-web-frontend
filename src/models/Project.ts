@@ -1,4 +1,9 @@
-interface Project {
+export interface ProjectPageList {
+  resListProjectDtos: Project;
+  totalPages: number;
+}
+
+export interface Project {
   id?: number;
   semester: string;
   teamName: string;
@@ -7,10 +12,8 @@ interface Project {
   gitHubUrl: string;
   serviceUrl: string;
   members: string[];
-  imageUrl: string;
+  imageUrl?: string;
   deleted?: boolean;
   createdAt?: Date;
   updatedAt?: Date;
 }
-
-export type { Project };

@@ -1,11 +1,17 @@
 import { createRoute } from '@tanstack/react-router';
 import { lazy } from 'react';
 import { rootRoute } from './__root';
-import { requireAuth } from './authCheck';
+import { requireAuth } from '~/components/Auth/Decode/authCheck.tsx';
 
 export const adminRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/admin',
   component: lazy(() => import('~/pages/Admin/AdminPage.tsx')),
   beforeLoad: requireAuth,
+});
+
+export const superAdminRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/admin/code',
+  component: lazy(() => import('~/pages/Admin/SuperAdminPage.tsx')),
 });

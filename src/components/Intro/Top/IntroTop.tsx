@@ -5,7 +5,10 @@ import Vector2 from '~/assets/images/Vector/Arrow-Vector2.png?format=webp&as=src
 import Crang from '~/assets/images/Status_Crang.svg';
 import styles from './IntroTop.module.css';
 
-const RECRUIT_SEMESTER = '2025-1';
+const today = new Date();
+const month = today.getMonth() + 1;
+
+const RECRUIT_SEMESTER = today.getFullYear() + '-' + (month > 7 ? 2 : 1);
 
 function IntroTop({
   recruitRef,

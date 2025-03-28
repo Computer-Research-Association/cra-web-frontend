@@ -1,10 +1,24 @@
-import { Project } from '~/models/Project.ts';
+import { Project, ProjectPageList } from '~/models/Project.ts';
 import { client } from './client.ts';
 import { authClient } from './auth/authClient.ts';
 
-export const getProjects = async () => {
+// orderBy: 0번 날짜순, 1번 학기순
+export const getProjects = async (
+  page: number = 1,
+  perPage: number = 12,
+  orderBy: number = 0,
+) => {
   try {
-    const response = await client.get<Project[]>(`/project`);
+    const response = await client.get<ProjectPageList>(
+      `/project/list/${page}`,
+      {
+        params: {
+          perPage,
+          orderBy,
+          isASC: false,
+        },
+      },
+    );
     return response.data;
   } catch (error) {
     console.error(error);

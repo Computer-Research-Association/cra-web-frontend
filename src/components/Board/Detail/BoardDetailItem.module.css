@@ -47,12 +47,14 @@
 }
 
 .title {
+  display: flex;
   text-align: left;
   margin: 4px 13px 14px;
   line-height: 34px;
   color: var(--color-brighter-text);
   font-size: 20px;
   font-family: 'Pretendard Medium';
+  justify-content: space-between;
 }
 
 .nav {
