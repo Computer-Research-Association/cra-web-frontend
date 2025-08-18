@@ -12,7 +12,7 @@ export const HomeRoute = createRoute({
 
 export const introRoute = createRoute({
   getParentRoute: () => rootRoute,
-  path: `/intro`,
+  path: `/main`,
   component: () => {
     const navigate = useNavigate();
 

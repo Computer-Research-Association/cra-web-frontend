@@ -29,6 +29,15 @@
   margin-bottom: 30px;
 }
 
+.point {
+  display: inline;
+  background: linear-gradient(90deg, #007cf0, #00dfd8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+}
+
 .banner {
   display: flex;
   flex-direction: column;
@@ -66,10 +75,10 @@
   justify-content: center;
   background-color: var(--color-recruit-blue);
   color: var(--color-white-blue-text);
-  font-size: 50px;
+  font-size: 30px;
   padding: 1rem 3rem;
   margin-top: 3rem;
-  border-radius: 2rem;
+  border-radius: 0.75rem;
   z-index: 2;
   text-decoration: none;
   transition:

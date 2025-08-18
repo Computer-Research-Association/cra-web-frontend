@@ -25,7 +25,7 @@ import {
 } from './errorRoute.ts';
 import { HomeRoute, introRoute } from './introRoutes.ts';
 import { recruitRoute } from './recruitRoute.ts';
-import { mainRoute } from './mainRoute.ts';
+// import { mainRoute } from './mainRoute.ts';
 import { loginRoute } from './loginRoute.ts';
 import {
   registerRoute,
@@ -52,15 +52,15 @@ import {
   academicEditRoute,
   academicWriteRoute,
 } from './academicRoutes.ts';
-import { bookRoute } from './bookRoute.ts';
-import { itemRoute } from './itemRoute.ts';
+// import { bookRoute } from './bookRoute.ts';
+// import { itemRoute } from './itemRoute.ts';
 import { projectRoute } from './projectRoute.ts';
-import {
-  havrutaRoute,
-  havrutaViewRoute,
-  havrutaEditRoute,
-  havrutaWriteRoute,
-} from './havrutaRoutes.ts';
+// import {
+//   havrutaRoute,
+//   havrutaViewRoute,
+//   havrutaEditRoute,
+//   havrutaWriteRoute,
+// } from './havrutaRoutes.ts';
 import { adminRoute, superAdminRoute } from './adminRoute.ts';
 import { adminAllUsers } from './adminAllUsers.ts';
 import {
@@ -75,11 +75,11 @@ import {
   adminItemUpdateRoute,
   adminItemCreateRoute,
 } from './adminItemRoutes.ts';
-import {
-  adminHavrutaRoute,
-  adminHavrutaUpdateRoute,
-  adminHavrutaCreateRoute,
-} from './adminHavrutaRoutes.ts';
+// import {
+//   adminHavrutaRoute,
+//   adminHavrutaUpdateRoute,
+//   adminHavrutaCreateRoute,
+// } from './adminHavrutaRoutes.ts';
 import {
   adminProjectRoute,
   adminProjectDetailRoute,
@@ -105,7 +105,7 @@ export const routes = createRouter({
     HomeRoute,
     introRoute,
     recruitRoute,
-    mainRoute,
+    // mainRoute,
     loginRoute,
     registerRoute,
     registerWelcomeRoute,
@@ -124,13 +124,13 @@ export const routes = createRouter({
     academicViewRoute,
     academicEditRoute,
     academicWriteRoute,
-    bookRoute,
-    itemRoute,
+    // bookRoute,
+    // itemRoute,
     projectRoute,
-    havrutaRoute,
-    havrutaViewRoute,
-    havrutaEditRoute,
-    havrutaWriteRoute,
+    // havrutaRoute,
+    // havrutaViewRoute,
+    // havrutaEditRoute,
+    // havrutaWriteRoute,
     adminRoute,
     superAdminRoute,
     adminAllUsers,
@@ -142,9 +142,9 @@ export const routes = createRouter({
     adminItemDetailRoute,
     adminItemUpdateRoute,
     adminItemCreateRoute,
-    adminHavrutaRoute,
-    adminHavrutaUpdateRoute,
-    adminHavrutaCreateRoute,
+    // adminHavrutaRoute,
+    // adminHavrutaUpdateRoute,
+    // adminHavrutaCreateRoute,
     adminProjectRoute,
     adminProjectDetailRoute,
     adminProjectUpdateRoute,

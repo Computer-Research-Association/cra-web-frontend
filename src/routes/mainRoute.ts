@@ -1,9 +1,18 @@
-import { createRoute } from '@tanstack/react-router';
-import { lazy } from 'react';
-import { rootRoute } from './__root';
+// import { createRoute, redirect } from '@tanstack/react-router';
+// import { lazy } from 'react';
+// import { rootRoute } from './__root';
+// import { useAuthStore } from '~/store/authStore';
 
-export const mainRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: '/main',
-  component: lazy(() => import('~/pages/Main/MainPage.tsx')),
-});
+// const requireAuth = () => {
+//   const { isAuthenticated } = useAuthStore.getState();
+//   if (!isAuthenticated) {
+//     return redirect({ to: '/login' });
+//   }
+// };
+
+// export const mainRoute = createRoute({
+//   getParentRoute: () => rootRoute,
+//   path: '/main',
+//   component: lazy(() => import('~/pages/Main/MainPage.tsx')),
+//   beforeLoad: requireAuth,
+// });

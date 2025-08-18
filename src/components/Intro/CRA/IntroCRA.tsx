@@ -1,7 +1,10 @@
 import { useEffect, useState } from 'react';
 import styles from './IntroCRA.module.css';
 
-const CRA_YEAR = '30';
+const today = new Date();
+
+const year = today.getFullYear();
+const CRA_YEAR = year - 1995;
 const CRA_SERVICE = '11';
 
 function IntroCRA() {
