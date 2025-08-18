@@ -14,7 +14,6 @@ export const academicRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/academic',
   component: lazy(() => import('~/pages/Board/Academic/AcademicPage.tsx')),
-  beforeLoad: requireAuth, // 보호된 경로
 });
 
 export const academicViewRoute = createRoute({

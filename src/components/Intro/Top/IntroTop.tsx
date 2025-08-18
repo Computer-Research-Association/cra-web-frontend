@@ -7,7 +7,10 @@ import styles from './IntroTop.module.css';
 
 const today = new Date();
 const month = today.getMonth() + 1;
-
+const RECRUIT_START_DATE = new Date('2025-08-30'); // 시작 날짜
+const RECRUIT_END_DATE = new Date('2025-09-10'); // 종료 날짜
+const isRecruitAvailable =
+  RECRUIT_END_DATE >= today && today >= RECRUIT_START_DATE;
 const RECRUIT_SEMESTER = today.getFullYear() + '-' + (month > 7 ? 2 : 1);
 
 function IntroTop({
@@ -27,9 +30,14 @@ function IntroTop({
       <div className={styles.main} ref={recruitRef}>
         <div className={styles.section}>
           {/* 처음 문구 */}
-          <div className={styles.comment}>
-            <p>CRA와 함께 성장할 동아리원을 모집합니다</p>
-          </div>
+          {isRecruitAvailable && (
+            <div className={styles.comment}>
+              <p>
+                <p className={styles.point}>CRA</p>와 함께 성장할 동아리원을
+                모집합니다
+              </p>
+            </div>
+          )}
 
           {/* 배너 */}
           <div className={styles.banner}>
@@ -62,12 +70,14 @@ function IntroTop({
           </div>
 
           {/* 리크루팅 페이지로 가는 버튼 */}
-          <Link
-            to="/recruit"
-            className={`${styles.RecruitBtn} ${isHighlighted ? styles.highlight : ''}`}
-          >
-            <p>{RECRUIT_SEMESTER} CRA 리크루팅 지원하기</p>
-          </Link>
+          {isRecruitAvailable && (
+            <Link
+              to="/recruit"
+              className={`${styles.RecruitBtn} ${isHighlighted ? styles.highlight : ''}`}
+            >
+              <p>{RECRUIT_SEMESTER}기 CRA 리크루팅 지원하기</p>
+            </Link>
+          )}
 
           {/* 누르면 밑으로 내려가는 화살표 */}
           <div className={styles.vector} onClick={scrollToSection}>

@@ -1,21 +1,150 @@
-import { Link } from 'react-router-dom';
-import CRALogo from '~/assets/images/cra-logo.png?format=webp&as=srcset';
-import styles from './HeaderIntro.module.css';
+// import { useState } from 'react';
+// import { Link, useNavigate } from 'react-router-dom';
+// import craIconBlue from '~/assets/images/cra-logo-blue.png?format=webp&as=srcset';
+// import { useAuthStore } from '~/store/authStore.ts';
+// import { useUIStore } from '~/store/uiStore.ts';
+// import UserModal from '~/components/Modal/User/MyUser/UserModal';
+// import styles from './HeaderIntro.module.css';
+// import { AxiosError } from 'axios';
+// import { useUserStore } from '~/store/userStore';
 
-export default function HeaderIntro() {
-  return (
-    <div className={styles.HeaderIntro}>
-      {/* 상단 헤더 */}
-      <ul className={styles.UlIntro}>
-        <Link to="./intro">
-          <li className={`${styles.LiIntro} ${styles.LiImg}`}>
-            <img srcSet={CRALogo} className={styles.Logo} loading="lazy" />
-          </li>
-        </Link>
-        <Link to="./main" className={`${styles.LiIntro} ${styles.NavbarLink}`}>
-          int main()
-        </Link>
-      </ul>
-    </div>
-  );
-}
+// export default function HeaderIntro() {
+//   const { isAuthenticated, logout } = useAuthStore();
+//   const { name, imgUrl } = useUserStore();
+//   const { isMenuOpen, toggleMenu } = useUIStore();
+//   const navigate = useNavigate();
+
+//   const [modalOpen, setModalOpen] = useState(false);
+//   const openModal = () => setModalOpen(true);
+//   const closeModal = () => setModalOpen(false);
+//   const isMenuOrModalOpen = isMenuOpen || modalOpen;
+
+//   const handleLogin = () => {
+//     void navigate('/login');
+//   };
+
+//   const handleLogout = () => {
+//     // 내정보
+//     try {
+//       void logout();
+//       closeModal();
+//       void navigate('/main');
+//     } catch (error) {
+//       if (error instanceof AxiosError) {
+//         console.error('Login Error:', error.response?.data);
+//       } else {
+//         console.error('Unexpected Error:', error);
+//         throw new Error('Unexpected Error occurred during Login');
+//       }
+//     }
+//   };
+
+//   const resetPage = () => {
+//     {
+//       sessionStorage.setItem('currentPage', '0');
+//       sessionStorage.removeItem('havruta');
+//     }
+//   };
+
+//   // const handleMyInfo = () => {
+//   //   navigate('/in  fo');
+//   // };
+//   return (
+//     <div className={styles['header-main']}>
+//       {/* <Link to="/"> */}
+//       <Link to="/main">
+//         <img
+//           srcSet={craIconBlue}
+//           alt="크라 아이콘"
+//           className={styles.logo}
+//           loading="lazy"
+//         />
+//       </Link>
+
+//       <button
+//         className={`${styles['menu-toggle']} ${isMenuOrModalOpen ? styles['menu-toggle-active'] : ''}`}
+//         onClick={toggleMenu}
+//       >
+//         <span></span>
+//         <span></span>
+//         <span></span>
+//       </button>
+
+//       <ul
+//         className={`${styles['nav-menu']} ${isMenuOpen ? styles.active : ''}`}
+//       >
+//         <>
+//           {[
+//             { path: '/notice', label: 'Notice' },
+//             { path: '/academic', label: 'Academic' },
+//             // { path: '/book', label: 'Book' },
+//             // { path: '/item', label: 'Item' },
+//             { path: '/project', label: 'Project' },
+//             { path: '/recruit', label: 'Recruit' },
+//           ].map(({ path, label }) => (
+//             <li key={path}>
+//               <Link
+//                 to={path}
+//                 className={`${styles['link']} ${styles['navbar-link']} ${
+//                   location.pathname.startsWith(path) ? styles.active : ''
+//                 }`}
+//                 onClick={() => {
+//                   toggleMenu();
+//                   resetPage();
+//                 }}
+//               >
+//                 {label}
+//               </Link>
+//             </li>
+//           ))}
+//         </>
+
+//         <li className={styles['mobile-authbutton']}>
+//           {isAuthenticated ? (
+//             <>
+//               <img
+//                 srcSet={imgUrl}
+//                 className={styles.profile}
+//                 onClick={openModal}
+//               />
+//               <p>{name}</p>
+//             </>
+//           ) : (
+//             <p
+//               className={`${styles['link']} ${styles['navbar-link']}`}
+//               onClick={() => {
+//                 handleLogin();
+//                 toggleMenu();
+//               }}
+//             >
+//               Login
+//             </p>
+//           )}
+//         </li>
+//         <div className={styles['desktop-authbutton']}>
+//           {isAuthenticated ? (
+//             <>
+//               <img
+//                 srcSet={imgUrl}
+//                 className={styles.profile}
+//                 onClick={openModal}
+//                 loading="lazy"
+//               />
+//               {/* <p>{name}</p> */}
+//               {/* <button className={styles.authbutton}>내정보</button> */}
+//             </>
+//           ) : (
+//             <>
+//               <button className={styles.authbutton} onClick={handleLogin}>
+//                 로그인
+//               </button>
+//             </>
+//           )}
+//           {modalOpen && (
+//             <UserModal closeModal={closeModal} handleLogout={handleLogout} />
+//           )}
+//         </div>
+//       </ul>
+//     </div>
+//   );
+// }
