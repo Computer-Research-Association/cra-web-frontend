@@ -15,23 +15,23 @@ export default function IntroPage() {
     );
   }, []);
   const recruitRef = useRef<HTMLDivElement>(null);
-  const [isHighlighted, setIsHighlighted] = useState(false); // ✅ 강조 효과 상태 추가
-  const today = new Date();
-  const RECRUIT_START_DATE = new Date('2025-08-30'); // 시작 날짜
-  const RECRUIT_END_DATE = new Date('2025-09-10'); // 종료 날짜
-  const isRecruitAvailable =
-    RECRUIT_END_DATE >= today && today >= RECRUIT_START_DATE;
+  const [isHighlighted] = useState(false); // ✅ 강조 효과 상태 추가
+  // const today = new Date();
+  // const RECRUIT_START_DATE = new Date('2025-08-30'); // 시작 날짜
+  // const RECRUIT_END_DATE = new Date('2025-09-10'); // 종료 날짜
+  // const isRecruitAvailable =
+  //   RECRUIT_END_DATE >= today && today >= RECRUIT_START_DATE;
 
-  const scrollToRecruit = () => {
-    recruitRef.current?.scrollIntoView({
-      behavior: 'smooth',
-      block: 'center',
-    });
-    setIsHighlighted(true);
-    setTimeout(() => {
-      setIsHighlighted(false);
-    }, 2000);
-  };
+  // const scrollToRecruit = () => {
+  //   recruitRef.current?.scrollIntoView({
+  //     behavior: 'smooth',
+  //     block: 'center',
+  //   });
+  //   setIsHighlighted(true);
+  //   setTimeout(() => {
+  //     setIsHighlighted(false);
+  //   }, 2000);
+  // };
   return (
     <div className={styles.container}>
       <IntroTop recruitRef={recruitRef} isHighlighted={isHighlighted} />
@@ -40,9 +40,9 @@ export default function IntroPage() {
       <IntroNetwork />
       <IntroProjects />
 
-      <button className={styles.goToRecruitBtn} onClick={scrollToRecruit}>
+      {/* <button className={styles.goToRecruitBtn} onClick={scrollToRecruit}>
         {isRecruitAvailable ? <p>지원하기</p> : <p>지원이 마감되었습니다</p>}
-      </button>
+      </button> */}
     </div>
   );
 }
