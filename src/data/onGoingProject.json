@@ -16,7 +16,7 @@
         "AI 기반의 강의자료 정리 프로그램 입니다.",
         "자료들을 분석해서 강의별로 폴더를 만들어 정리합니다."
       ],
-      "stack": "Python, PyQt5, FastAPI"
+      "stack": "Python, PyQt5, FastAPI, Mysql"
     }
   ]
 }

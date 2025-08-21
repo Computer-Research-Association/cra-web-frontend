@@ -77,7 +77,9 @@ export default function HeaderMain() {
       </button>
 
       <ul
-        className={`${styles['nav-menu']} ${isMenuOpen ? styles.active : ''}`}
+        className={`${styles['nav-menu']} ${isMenuOpen ? styles.active : ''} ${
+          ['/recruit', '/'].includes(location.pathname) ? styles['nav-menu-dark'] : ''
+        }`}
       >
         <>
           {[
