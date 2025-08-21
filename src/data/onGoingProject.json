@@ -1,34 +1,22 @@
 {
   "data": [
     {
-      "image": "https://lkyoung-bucket.s3.ap-northeast-2.amazonaws.com/assets/intro_page/project/mallang.jpg?format=webp&as=srcset",
-      "title": "말랑 타격대",
+      "image": "https://media.cra206.org/cra-homepage/assets/25-1/ccgo.png",
+      "title": "CCGO",
       "description": [
-        "자원을 모아 건물을 짓고, 유닛을 생산해 전략적으로 상대 본진을 파괴하는 실시간 전략 게임입니다.",
-        "중세기사 컨셉을 가진 RTS (Real-Time-Strategy)입니다.",
-        "1 대 1이 가능한 멀티플레이어 게임입니다."
+        "팀 CC를 비롯한 모든 공동체 내에서 친목 도모 활성화를 위한 서비스 앱입니다.",
+        "CC 미션을 자동으로 제공해주며, 서로의 CC미션 진행 현황 파악이 가능합니다."
       ],
-      "stack": "Unity, Photon Server"
+      "stack": "React Native, Spring Boot, Mysql"
     },
     {
-      "image": "https://lkyoung-bucket.s3.ap-northeast-2.amazonaws.com/assets/intro_page/project/craweb.png?format=webp&as=srcset",
-      "title": "CRA 웹페이지",
+      "image": "https://media.cra206.org/cra-homepage/assets/25-1/Jamiron.png",
+      "title": "Jamiron",
       "description": [
-        "CRA의 새로운 페이지를 제작하는 웹 개발 프로젝트입니다.",
-        "동아리의 소개와 CRA 회원들만의 소통 공간 제공합니다.",
-        "25-1 학기에 출시를 목표로 하고 있습니다."
+        "AI 기반의 강의자료 정리 프로그램 입니다.",
+        "자료들을 분석해서 강의별로 폴더를 만들어 정리합니다."
       ],
-      "stack": "React, Spring Boot, MySQL, AWS"
-    },
-    {
-      "image": "https://lkyoung-bucket.s3.ap-northeast-2.amazonaws.com/assets/intro_page/project/crassistant.png?format=webp&as=srcset",
-      "title": "Coding Roadmap Assistant",
-      "description": [
-        "AI 기반의 코딩 보조 도우미 서비스입니다.",
-        "OpenAI API를 활용하여 사용자에게 도움을 제시합니다.",
-        "현재 VSCode Marketplace에 출시한 상태이고 Extension으로 사용 가능 합니다."
-      ],
-      "stack": "TypeScript"
+      "stack": "Python, PyQt5, FastAPI"
     }
   ]
 }
