@@ -1,28 +1,42 @@
 import styles from './Calender.module.css';
+import recruitDate from '~/data/recruit-date.json';
+
+type RecruitTimelineItem = {
+  title: string;
+  start?: string;
+  end?: string;
+  date?: string;
+};
+
+function formatDate(dateStr: string) {
+  const d = new Date(dateStr);
+  const year = d.getFullYear();
+  const month = d.getMonth() + 1;
+  const day = d.getDate();
+  const weekday = ['일', '월', '화', '수', '목', '금', '토'][d.getDay()];
+  return `${year}.${month}.${day}(${weekday})`;
+}
 
 function Calender() {
+  const timeline = (recruitDate.timeline as RecruitTimelineItem[]) || [];
+
   return (
     <div className={styles['recruit-calender']}>
       <h2>모집 일정</h2>
       <div className={styles['calender-line']}>
-        <div className={styles['calender-box']}>
-          <h3>서류 접수</h3>
-          <p>2025.2.26.(수)</p>
-          <p>~ 3.12.(수)</p>
-        </div>
-        <div className={styles['calender-box']}>
-          <h3>면접 일정 안내</h3>
-          <p>2025.3.12(수)</p>
-        </div>
-        <div className={styles['calender-box']}>
-          <h3>코딩 테스트 / 면접</h3>
-          <p>2025.3.13(목)</p>
-          <p>~3.19(수)</p>
-        </div>
-        <div className={styles['calender-box']}>
-          <h3>최종합격 발표</h3>
-          <p>2025.3.20(목)</p>
-        </div>
+        {timeline.map((item) => (
+          <div key={item.title} className={styles['calender-box']}>
+            <h3>{item.title}</h3>
+            {item.start && item.end ? (
+              <>
+                <p>{formatDate(item.start)}</p>
+                <p>~ {formatDate(item.end)}</p>
+              </>
+            ) : item.date ? (
+              <p>{formatDate(item.date)}</p>
+            ) : null}
+          </div>
+        ))}
       </div>
     </div>
   );
