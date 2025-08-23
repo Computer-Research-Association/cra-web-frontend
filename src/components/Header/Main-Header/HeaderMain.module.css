@@ -147,6 +147,22 @@ li {
     display: flex;
   }
 
+  .nav-menu-dark {
+    background-color: var(--color-black);
+  }
+
+  .nav-menu-dark .navbar-link {
+    color: var(--color-white);
+  }
+
+  .nav-menu-dark .navbar-link:hover {
+    color: var(--color-primary);
+  }
+
+  .nav-menu-dark .navbar-link.active {
+    color: var(--color-primary);
+  }
+
   ul {
     flex-direction: column;
   }

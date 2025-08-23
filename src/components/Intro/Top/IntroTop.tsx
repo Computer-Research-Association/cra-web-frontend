@@ -4,14 +4,15 @@ import Vector from '~/assets/images/Vector/Arrow-Vector.png?format=webp&as=srcse
 import Vector2 from '~/assets/images/Vector/Arrow-Vector2.png?format=webp&as=srcset';
 import Crang from '~/assets/images/Status_Crang.svg';
 import styles from './IntroTop.module.css';
+import recruitDate from '~/data/recruit-date.json';
 
 const today = new Date();
 const month = today.getMonth() + 1;
-const RECRUIT_START_DATE = new Date('2025-08-30'); // 시작 날짜
-const RECRUIT_END_DATE = new Date('2025-09-10'); // 종료 날짜
+const RECRUIT_START_DATE = new Date(recruitDate.applicationPeriod.start);
+const RECRUIT_END_DATE = new Date(recruitDate.applicationPeriod.end);
 const isRecruitAvailable =
   RECRUIT_END_DATE >= today && today >= RECRUIT_START_DATE;
-const RECRUIT_SEMESTER = today.getFullYear() + '-' + (month > 7 ? 2 : 1);
+const RECRUIT_SEMESTER = recruitDate.semester ?? today.getFullYear() + '-' + (month > 7 ? 2 : 1);
 
 function IntroTop({
   recruitRef,
@@ -75,7 +76,7 @@ function IntroTop({
               to="/recruit"
               className={`${styles.RecruitBtn} ${isHighlighted ? styles.highlight : ''}`}
             >
-              <p>{RECRUIT_SEMESTER}기 CRA 리크루팅 지원하기</p>
+              <p>{RECRUIT_SEMESTER} CRA 리크루팅 지원하기</p>
             </Link>
           )}
 
