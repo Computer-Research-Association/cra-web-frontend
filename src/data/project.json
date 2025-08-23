@@ -1,7 +1,7 @@
 {
   "data": [
     {
-      "image": "https://lkyoung-bucket.s3.ap-northeast-2.amazonaws.com/assets/intro_page/project/itaxi.png?format=webp&as=srcset",
+      "image": "https://media.cra206.org/cra-homepage/assets/projects/itaxi.png",
       "title": "아이택시",
       "description": [
         "한동인의 No.1 교통 애플리케이션입니다.",
@@ -11,23 +11,13 @@
       "stack": "Flutter, Firebase, GCP, AWS, Java Spring Boot"
     },
     {
-      "image": "https://lkyoung-bucket.s3.ap-northeast-2.amazonaws.com/assets/intro_page/project/hsafari.png?format=webp&as=srcset",
+      "image": "https://media.cra206.org/cra-homepage/assets/projects/hsafari.png",
       "title": "H-Safari",
       "description": [
         "한동인들의 중고거래 플랫폼을 제공하는 서비스입니다.",
         "20-1학기 신입 방학 프로젝트 때 제작되었습니다."
       ],
       "stack": "Flutter, Node.js, Firebase"
-    },
-    {
-      "image": "https://lkyoung-bucket.s3.ap-northeast-2.amazonaws.com/assets/intro_page/project/timetable.png?format=webp&as=srcset",
-      "title": "대학 시간",
-      "description": [
-        "Histime 재개발 프로젝트입니다!",
-        "재학생 중 천명이 넘게 사용하고 있으며, 재정비하여 2주차부터 서비스를 시작하려고 합니다.",
-        " 앞으로 합승 후 정산하기에 도움이 되도록 확장 준비중입니다."
-      ],
-      "stack": "Flutter, Firebase, GCP, AWS, Java Spring Boot"
     }
   ]
 }
