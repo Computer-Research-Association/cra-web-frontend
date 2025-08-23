@@ -2,54 +2,90 @@ name: build and deploy
 
 on:
   push:
-    branches: ['main']
+    branches: ['dev']
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout (with submodules)
+        uses: actions/checkout@v4
         with:
           submodules: true
           token: ${{ secrets.PAT_TOKEN }}
           fetch-depth: 0
 
-      - name: Set up node.js
+      - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '22'
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
-      - name: Build vite
+      - name: Build (Vite)
         run: npm run build
 
-      - name: Add 404.html
+      - name: Add 404.html (SPA fallback)
         run: |
           cd dist
           cp index.html 404.html
 
-      # azure에 옮기기
-      - name: copy file via ssh password
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          debug: true
-          host: ${{ secrets.AZURE_HOST }}
-          username: ${{ secrets.AZURE_USERNAME }}
-          key: ${{ secrets.AZURE_PRIVATE_KEY }}
-          source: './dist'
-          target: /home/${{ secrets.AZURE_USERNAME }}/craweb
-
-      # ssh 접속해서 nginx 재시작
-      - name: Restart nginx
+      - name: Setup SSH configuration (bastion → target)
         run: |
-          sudo service nginx stop
-          sudo service nginx start
+          set -e
+          eval "$(ssh-agent -s)"
+          mkdir -p ~/.ssh && chmod 700 ~/.ssh
 
-    # - name: Install Firebase CLI
-    #   run: npm install -g firebase-tools
+          # keys
+          echo "${{ secrets.BASTION_KEY }}" > ~/.ssh/bastion.pem
+          echo "${{ secrets.SERVER_KEY }}" > ~/.ssh/target.pem
+          chmod 600 ~/.ssh/bastion.pem ~/.ssh/target.pem
+          ssh-add ~/.ssh/bastion.pem
+          ssh-add ~/.ssh/target.pem
 
-    # - name: Deploy to Firebase
-    #   run: firebase deploy --only hosting --token ${{ secrets.FIREBASE_AUTH_TOKEN }}
+          # known_hosts
+          ssh-keyscan -H ${{ secrets.BASTION_HOST }} >> ~/.ssh/known_hosts
+          ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
+          chmod 644 ~/.ssh/known_hosts
+
+          # ssh config (ProxyJump)
+          cat > ~/.ssh/config << 'EOF'
+          Host bastion
+            HostName ${{ secrets.BASTION_HOST }}
+            User ${{ secrets.BASTION_USER }}
+            IdentityFile ~/.ssh/bastion.pem
+            ServerAliveInterval 60
+            ServerAliveCountMax 3
+
+          Host target
+            HostName ${{ secrets.SERVER_HOST }}
+            User ${{ secrets.SERVER_USERNAME }}
+            IdentityFile ~/.ssh/target.pem
+            ProxyJump bastion
+            ServerAliveInterval 60
+            ServerAliveCountMax 3
+            StrictHostKeyChecking no
+            UserKnownHostsFile /dev/null
+          EOF
+          chmod 600 ~/.ssh/config
+
+      - name: Test SSH connections
+        run: |
+          ssh -F ~/.ssh/config bastion "echo 'bastion ok'"
+          ssh -F ~/.ssh/config target "echo 'target ok'"
+          
+      - name: Upload dist via bastion & reload nginx
+        run: |
+          set -e
+          ssh -F ~/.ssh/config target "
+            mkdir -p ~/cra_web/dist &&
+            rm -rf ~/cra_web/dist/* 
+          "
+          scp -F ~/.ssh/config -r ./dist/* target:~/cra_web/dist/
+
+          ssh -F ~/.ssh/config target "
+            sudo nginx -t &&
+            sudo systemctl reload nginx
+          "
