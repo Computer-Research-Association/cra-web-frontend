@@ -29,72 +29,36 @@ jobs:
           cd dist
           cp index.html 404.html
       
-      - name: Setup SSH configuration (bastion → target)
+      - name: Setup SSH configuration
         run: |
-          set -e
           eval "$(ssh-agent -s)"
           mkdir -p ~/.ssh && chmod 700 ~/.ssh
-          
-          # SSH 키 설정
           echo "${{ secrets.BASTION_KEY }}" > ~/.ssh/bastion.pem
           echo "${{ secrets.SERVER_KEY }}" > ~/.ssh/target.pem
           chmod 600 ~/.ssh/bastion.pem ~/.ssh/target.pem
           ssh-add ~/.ssh/bastion.pem
           ssh-add ~/.ssh/target.pem
-          
-          # known_hosts 설정 
-          ssh-keyscan -H -t rsa,ed25519 ${{ secrets.BASTION_HOST }} >> ~/.ssh/known_hosts || {
-            ssh-keyscan -t rsa ${{ secrets.BASTION_HOST }} >> ~/.ssh/known_hosts || {
-              echo "Warning: Could not add bastion to known_hosts"
-            }
-          }
-          
-          # SSH 설정 파일 생성
           cat > ~/.ssh/config << 'EOF'
           Host bastion
             HostName ${{ secrets.BASTION_HOST }}
             User ${{ secrets.BASTION_USER }}
             IdentityFile ~/.ssh/bastion.pem
-            ServerAliveInterval 60
-            ServerAliveCountMax 3
             StrictHostKeyChecking no
             UserKnownHostsFile /dev/null
           
           Host target
             HostName ${{ secrets.SERVER_HOST }}
+            Port 2222
             User ${{ secrets.SERVER_USERNAME }}
             IdentityFile ~/.ssh/target.pem
             ProxyJump bastion
-            ServerAliveInterval 60
-            ServerAliveCountMax 3
             StrictHostKeyChecking no
             UserKnownHostsFile /dev/null
           EOF
           chmod 600 ~/.ssh/config
-          
-          echo "SSH configuration completed"
       
-      - name: Test SSH connections
-        run: 
-          ssh -F ~/.ssh/config -o ConnectTimeout=10 bastion "echo 'bastion connection successful'"
-          ssh -F ~/.ssh/config -o ConnectTimeout=15 target "echo 'target connection successful'"
-          
-      - name: Upload dist via bastion & reload nginx
+      - name: Deploy
         run: |
-          set -e
-          echo "Preparing target directory..."
-          ssh -F ~/.ssh/config target "
-            mkdir -p ~/cra_web/dist &&
-            rm -rf ~/cra_web/dist/* 
-          "
-          
-          echo "Uploading files..."
+          ssh -F ~/.ssh/config target "mkdir -p ~/cra_web/dist && rm -rf ~/cra_web/dist/*"
           scp -F ~/.ssh/config -r ./dist/* target:~/cra_web/dist/
-          
-          echo "Testing and reloading nginx..."
-          ssh -F ~/.ssh/config target "
-            sudo nginx -t &&
-            sudo systemctl reload nginx
-          "
-          
-          echo "Deployment completed successfully"
+          ssh -F ~/.ssh/config target "sudo nginx -t && sudo systemctl reload nginx"
