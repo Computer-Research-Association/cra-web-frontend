@@ -47,9 +47,11 @@ export default function RecruitPage() {
     }, 3000); // 4.5초 뒤에 애니메이션을 원래 상태로 되돌리기
 
     const scrollTimer = setTimeout(() => {
-      titleRef.current?.scrollIntoView({
-        behavior: 'smooth',
-        block: 'center',
+      const currentScrollY = window.scrollY;
+      const scrollAmount = window.innerHeight * 1.0;
+      window.scrollTo({
+        top: currentScrollY + scrollAmount,
+        behavior: 'smooth'
       });
       setTimeout(() => {
         setIsExpanding(true); // 다시 벌어짐
