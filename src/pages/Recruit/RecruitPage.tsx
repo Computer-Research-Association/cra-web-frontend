@@ -48,7 +48,7 @@ export default function RecruitPage() {
 
     const scrollTimer = setTimeout(() => {
       const currentScrollY = window.scrollY;
-      const scrollAmount = window.innerHeight * 1.0;
+      const scrollAmount = window.innerHeight * 1.2;
       window.scrollTo({
         top: currentScrollY + scrollAmount,
         behavior: 'smooth'
