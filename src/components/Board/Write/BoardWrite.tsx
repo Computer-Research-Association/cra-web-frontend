@@ -42,6 +42,12 @@ export default function BoardWrite({ category }: BoardWriteProps) {
         setErrors((prev) => ({ ...prev, content: undefined }));
       }
     },
+    onImageUpload: (imageUrl: string) => {
+      setFormData((prev) => ({
+        ...prev,
+        imageUrls: [...prev.imageUrls, imageUrl],
+      }));
+    },
   });
   const mutation = useMutation({
     mutationFn: async () => {

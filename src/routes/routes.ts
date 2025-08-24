@@ -25,7 +25,7 @@ import {
 } from './errorRoute.ts';
 import { HomeRoute, introRoute } from './introRoutes.ts';
 import { recruitRoute } from './recruitRoute.ts';
-import { mainRoute } from './mainRoute.ts';
+// import { mainRoute } from './mainRoute.ts';
 import { loginRoute } from './loginRoute.ts';
 import {
   registerRoute,
@@ -52,8 +52,8 @@ import {
   academicEditRoute,
   academicWriteRoute,
 } from './academicRoutes.ts';
-import { bookRoute } from './bookRoute.ts';
-import { itemRoute } from './itemRoute.ts';
+// import { bookRoute } from './bookRoute.ts';
+// import { itemRoute } from './itemRoute.ts';
 import { projectRoute } from './projectRoute.ts';
 // import {
 //   havrutaRoute,
@@ -105,7 +105,7 @@ export const routes = createRouter({
     HomeRoute,
     introRoute,
     recruitRoute,
-    mainRoute,
+    // mainRoute,
     loginRoute,
     registerRoute,
     registerWelcomeRoute,
@@ -124,8 +124,8 @@ export const routes = createRouter({
     academicViewRoute,
     academicEditRoute,
     academicWriteRoute,
-    bookRoute,
-    itemRoute,
+    // bookRoute,
+    // itemRoute,
     projectRoute,
     // havrutaRoute,
     // havrutaViewRoute,

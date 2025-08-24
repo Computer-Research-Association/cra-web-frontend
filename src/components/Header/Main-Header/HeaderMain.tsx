@@ -9,6 +9,8 @@ import { AxiosError } from 'axios';
 import { useUserStore } from '~/store/userStore';
 
 export default function HeaderMain() {
+  const isBlackHeader = ['/main', '/recruit', '/'].includes(location.pathname);
+
   const { isAuthenticated, logout } = useAuthStore();
   const { name, imgUrl } = useUserStore();
   const { isMenuOpen, toggleMenu } = useUIStore();
@@ -50,7 +52,11 @@ export default function HeaderMain() {
   //   navigate('/in  fo');
   // };
   return (
-    <div className={styles['header-main']}>
+    <div
+      className={`${styles['header-main']} ${
+        isBlackHeader ? styles.black : styles.white
+      }`}
+    >
       {/* <Link to="/"> */}
       <Link to="/main">
         <img
@@ -71,15 +77,18 @@ export default function HeaderMain() {
       </button>
 
       <ul
-        className={`${styles['nav-menu']} ${isMenuOpen ? styles.active : ''}`}
+        className={`${styles['nav-menu']} ${isMenuOpen ? styles.active : ''} ${
+          ['/recruit', '/'].includes(location.pathname) ? styles['nav-menu-dark'] : ''
+        }`}
       >
         <>
           {[
             { path: '/notice', label: 'Notice' },
             { path: '/academic', label: 'Academic' },
-            { path: '/book', label: 'Book' },
-            { path: '/item', label: 'Item' },
+            // { path: '/book', label: 'Book' },
+            // { path: '/item', label: 'Item' },
             { path: '/project', label: 'Project' },
+            { path: '/recruit', label: 'Recruit' },
           ].map(({ path, label }) => (
             <li key={path}>
               <Link

@@ -3,6 +3,11 @@ import Vector2 from '~/assets/images/Vector/Arrow-Vector2.png?format=webp&as=src
 import styles from './Banner.module.css';
 import RecruitButton from './RecruitButton';
 import React, { RefObject } from 'react';
+import recruitDate from '~/data/recruit-date.json';
+
+// const RECRUIT_START_DATE = new Date(recruitDate.applicationPeriod.start);
+const SEMESTER = recruitDate.semester;
+// const RECRUIT_END_DATE = new Date(recruitDate.applicationPeriod.end);
 
 function Banner({
   titleRef,
@@ -20,10 +25,10 @@ function Banner({
   return (
     <div className={styles['recruit-main']}>
       <div className={styles['recruit-banner']}>
-        <p id={styles['title']}>2025-1 CRA</p>
+        <p id={styles['title']}>{SEMESTER} CRA</p>
         <p id={styles['title']}>RECRUITMENT</p>
         <p id={styles['content']}>
-          CRA는 함께 성장 할 25-1 기수 동아리원을 모집합니다.
+          CRA와 함께 성장할 {SEMESTER.substring(2)} 기수 동아리원을 모집합니다.
         </p>
         <RecruitButton titleRef={titleRef} />
         <div className={styles['vector']} onClick={scrollToSection}>

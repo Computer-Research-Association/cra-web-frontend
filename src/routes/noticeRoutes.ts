@@ -14,7 +14,6 @@ export const noticeRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/notice',
   component: lazy(() => import('~/pages/Board/Notice/NoticePage.tsx')),
-  beforeLoad: requireAuth,
 });
 
 export const noticeViewRoute = createRoute({

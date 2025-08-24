@@ -4,12 +4,23 @@ import Vector from '~/assets/images/Vector/Arrow-Vector.png?format=webp&as=srcse
 import Vector2 from '~/assets/images/Vector/Arrow-Vector2.png?format=webp&as=srcset';
 import Crang from '~/assets/images/Status_Crang.svg';
 import styles from './IntroTop.module.css';
+import recruitDate from '~/data/recruit-date.json';
+
+
+
+function toLocalDate(dateStr: string, endOfDay = false) {
+  const [y, m, d] = dateStr.split('-').map(Number);
+  return endOfDay
+    ? new Date(y, m - 1, d, 23, 59, 59, 999)
+    : new Date(y, m - 1, d, 0, 0, 0, 0);
+}
 
 const today = new Date();
 const month = today.getMonth() + 1;
-
-const RECRUIT_SEMESTER = today.getFullYear() + '-' + (month > 7 ? 2 : 1);
-
+const RECRUIT_START_DATE = toLocalDate(recruitDate.applicationPeriod.start);
+const RECRUIT_END_DATE = toLocalDate(recruitDate.applicationPeriod.end, true);
+const RECRUIT_SEMESTER = recruitDate.semester ?? today.getFullYear() + '-' + (month > 7 ? 2 : 1);
+const isRecruitAvailable = today >= RECRUIT_START_DATE && today <= RECRUIT_END_DATE;
 function IntroTop({
   recruitRef,
   isHighlighted,
@@ -27,9 +38,14 @@ function IntroTop({
       <div className={styles.main} ref={recruitRef}>
         <div className={styles.section}>
           {/* 처음 문구 */}
-          <div className={styles.comment}>
-            <p>CRA와 함께 성장할 동아리원을 모집합니다</p>
-          </div>
+          {isRecruitAvailable && (
+            <div className={styles.comment}>
+              <p>
+                <p className={styles.point}>CRA</p>와 함께 성장할 동아리원을
+                모집합니다
+              </p>
+            </div>
+          )}
 
           {/* 배너 */}
           <div className={styles.banner}>
@@ -62,12 +78,14 @@ function IntroTop({
           </div>
 
           {/* 리크루팅 페이지로 가는 버튼 */}
-          <Link
-            to="/recruit"
-            className={`${styles.RecruitBtn} ${isHighlighted ? styles.highlight : ''}`}
-          >
-            <p>{RECRUIT_SEMESTER} CRA 리크루팅 지원하기</p>
-          </Link>
+          {isRecruitAvailable && (
+            <Link
+              to="/recruit"
+              className={`${styles.RecruitBtn} ${isHighlighted ? styles.highlight : ''}`}
+            >
+              <p>{RECRUIT_SEMESTER} CRA 리크루팅 지원하기</p>
+            </Link>
+          )}
 
           {/* 누르면 밑으로 내려가는 화살표 */}
           <div className={styles.vector} onClick={scrollToSection}>

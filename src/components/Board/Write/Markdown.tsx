@@ -7,13 +7,14 @@ import { onUploadImage } from '~/api/board';
 
 interface UseMarkdownEditorProps {
   initialContent?: string;
-  onContentChange?: (_content: string) => void;
+  onContentChange?: (content: string) => void;
+  onImageUpload?: (imageUrl: string) => void;
 }
 
 interface UseMarkdownEditorReturn {
   editorRef: React.RefObject<any>;
   content: string;
-  error?: string;
+  error: string | undefined;
   handleEditorChange: () => void;
   validateContent: () => boolean;
   editorConfig: {
@@ -36,6 +37,7 @@ interface UseMarkdownEditorReturn {
 export const useMarkdownEditor = ({
   initialContent = ' ',
   onContentChange,
+  onImageUpload,
 }: UseMarkdownEditorProps = {}): UseMarkdownEditorReturn => {
   const editorRef = useRef<any>();
   const [content, setContent] = useState(initialContent);
@@ -90,6 +92,10 @@ export const useMarkdownEditor = ({
     try {
       const url = await onUploadImage(blob);
       callback(url);
+      // 부모 컴포넌트에 이미지 URL 전달
+      if (onImageUpload) {
+        onImageUpload(url);
+      }
       return url;
     } catch (error) {
       console.error('이미지 업로드 실패:', error);

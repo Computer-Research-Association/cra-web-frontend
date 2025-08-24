@@ -2,7 +2,7 @@
   "data": [
     {
       "title": "탄탄하고 끈끈한 네트워크",
-      "image": "https://lkyoung-bucket.s3.ap-northeast-2.amazonaws.com/assets/intro_page/crabig.jpg?format=webp&as=srcset",
+      "image": "https://media.cra206.org/cra-homepage/assets/meetings/crabig.jpg",
       "content": [
         [
           "현재 재학생 약 50명, 졸업생 약 200명으로 구성",
@@ -18,7 +18,7 @@
     },
     {
       "title": "함께 성장하기에 좋은 환경",
-      "image": "https://lkyoung-bucket.s3.ap-northeast-2.amazonaws.com/assets/intro_page/crastudy1.jpg?format=webp&as=srcset",
+      "image": "https://media.cra206.org/cra-homepage/assets/25-1/crastudy25-1.jpg",
       "content": [
         [
           "선의의 경쟁을 통해 좋은 자극을 받을 수 있는 동료",
@@ -34,8 +34,8 @@
       ]
     },
     {
-      "title": "리얼로다가! 개발을 합니다",
-      "image": "https://lkyoung-bucket.s3.ap-northeast-2.amazonaws.com/assets/intro_page/cradevelop.jpg?format=webp&as=srcset",
+      "title": "개발, 진심으로 합니다",
+      "image": "https://media.cra206.org/cra-homepage/assets/24-2/cradevelop.jpg",
       "content": [
         [
           "신입회원은 방학 프로젝트를 진행하게 됩니다.",

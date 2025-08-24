@@ -11,8 +11,17 @@
   box-sizing: border-box;
   justify-content: space-between;
   padding: 0.65rem 8rem;
-  margin-bottom: 4rem;
+  /* margin-bottom: 4rem; */
+}
+
+.white {
+  background-color: var(--color-white);
   border-bottom: 1px solid var(--color-bright-stroke);
+}
+
+.black {
+  background-color: var(--color-black);
+  border-bottom: none;
 }
 
 .logo {
@@ -136,6 +145,22 @@ li {
 
   .nav-menu.active {
     display: flex;
+  }
+
+  .nav-menu-dark {
+    background-color: var(--color-black);
+  }
+
+  .nav-menu-dark .navbar-link {
+    color: var(--color-white);
+  }
+
+  .nav-menu-dark .navbar-link:hover {
+    color: var(--color-primary);
+  }
+
+  .nav-menu-dark .navbar-link.active {
+    color: var(--color-primary);
   }
 
   ul {
