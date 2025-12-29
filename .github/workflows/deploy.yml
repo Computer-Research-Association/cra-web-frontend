@@ -1,64 +1,30 @@
-name: build and deploy
+name: Deploy
+
 on:
   push:
-    branches: ['main']
+    branches: [main]
+
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout (with submodules)
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
         with:
-          submodules: true
-          token: ${{ secrets.PAT_TOKEN }}
-          fetch-depth: 0
-      
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+      - run: npm run build
+
+      - uses: appleboy/scp-action@v0.1.7
         with:
-          node-version: '22'
-      
-      - name: Install dependencies
-        run: npm ci
-      
-      - name: Build (Vite)
-        run: npm run build
-      
-      - name: Add 404.html (SPA fallback)
-        run: |
-          cd dist
-          cp index.html 404.html
-      
-      - name: Setup SSH configuration
-        run: |
-          eval "$(ssh-agent -s)"
-          mkdir -p ~/.ssh && chmod 700 ~/.ssh
-          echo "${{ secrets.BASTION_KEY }}" > ~/.ssh/bastion.pem
-          echo "${{ secrets.SERVER_KEY }}" > ~/.ssh/target.pem
-          chmod 600 ~/.ssh/bastion.pem ~/.ssh/target.pem
-          ssh-add ~/.ssh/bastion.pem
-          ssh-add ~/.ssh/target.pem
-          cat > ~/.ssh/config << 'EOF'
-          Host bastion
-            HostName ${{ secrets.BASTION_HOST }}
-            User ${{ secrets.BASTION_USER }}
-            IdentityFile ~/.ssh/bastion.pem
-            StrictHostKeyChecking no
-            UserKnownHostsFile /dev/null
-          
-          Host target
-            HostName ${{ secrets.SERVER_HOST }}
-            Port 2222
-            User ${{ secrets.SERVER_USERNAME }}
-            IdentityFile ~/.ssh/target.pem
-            ProxyJump bastion
-            StrictHostKeyChecking no
-            UserKnownHostsFile /dev/null
-          EOF
-          chmod 600 ~/.ssh/config
-      
-      - name: Deploy
-        run: |
-          ssh -F ~/.ssh/config target "mkdir -p ~/cra_web/dist && rm -rf ~/cra_web/dist/*"
-          scp -F ~/.ssh/config -r ./dist/* target:~/cra_web/dist/
-          ssh -F ~/.ssh/config target "sudo nginx -t && sudo systemctl reload nginx"
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          port: ${{ secrets.SERVER_SSH_PORT }}
+          source: "dist/*"
+          target: "~/www"
+          strip_components: 1
+          overwrite: true
