@@ -1,7 +1,7 @@
 {
   "data": [
     {
-      "image": "https://media.cra206.org/cra-homepage/assets/projects/itaxi.png",
+      "image": "https://axtgtqxmsmpp.objectstorage.ap-chuncheon-1.oci.customer-oci.com/n/axtgtqxmsmpp/b/cra-web-bucket/o/assets%2Fprojects%2Fitaxi.png",
       "title": "아이택시",
       "description": [
         "한동인의 No.1 교통 애플리케이션입니다.",
@@ -11,7 +11,7 @@
       "stack": "Flutter, Firebase, GCP, AWS, Java Spring Boot"
     },
     {
-      "image": "https://media.cra206.org/cra-homepage/assets/projects/hsafari.png",
+      "image": "https://axtgtqxmsmpp.objectstorage.ap-chuncheon-1.oci.customer-oci.com/n/axtgtqxmsmpp/b/cra-web-bucket/o/assets%2Fprojects%2Fhsafari.png",
       "title": "H-Safari",
       "description": [
         "한동인들의 중고거래 플랫폼을 제공하는 서비스입니다.",

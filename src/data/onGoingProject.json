@@ -1,7 +1,7 @@
 {
   "data": [
     {
-      "image": "https://media.cra206.org/cra-homepage/assets/25-1/ccgo.png",
+      "image": "https://axtgtqxmsmpp.objectstorage.ap-chuncheon-1.oci.customer-oci.com/n/axtgtqxmsmpp/b/cra-web-bucket/o/assets%2F25-1%2Fccgo.png",
       "title": "CCGO",
       "description": [
         "팀 CC를 비롯한 모든 공동체 내에서 친목 도모 활성화를 위한 서비스 앱입니다.",
@@ -10,7 +10,7 @@
       "stack": "React Native, Spring Boot, Mysql"
     },
     {
-      "image": "https://media.cra206.org/cra-homepage/assets/25-1/25-1Jamiron.png",
+      "image": "https://axtgtqxmsmpp.objectstorage.ap-chuncheon-1.oci.customer-oci.com/n/axtgtqxmsmpp/b/cra-web-bucket/o/assets%2F25-1%2F25-1Jamiron.png",
       "title": "Jamiron",
       "description": [
         "강의자료를 AI 기반으로 분석하여 정리하는 프로그램 입니다.",
