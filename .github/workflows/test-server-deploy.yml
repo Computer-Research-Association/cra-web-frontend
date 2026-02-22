@@ -18,6 +18,8 @@ jobs:
       
       - run: npm ci
       - run: npm run build
+        env:
+          VITE_API_BASE_URL: ${{ secrets.TEST_API_URL }} 
       
       - uses: appleboy/scp-action@v0.1.7
         with:
