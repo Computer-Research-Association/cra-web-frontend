@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "git submodule update --remote && cp ./cra-web-frontend-data/.env . && vite",
+    "dev": " vite",
     "test": "tsc -b && vite build",
     "build": "git submodule update --remote && cp ./cra-web-frontend-data/.env . && tsc -b && vite build",
     "lint": "eslint .",

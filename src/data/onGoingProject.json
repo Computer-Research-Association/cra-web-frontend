@@ -1,23 +1,22 @@
 {
   "data": [
     {
-      "image": "https://media.cra206.org/cra-homepage/assets/25-1/ccgo.png",
-      "title": "CCGO",
+      "image": "https://axtgtqxmsmpp.objectstorage.ap-chuncheon-1.oci.customer-oci.com/n/axtgtqxmsmpp/b/cra-web-bucket/o/assets%2F25-2%2F25-2mafia.png",
+      "title": "시민팀 - Mafia game AI",
       "description": [
-        "팀 CC를 비롯한 모든 공동체 내에서 친목 도모 활성화를 위한 서비스 앱입니다.",
-        "CC 미션을 자동으로 제공해주며, 서로의 CC미션 진행 현황 파악이 가능합니다."
+        "부분 관측 마르코프 결정 과정 환경에서 강화학습과 모방학습을 시현할 수 있는 환경을 마련하였습니다.",
+        "간단한 연구 질문을 설정하여 연구를 진행하고 스스로 논문을 작성하는 경험을 할 수 있었습니다."
       ],
-      "stack": "React Native, Spring Boot, Mysql"
+      "stack": "PyTorch, Gymnasium, PettingZoo, SuperSuit, TensorBoard"
     },
     {
-      "image": "https://media.cra206.org/cra-homepage/assets/25-1/25-1Jamiron.png",
-      "title": "Jamiron",
+      "image": "https://axtgtqxmsmpp.objectstorage.ap-chuncheon-1.oci.customer-oci.com/n/axtgtqxmsmpp/b/cra-web-bucket/o/assets%2F25-2%2F25-2gold.png",
+      "title": "금 나와라 뚝딱팀 - 알고리즘 기반 주식 자동 매매 시스템",
       "description": [
-        "강의자료를 AI 기반으로 분석하여 정리하는 프로그램 입니다.",
-        "사용자가 수강 중인 강의 계획서를 기반으로 AI가 자료를 자동으로 분류하며",
-        "사용자가 직접 폴더를 지정 할 수 있습니다."
+        "사용자를 대신하여 비트코인을 자동으로 매매해주는 서비스입니다. ",
+        "매매 현황, 거래 내역, 시스템 로그를 웹 페이지에서 확인할 수 있습니다."
       ],
-      "stack": "Python, PyQt5, FastAPI, Mysql"
+      "stack": "React, PostgreSQL, Python, FastAPI"
     }
   ]
 }
