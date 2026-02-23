@@ -26,7 +26,14 @@ function Calender() {
       <div className={styles['calender-line']}>
         {timeline.map((item) => (
           <div key={item.title} className={styles['calender-box']}>
-            <h3>{item.title}</h3>
+            <h3>
+              {item.title.split('\n').map((line, index, arr) => (
+                <span key={index}>
+                  {line}
+                  {index !== arr.length - 1 && <br />}
+                </span>
+              ))}
+            </h3>
             {item.start && item.end ? (
               <>
                 <p>{formatDate(item.start)}</p>
