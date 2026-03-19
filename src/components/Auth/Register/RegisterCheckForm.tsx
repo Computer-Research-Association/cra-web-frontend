@@ -1,3 +1,8 @@
+// This file has been deprecated.
+// The registration flow has been simplified to a single form without the initial agreement step
+// The agreement checkboxes have been integrated into the main registration form (RegisterForm.tsx).
+// 개인정보 처리 방침 동의 체크박스가 메인 회원가입 폼(RegisterForm.tsx)으로 통합되었습니다.
+/*
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
@@ -118,3 +123,4 @@ function RegisterCheckForm() {
 }
 
 export default RegisterCheckForm;
+*/

@@ -30,7 +30,7 @@ import { loginRoute } from './loginRoute.ts';
 import {
   registerRoute,
   registerWelcomeRoute,
-  registerInfoRoute,
+  //registerInfoRoute,
   privacyPolicyRoute,
 } from './registerRoutes.ts';
 import {
@@ -109,7 +109,7 @@ export const routes = createRouter({
     loginRoute,
     registerRoute,
     registerWelcomeRoute,
-    registerInfoRoute,
+    //registerInfoRoute,
     privacyPolicyRoute,
     idSerachRoute,
     idCompleteRoute,
