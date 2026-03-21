@@ -7,11 +7,14 @@ import UserModal from '~/components/Modal/User/MyUser/UserModal';
 import styles from './HeaderMain.module.css';
 import { AxiosError } from 'axios';
 import { useUserStore } from '~/store/userStore';
+import isAdmin from '~/components/Auth/Decode/adminCheck.tsx';
 
 export default function HeaderMain() {
   const isBlackHeader = ['/main', '/recruit', '/'].includes(location.pathname);
 
-  const { isAuthenticated, logout } = useAuthStore();
+  const { isAuthenticated, logout, accessToken } = useAuthStore();
+  const userIsAdmin =
+    isAuthenticated && accessToken ? isAdmin(accessToken) : false; //어드민 여부 체크
   const { name, imgUrl } = useUserStore();
   const { isMenuOpen, toggleMenu } = useUIStore();
   const navigate = useNavigate();
@@ -40,6 +43,14 @@ export default function HeaderMain() {
       }
     }
   };
+
+  const navItems = [
+    ...(userIsAdmin ? [{ path: '/admin', label: 'Admin' }] : []),
+    { path: '/notice', label: 'Notice' },
+    { path: '/academic', label: 'Academic' },
+    { path: '/project', label: 'Project' },
+    { path: '/recruit', label: 'Recruit' },
+  ];
 
   const resetPage = () => {
     {
@@ -78,18 +89,13 @@ export default function HeaderMain() {
 
       <ul
         className={`${styles['nav-menu']} ${isMenuOpen ? styles.active : ''} ${
-          ['/recruit', '/'].includes(location.pathname) ? styles['nav-menu-dark'] : ''
+          ['/recruit', '/'].includes(location.pathname)
+            ? styles['nav-menu-dark']
+            : ''
         }`}
       >
         <>
-          {[
-            { path: '/notice', label: 'Notice' },
-            { path: '/academic', label: 'Academic' },
-            // { path: '/book', label: 'Book' },
-            // { path: '/item', label: 'Item' },
-            { path: '/project', label: 'Project' },
-            { path: '/recruit', label: 'Recruit' },
-          ].map(({ path, label }) => (
+          {navItems.map(({ path, label }) => (
             <li key={path}>
               <Link
                 to={path}
