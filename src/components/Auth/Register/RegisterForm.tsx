@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { ClipLoader } from 'react-spinners';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { emailCode, emailRequest } from '~/api/account';
 import { signUp } from '~/api/auth/authApi';
@@ -13,6 +13,7 @@ import RegisterInputTextField from './RegisterInputTextField';
 import RegisterPasswordTextField from './RegisterPasswordTextField';
 import { useRegisterStore } from '~/store/registerStore';
 import axios from 'axios';
+import styles from '../Login/LoginForm.module.css';
 
 const Container = styled.div`
   display: flex;
@@ -348,17 +349,23 @@ function RegisterForm() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setUserName(formData.username);
-    setName(formData.name);
+
+    if (!consent || !isOver14) {
+      setIsModalOpen(true);
+      setModalMessage('모든 필수 항목에 동의해야 합니다.');
+      return;
+    }
 
     if (submitLoading) return;
     setSubmitLoading(true);
-    // Check if any field is empty
+
+    setUserName(formData.username);
+    setName(formData.name);
+
     // 모든 필드가 채워졌는지 확인
     for (const key in formData) {
       if (!formData[key as keyof typeof formData]) {
-        // 타입 단언 추가
-        setIsModalOpen(true); // 모달 열기
+        setIsModalOpen(true);
         setModalMessage('모든 항목을 입력해 주세요.');
         setSubmitLoading(false);
         return;
@@ -369,34 +376,38 @@ function RegisterForm() {
     const studentIdRegex = /^\d+$/; // 숫자만
 
     if (formData.password.length < 8) {
-      setIsModalOpen(true); // 모달 열기
+      setIsModalOpen(true);
       setModalMessage('비밀번호는 8글자 이상이어야 합니다.');
       setSubmitLoading(false);
       return;
     }
+
     if (
       !studentIdRegex.test(formData.studentId) ||
       formData.studentId.length < 8
     ) {
-      setIsModalOpen(true); // 모달 열기
+      setIsModalOpen(true);
       setModalMessage('학번은 8글자 숫자로 이루어져야 합니다.');
       setSubmitLoading(false);
       return;
     }
+
     if (!termRegex.test(formData.term)) {
-      setIsModalOpen(true); // 모달 열기
+      setIsModalOpen(true);
       setModalMessage('올바르지 않은 기수 번호입니다.');
       setSubmitLoading(false);
       return;
     }
+
     if (formData.password !== formData.passwordCheck) {
-      setIsModalOpen(true); // 모달 열기
+      setIsModalOpen(true);
       setModalMessage('비밀번호가 일치하지 않습니다.');
       setSubmitLoading(false);
       return;
     }
+
     if (!isValid) {
-      setIsModalOpen(true); // 모달 열기
+      setIsModalOpen(true);
       setModalMessage('이메일을 인증해주세요.');
       setSubmitLoading(false);
       return;
@@ -406,6 +417,7 @@ function RegisterForm() {
     const iv = CryptoJS.enc.Utf8.parse(
       import.meta.env.VITE_SECRET_IV as string,
     );
+
     const encryptedPassword = CryptoJS.AES.encrypt(
       formData.password,
       CryptoJS.enc.Utf8.parse(secretKey),
@@ -417,6 +429,7 @@ function RegisterForm() {
     ).toString();
 
     setError('');
+
     const requestBody: ReqSignUp = {
       ...formData,
       password: encryptedPassword,
@@ -425,12 +438,12 @@ function RegisterForm() {
 
     try {
       await signUp(requestBody);
-      setIsModalOpen(true); // 모달 열기
+      setIsModalOpen(true);
       setModalMessage('회원가입이 완료되었습니다.');
       void navigate('/register/complete');
     } catch (error) {
       if (error instanceof Error) {
-        setIsModalOpen(true); // 모달 열기
+        setIsModalOpen(true);
         setModalMessage(error.message);
       }
     } finally {
@@ -456,6 +469,38 @@ function RegisterForm() {
     const secs = seconds % 60;
     return `${minutes}:${secs < 10 ? `0${secs}` : secs}`;
   };
+
+  // 동의 항목
+
+  const CheckBoxForm = styled.form`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 90%;
+    max-width: 500px;
+    gap: 20px;
+  `;
+
+  const CheckBoxInput = styled.div`
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  `;
+
+  const StyledCheckbox = styled.input`
+    width: 15px;
+    height: 15px;
+    transform: scale(1.4);
+    cursor: pointer;
+  `;
+
+  const Label = styled.label`
+    font-size: 1.2rem;
+    cursor: pointer;
+  `;
+
+  const [consent, setConsent] = useState(false);
+  const [isOver14, setIsOver14] = useState(false);
 
   return (
     <Container>
@@ -604,7 +649,36 @@ function RegisterForm() {
 
         {error && <p style={{ color: 'var(--color-error)' }}>{error}</p>}
 
-        <SubmitBtn type="submit">
+        <CheckBoxForm>
+          <CheckBoxInput>
+            <StyledCheckbox
+              type="checkbox"
+              id="consent"
+              checked={consent}
+              onChange={() => setConsent(!consent)}
+            />
+            <Label htmlFor="consent">
+              개인정보 처리 방침에 동의합니다. (필수)
+            </Label>
+            <Link to="/privacy-policy" className={styles.PrivacyPolicy}>
+              약관 보기
+            </Link>
+          </CheckBoxInput>
+
+          <CheckBoxInput>
+            <StyledCheckbox
+              type="checkbox"
+              id="isOver14"
+              checked={isOver14}
+              onChange={() => setIsOver14(!isOver14)}
+            />
+            <Label htmlFor="isOver14">만 14세 이상입니다. (필수)</Label>
+          </CheckBoxInput>
+        </CheckBoxForm>
+        <SubmitBtn
+          type="submit"
+          disabled={!consent || !isOver14 || submitLoading}
+        >
           {submitLoading ? <ClipLoader size={25} color="#fff" /> : '확인'}
         </SubmitBtn>
       </RegisterInputForm>
