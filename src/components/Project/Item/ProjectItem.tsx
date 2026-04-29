@@ -5,6 +5,7 @@ import styles from './ProjectItem.module.css';
 
 export default function ProjectItem({ project }: { project: Project }) {
   const [modalIsOpen, setModalOpen] = useState(false);
+  console.log(Object.keys(project));
 
   const openModal = () => setModalOpen(true);
   const closeModal = () => setModalOpen(false);
@@ -12,11 +13,25 @@ export default function ProjectItem({ project }: { project: Project }) {
   return (
     <>
       <div className={styles['project-block']} onClick={openModal}>
-        <div className={styles['picture-background']}>
+        {/*<div className={styles['picture-background']}>
           <img src={project.imageUrl} className={styles['project-picture']} />
+        </div>*/}
+        <div className={styles['title']}>
+          {project.serviceName}
+          <img
+            src="/src/assets/images/project/OpenPageArrow.png"
+            width="13"
+            height="13"
+          />
         </div>
-        <div className={styles['title']}>{project.serviceName}</div>
-        <div className={styles['content']}>{project.members.join(', ')}</div>
+        <div className={styles['content']}>{project.content}</div>
+        <div className={styles['memberContainer']}>
+          {project.members.map((member, index) => (
+            <button key={index} className={styles['memberButton']}>
+              {member}
+            </button>
+          ))}
+        </div>
       </div>
       {modalIsOpen && (
         <ProjectModal projectId={project.id!} closeModal={closeModal} />
