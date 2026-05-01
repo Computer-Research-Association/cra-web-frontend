@@ -12,6 +12,7 @@ export default function ProjectItem({ project }: { project: Project }) {
   return (
     <>
       <div className={styles['project-block']} onClick={openModal}>
+        <div className={styles['semester']}>{project.semester}</div>
         <div className={styles['title']}>
           {project.serviceName}
           <img

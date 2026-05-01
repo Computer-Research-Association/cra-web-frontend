@@ -87,9 +87,21 @@
   margin-top: 8px;
 }
 
+.semester {
+  display: inline-block;
+  padding: 3px 10px;
+  margin: 6px 8px 2px;
+  background: #e8f7fc;
+  color: #2cb4db;
+  border-radius: 20px;
+  font-family: 'Pretendard SemiBold';
+  font-size: 12px;
+  width: fit-content;
+}
+
 .content {
   font-family: 'Pretendard Regular';
-  color: /*var(--color-dark-stroke);*/ rgb(255, 0, 0);
+  color: var(--color-dark-stroke);
   text-align: left;
   padding-left: 10px;
   font-size: clamp(12px, 1vw, 16px);
