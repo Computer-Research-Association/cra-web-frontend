@@ -66,6 +66,9 @@ function ProjectAdminDetail() {
         <Content>
           <Bold>이미지 URL:</Bold> {project.imageUrl}
         </Content>
+        <Content>
+          <Bold>태그:</Bold> {project.tags?.map((t) => t.name).join(', ') || '없음'}
+        </Content>
       </Container>
     );
   }

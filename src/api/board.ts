@@ -173,17 +173,29 @@ export const deleteBoards = async (id: number): Promise<Board> => {
   }
 };
 
-export const onUploadImage = async (blob: File): Promise<string> => {
+export const onUploadImage = async (
+  blob: File,
+  onProgress?: (percent: number) => void,
+): Promise<string> => {
   const formData = new FormData();
   formData.append('image', blob);
 
   try {
     const response = await authClient.post<string>('/image/upload', formData, {
       headers: { 'Content-Type': 'multipart/form-data' },
+      timeout: 60000,
+      onUploadProgress: (progressEvent) => {
+        if (onProgress && progressEvent.total) {
+          const percent = Math.min(
+            Math.round((progressEvent.loaded * 100) / progressEvent.total),
+            99,
+          );
+          onProgress(percent);
+        }
+      },
     });
-    const imageUrl = response.data;
 
-    return imageUrl; // 이미지 URL만 반환 (callback 없음)
+    return response.data;
   } catch (error) {
     console.error('이미지 업로드 실패:', error);
     throw error;

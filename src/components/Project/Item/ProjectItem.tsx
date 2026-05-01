@@ -5,7 +5,6 @@ import styles from './ProjectItem.module.css';
 
 export default function ProjectItem({ project }: { project: Project }) {
   const [modalIsOpen, setModalOpen] = useState(false);
-  console.log(Object.keys(project));
 
   const openModal = () => setModalOpen(true);
   const closeModal = () => setModalOpen(false);
@@ -13,9 +12,6 @@ export default function ProjectItem({ project }: { project: Project }) {
   return (
     <>
       <div className={styles['project-block']} onClick={openModal}>
-        {/*<div className={styles['picture-background']}>
-          <img src={project.imageUrl} className={styles['project-picture']} />
-        </div>*/}
         <div className={styles['title']}>
           {project.serviceName}
           <img
@@ -25,6 +21,15 @@ export default function ProjectItem({ project }: { project: Project }) {
           />
         </div>
         <div className={styles['content']}>{project.content}</div>
+        {project.tags && project.tags.length > 0 && (
+          <div className={styles['tagContainer']}>
+            {project.tags.map((tag) => (
+              <span key={tag.id} className={styles['tagPill']}>
+                {tag.name}
+              </span>
+            ))}
+          </div>
+        )}
         <div className={styles['memberContainer']}>
           {project.members.map((member, index) => (
             <button key={index} className={styles['memberButton']}>
