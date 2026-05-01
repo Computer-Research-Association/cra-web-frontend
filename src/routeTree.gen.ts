@@ -30,6 +30,7 @@ import { Route as BookRouteImport } from './routes/bookRoute'
 import { Route as AuthRoutesImport } from './routes/authRoutes'
 import { Route as AdminRouteImport } from './routes/adminRoute'
 import { Route as AdminProjectRoutesImport } from './routes/adminProjectRoutes'
+import { Route as AdminLayoutRouteImport } from './routes/adminLayoutRoute'
 import { Route as AdminItemRoutesImport } from './routes/adminItemRoutes'
 import { Route as AdminHavrutaRoutesImport } from './routes/adminHavrutaRoutes'
 import { Route as AdminBookRoutesImport } from './routes/adminBookRoutes'
@@ -152,6 +153,12 @@ const AdminProjectRoutesRoute = AdminProjectRoutesImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const AdminLayoutRouteRoute = AdminLayoutRouteImport.update({
+  id: '/adminLayoutRoute',
+  path: '/adminLayoutRoute',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const AdminItemRoutesRoute = AdminItemRoutesImport.update({
   id: '/adminItemRoutes',
   path: '/adminItemRoutes',
@@ -219,6 +226,13 @@ declare module '@tanstack/react-router' {
       path: '/adminItemRoutes'
       fullPath: '/adminItemRoutes'
       preLoaderRoute: typeof AdminItemRoutesImport
+      parentRoute: typeof rootRoute
+    }
+    '/adminLayoutRoute': {
+      id: '/adminLayoutRoute'
+      path: '/adminLayoutRoute'
+      fullPath: '/adminLayoutRoute'
+      preLoaderRoute: typeof AdminLayoutRouteImport
       parentRoute: typeof rootRoute
     }
     '/adminProjectRoutes': {
@@ -365,6 +379,7 @@ export interface FileRoutesByFullPath {
   '/adminBookRoutes': typeof AdminBookRoutesRoute
   '/adminHavrutaRoutes': typeof AdminHavrutaRoutesRoute
   '/adminItemRoutes': typeof AdminItemRoutesRoute
+  '/adminLayoutRoute': typeof AdminLayoutRouteRoute
   '/adminProjectRoutes': typeof AdminProjectRoutesRoute
   '/adminRoute': typeof AdminRouteRoute
   '/authRoutes': typeof AuthRoutesRoute
@@ -392,6 +407,7 @@ export interface FileRoutesByTo {
   '/adminBookRoutes': typeof AdminBookRoutesRoute
   '/adminHavrutaRoutes': typeof AdminHavrutaRoutesRoute
   '/adminItemRoutes': typeof AdminItemRoutesRoute
+  '/adminLayoutRoute': typeof AdminLayoutRouteRoute
   '/adminProjectRoutes': typeof AdminProjectRoutesRoute
   '/adminRoute': typeof AdminRouteRoute
   '/authRoutes': typeof AuthRoutesRoute
@@ -420,6 +436,7 @@ export interface FileRoutesById {
   '/adminBookRoutes': typeof AdminBookRoutesRoute
   '/adminHavrutaRoutes': typeof AdminHavrutaRoutesRoute
   '/adminItemRoutes': typeof AdminItemRoutesRoute
+  '/adminLayoutRoute': typeof AdminLayoutRouteRoute
   '/adminProjectRoutes': typeof AdminProjectRoutesRoute
   '/adminRoute': typeof AdminRouteRoute
   '/authRoutes': typeof AuthRoutesRoute
@@ -449,6 +466,7 @@ export interface FileRouteTypes {
     | '/adminBookRoutes'
     | '/adminHavrutaRoutes'
     | '/adminItemRoutes'
+    | '/adminLayoutRoute'
     | '/adminProjectRoutes'
     | '/adminRoute'
     | '/authRoutes'
@@ -475,6 +493,7 @@ export interface FileRouteTypes {
     | '/adminBookRoutes'
     | '/adminHavrutaRoutes'
     | '/adminItemRoutes'
+    | '/adminLayoutRoute'
     | '/adminProjectRoutes'
     | '/adminRoute'
     | '/authRoutes'
@@ -501,6 +520,7 @@ export interface FileRouteTypes {
     | '/adminBookRoutes'
     | '/adminHavrutaRoutes'
     | '/adminItemRoutes'
+    | '/adminLayoutRoute'
     | '/adminProjectRoutes'
     | '/adminRoute'
     | '/authRoutes'
@@ -529,6 +549,7 @@ export interface RootRouteChildren {
   AdminBookRoutesRoute: typeof AdminBookRoutesRoute
   AdminHavrutaRoutesRoute: typeof AdminHavrutaRoutesRoute
   AdminItemRoutesRoute: typeof AdminItemRoutesRoute
+  AdminLayoutRouteRoute: typeof AdminLayoutRouteRoute
   AdminProjectRoutesRoute: typeof AdminProjectRoutesRoute
   AdminRouteRoute: typeof AdminRouteRoute
   AuthRoutesRoute: typeof AuthRoutesRoute
@@ -556,6 +577,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminBookRoutesRoute: AdminBookRoutesRoute,
   AdminHavrutaRoutesRoute: AdminHavrutaRoutesRoute,
   AdminItemRoutesRoute: AdminItemRoutesRoute,
+  AdminLayoutRouteRoute: AdminLayoutRouteRoute,
   AdminProjectRoutesRoute: AdminProjectRoutesRoute,
   AdminRouteRoute: AdminRouteRoute,
   AuthRoutesRoute: AuthRoutesRoute,
@@ -592,6 +614,7 @@ export const routeTree = rootRoute
         "/adminBookRoutes",
         "/adminHavrutaRoutes",
         "/adminItemRoutes",
+        "/adminLayoutRoute",
         "/adminProjectRoutes",
         "/adminRoute",
         "/authRoutes",
@@ -627,6 +650,9 @@ export const routeTree = rootRoute
     },
     "/adminItemRoutes": {
       "filePath": "adminItemRoutes.ts"
+    },
+    "/adminLayoutRoute": {
+      "filePath": "adminLayoutRoute.ts"
     },
     "/adminProjectRoutes": {
       "filePath": "adminProjectRoutes.ts"

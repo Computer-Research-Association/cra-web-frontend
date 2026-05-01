@@ -12,11 +12,31 @@ export default function ProjectItem({ project }: { project: Project }) {
   return (
     <>
       <div className={styles['project-block']} onClick={openModal}>
-        <div className={styles['picture-background']}>
-          <img src={project.imageUrl} className={styles['project-picture']} />
+        <div className={styles['title']}>
+          {project.serviceName}
+          <img
+            src="/src/assets/images/project/OpenPageArrow.png"
+            width="13"
+            height="13"
+          />
         </div>
-        <div className={styles['title']}>{project.serviceName}</div>
-        <div className={styles['content']}>{project.members.join(', ')}</div>
+        <div className={styles['content']}>{project.content}</div>
+        {project.tags && project.tags.length > 0 && (
+          <div className={styles['tagContainer']}>
+            {project.tags.map((tag) => (
+              <span key={tag.id} className={styles['tagPill']}>
+                {tag.name}
+              </span>
+            ))}
+          </div>
+        )}
+        <div className={styles['memberContainer']}>
+          {project.members.map((member, index) => (
+            <button key={index} className={styles['memberButton']}>
+              {member}
+            </button>
+          ))}
+        </div>
       </div>
       {modalIsOpen && (
         <ProjectModal projectId={project.id!} closeModal={closeModal} />
