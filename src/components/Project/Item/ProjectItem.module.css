@@ -74,6 +74,18 @@
   overflow: hidden;
 }
 
+.semester {
+  display: inline-block;
+  padding: 3px 10px;
+  margin: 6px 8px 2px;
+  background: #e8f7fc;
+  color: #2cb4db;
+  border-radius: 20px;
+  font-family: 'Pretendard SemiBold';
+  font-size: 12px;
+  width: fit-content;
+}
+
 .title {
   display: flex;
   justify-content: space-between;

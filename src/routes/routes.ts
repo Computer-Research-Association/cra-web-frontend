@@ -54,7 +54,7 @@ import {
 } from './academicRoutes.ts';
 // import { bookRoute } from './bookRoute.ts';
 // import { itemRoute } from './itemRoute.ts';
-import { projectRoute } from './projectRoute.ts';
+import { projectRoute, projectDetailRoute } from './projectRoute.ts';
 // import {
 //   havrutaRoute,
 //   havrutaViewRoute,
@@ -127,6 +127,7 @@ export const routes = createRouter({
     // bookRoute,
     // itemRoute,
     projectRoute,
+    projectDetailRoute,
     // havrutaRoute,
     // havrutaViewRoute,
     // havrutaEditRoute,

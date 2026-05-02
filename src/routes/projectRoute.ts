@@ -17,3 +17,9 @@ export const projectRoute = createRoute({
   component: lazy(() => import('~/pages/Board/Project/ProjectPage.tsx')),
   // beforeLoad: requireAuth,
 });
+
+export const projectDetailRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/project/view/$id',
+  component: lazy(() => import('~/pages/Board/Project/ProjectDetailPage.tsx')),
+});
