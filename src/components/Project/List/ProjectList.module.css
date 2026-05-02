@@ -1,11 +1,47 @@
-.boardList {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr); /* 3열 고정 */
-  padding-top: 34px;
-  padding-bottom: 2rem;
+.container {
+  width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  gap: 1.5rem;
+  padding: 40px 20px;
+}
+
+.boardList {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  padding-bottom: 3rem;
+}
+
+@media (max-width: 1024px) {
+  .boardList {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .boardList {
+    grid-template-columns: 1fr;
+  }
+}
+
+.divider {
+  display: none; /* Dividers are not needed in grid view */
+}
+
+.board-wrapper {
+  height: 100%;
+}
+
+.board-list-footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2rem;
+  padding-bottom: 4rem;
+}
+
+.spacer {
+  flex: 1;
 }
 
 .title {
@@ -14,18 +50,6 @@
   font-size: 40px;
   font-family: 'Pretendard Bold';
   color: var(--color-bright-text);
-}
-
-@media (max-width: 1200px) {
-  .boardList {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 850px) {
-  .boardList {
-    grid-template-columns: 1fr;
-  }
 }
 
 .pagination {
@@ -46,8 +70,8 @@
   align-items: center;
   gap: 6px;
   padding: 7px 18px;
-  border-radius: 20px;
-  border: 0px solid #2cb4db;
+  border-radius: 4px;
+  border: 1px solid #e4e9ef;
   background: white;
   font-family: 'Pretendard Regular';
   font-size: 14px;

@@ -14,7 +14,7 @@
   --color-dark-stroke: #c1c1c1;
   --color-bright-stroke: #d9d9d9;
 
-  --color-background: #f0f0f0;
+  --color-background: #f0f0f0; /*f0f0f0 or f2f5f8*/
   --color-brighter-border: #adadad;
   --color-card-white: rgb(243, 243, 243);
   --color-file-white: rgb(244, 244, 244);

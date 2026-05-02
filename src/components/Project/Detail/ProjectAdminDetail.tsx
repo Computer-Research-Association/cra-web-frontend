@@ -92,12 +92,6 @@ const FieldGrid = styled.div`
   }
 `;
 
-const FieldFull = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-`;
-
 const Field = styled.div`
   display: flex;
   flex-direction: column;
@@ -180,7 +174,7 @@ const SemesterBadge = styled.span`
   padding: 4px 12px;
   background: rgba(44, 180, 219, 0.12);
   color: #2cb4db;
-  border-radius: 20px;
+  border-radius: 4px;
   font-family: 'Pretendard SemiBold';
   font-size: 13px;
   width: fit-content;
@@ -218,8 +212,9 @@ const PillRow = styled.div`
 const TagPill = styled.span`
   padding: 5px 14px;
   background: rgba(44, 180, 219, 0.1);
+  border: 1px solid #c9eef8;
   color: #1a8fa8;
-  border-radius: 20px;
+  border-radius: 4px;
   font-family: 'Pretendard Regular';
   font-size: 13px;
 `;
@@ -228,7 +223,7 @@ const MemberChip = styled.span`
   padding: 5px 14px;
   background: #f8fafc;
   border: 1px solid #e2e8f0;
-  border-radius: 20px;
+  border-radius: 4px;
   font-family: 'Pretendard Regular';
   font-size: 13px;
   color: #334155;
@@ -300,10 +295,14 @@ function ProjectAdminDetail() {
               <FieldValue>{project.serviceName}</FieldValue>
             </Field>
           </FieldGrid>
-          <FieldFull>
-            <FieldLabel>내용</FieldLabel>
+        </Card>
+
+        {/* 내용 */}
+        <Card>
+          <CardTitle>내용</CardTitle>
+          <Field>
             <FieldValue>{project.content}</FieldValue>
-          </FieldFull>
+          </Field>
         </Card>
 
         {/* 링크 */}
@@ -344,7 +343,7 @@ function ProjectAdminDetail() {
         {/* 팀원 & 태그 */}
         <Card>
           <CardTitle>팀원 & 태그</CardTitle>
-          <FieldFull>
+          <Field>
             <FieldLabel>팀원</FieldLabel>
             <PillRow>
               {project.members.length > 0 ? (
@@ -355,8 +354,8 @@ function ProjectAdminDetail() {
                 <EmptyValue>없음</EmptyValue>
               )}
             </PillRow>
-          </FieldFull>
-          <FieldFull>
+          </Field>
+          <Field style={{ marginTop: '1.25rem' }}>
             <FieldLabel>태그</FieldLabel>
             <PillRow>
               {project.tags && project.tags.length > 0 ? (
@@ -367,7 +366,7 @@ function ProjectAdminDetail() {
                 <EmptyValue>없음</EmptyValue>
               )}
             </PillRow>
-          </FieldFull>
+          </Field>
         </Card>
       </CardStack>
     </div>
