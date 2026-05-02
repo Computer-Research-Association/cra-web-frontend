@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 import React, { useEffect, useState } from 'react';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { getProjectById, updateProject } from '~/api/project.ts';
 import { QUERY_KEY } from '~/api/queryKey.ts';
@@ -10,6 +11,7 @@ import LoadingSpinner from '~/components/Common/LoadingSpinner';
 
 function ProjectAdminEdit() {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const [tagInput, setTagInput] = useState('');
   const [uploadProgress, setUploadProgress] = useState<number | null>(null);
 
@@ -51,12 +53,17 @@ function ProjectAdminEdit() {
     }
   }, [projectQuery.isSuccess, projectQuery.data]);
 
-  const mutation = useMutation({
+  const mutation = useMutation<Project, Error, Project>({
     mutationFn: (project: Project) => updateProject(project),
     onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ['project.projects'] });
+      await queryClient.invalidateQueries({
+        queryKey: QUERY_KEY.project.projectById(projectId),
+      });
+      alert('프로젝트가 성공적으로 수정됐습니다.');
       await navigate(-1);
     },
-    onError: (error) => {
+    onError: (error: Error) => {
       console.error('프로젝트 수정 실패:', error);
     },
   });
@@ -77,7 +84,10 @@ function ProjectAdminEdit() {
     } else {
       setFormData((prev) => ({
         ...prev,
-        [name]: name === 'members' ? value.split(',').map((m) => m.trimStart()) : value,
+        [name]:
+          name === 'members'
+            ? value.split(',').map((m) => m.trimStart())
+            : value,
       }));
     }
   };
@@ -87,7 +97,10 @@ function ProjectAdminEdit() {
       e.preventDefault();
       const trimmed = tagInput.trim();
       if (trimmed && !formData.tagNames.includes(trimmed)) {
-        setFormData((prev) => ({ ...prev, tagNames: [...prev.tagNames, trimmed] }));
+        setFormData((prev) => ({
+          ...prev,
+          tagNames: [...prev.tagNames, trimmed],
+        }));
       }
       setTagInput('');
     }
@@ -112,13 +125,14 @@ function ProjectAdminEdit() {
     <div className={styles.container}>
       <h2 className={styles.formTitle}>프로젝트 수정</h2>
       <form className={styles.form} onSubmit={handleSubmit}>
-
         {/* 기본 정보 */}
         <div className={styles.card}>
           <p className={styles.cardTitle}>기본 정보</p>
           <div className={styles.fieldRow}>
             <div className={styles.fieldGroup}>
-              <label className={styles.label} htmlFor="semester">학기</label>
+              <label className={styles.label} htmlFor="semester">
+                학기
+              </label>
               <input
                 className={styles.input}
                 type="text"
@@ -131,7 +145,9 @@ function ProjectAdminEdit() {
               />
             </div>
             <div className={styles.fieldGroup}>
-              <label className={styles.label} htmlFor="teamName">팀 이름</label>
+              <label className={styles.label} htmlFor="teamName">
+                팀 이름
+              </label>
               <input
                 className={styles.input}
                 type="text"
@@ -145,7 +161,9 @@ function ProjectAdminEdit() {
             </div>
           </div>
           <div className={styles.fieldGroup}>
-            <label className={styles.label} htmlFor="serviceName">서비스 이름</label>
+            <label className={styles.label} htmlFor="serviceName">
+              서비스 이름
+            </label>
             <input
               className={styles.input}
               type="text"
@@ -158,7 +176,9 @@ function ProjectAdminEdit() {
             />
           </div>
           <div className={styles.fieldGroup}>
-            <label className={styles.label} htmlFor="content">내용</label>
+            <label className={styles.label} htmlFor="content">
+              내용
+            </label>
             <input
               className={styles.input}
               type="text"
@@ -177,7 +197,9 @@ function ProjectAdminEdit() {
           <p className={styles.cardTitle}>링크</p>
           <div className={styles.fieldRow}>
             <div className={styles.fieldGroup}>
-              <label className={styles.label} htmlFor="gitHubUrl">GitHub 주소</label>
+              <label className={styles.label} htmlFor="gitHubUrl">
+                GitHub 주소
+              </label>
               <input
                 className={styles.input}
                 type="text"
@@ -190,7 +212,9 @@ function ProjectAdminEdit() {
               />
             </div>
             <div className={styles.fieldGroup}>
-              <label className={styles.label} htmlFor="serviceUrl">서비스 URL</label>
+              <label className={styles.label} htmlFor="serviceUrl">
+                서비스 URL
+              </label>
               <input
                 className={styles.input}
                 type="text"
@@ -209,7 +233,9 @@ function ProjectAdminEdit() {
         <div className={styles.card}>
           <p className={styles.cardTitle}>팀원 & 태그</p>
           <div className={styles.fieldGroup}>
-            <label className={styles.label} htmlFor="members">팀원</label>
+            <label className={styles.label} htmlFor="members">
+              팀원
+            </label>
             <input
               className={styles.input}
               type="text"
@@ -222,7 +248,9 @@ function ProjectAdminEdit() {
             />
           </div>
           <div className={styles.fieldGroup}>
-            <label className={styles.label} htmlFor="tagInput">태그</label>
+            <label className={styles.label} htmlFor="tagInput">
+              태그
+            </label>
             <input
               className={styles.input}
               type="text"
@@ -257,10 +285,14 @@ function ProjectAdminEdit() {
           <div className={styles.fieldGroup}>
             <label className={styles.label}>대표 이미지</label>
             {formData.imageUrl && (
-              <p className={styles.uploadSuccess}>현재 이미지: {formData.imageUrl.split('/').pop()}</p>
+              <p className={styles.uploadSuccess}>
+                현재 이미지: {formData.imageUrl.split('/').pop()}
+              </p>
             )}
             <div className={styles.fileInputWrapper}>
-              <span className={styles.fileInputLabel}>클릭하여 새 이미지를 선택하세요</span>
+              <span className={styles.fileInputLabel}>
+                클릭하여 새 이미지를 선택하세요
+              </span>
               <input
                 className={styles.fileInput}
                 type="file"
@@ -272,7 +304,10 @@ function ProjectAdminEdit() {
             </div>
             {uploadProgress !== null && uploadProgress < 100 && (
               <div className={styles.progressWrapper}>
-                <div className={styles.progressBar} style={{ width: `${uploadProgress}%` }} />
+                <div
+                  className={styles.progressBar}
+                  style={{ width: `${uploadProgress}%` }}
+                />
                 <span className={styles.progressText}>{uploadProgress}%</span>
               </div>
             )}
