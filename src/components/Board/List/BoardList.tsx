@@ -28,17 +28,15 @@ export default function BoardList({
   currentPage,
   onPageChange,
 }: BoardListProps) {
-  const { data: pinBoards } = useQuery<Board[]>({
-    queryKey: ['pinBoards'],
-    queryFn: getPinBoard,
-  });
+  // const { data: pinBoards } = useQuery<Board[]>({
+  //   queryKey: ['pinBoards'],
+  //   queryFn: getPinBoard,
+  // });
 
   const renderBoardContent = () => {
     if (boardsQuery.length > 0) {
-      const pinnedBoardIds = pinBoards
-        ? pinBoards.map((board) => board.boardId)
-        : [];
-
+      const pinnedBoardIds = pinned ? pinned.map((board) => board.boardId) : [];
+      console.log(pinnedBoardIds);
       // 필터링된 게시물에서 핀된 게시물과 일반 게시물 분리
       const pinnedBoards = boardsQuery.filter((board) =>
         pinnedBoardIds.includes(board.id),
