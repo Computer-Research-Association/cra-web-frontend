@@ -1,7 +1,6 @@
 import { createRoute } from '@tanstack/react-router';
 import { lazy } from 'react';
 import { adminLayoutRoute } from './adminLayoutRoute';
-import { rootRoute } from './__root';
 
 
 export const adminHavrutaRoute = createRoute({
