@@ -26,6 +26,8 @@ function BoardContainer({ category }: { category: number }) {
     ? boardsQuery.data.resBoardPinDtos
     : [];
 
+  // console.log('data:', boardsQuery.data);
+  // console.log('pinned:', boardsQuery.data?.resBoardPinDtos);
   return (
     <BoardList
       category={category}

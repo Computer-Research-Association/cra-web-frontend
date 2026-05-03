@@ -6,8 +6,8 @@ import { CATEGORY_STRINGS_EN } from '~/constants/category_strings_en.ts';
 import BoardItem from '~/components/Board/Item/BoardItem.tsx';
 import Pagination from '~/components/Pagination/Pagination.tsx';
 import styles from './BoardList.module.css';
-import { useQuery } from '@tanstack/react-query';
-import { getPinBoard } from '~/api/pin';
+// import { useQuery } from '@tanstack/react-query';
+// import { getPinBoard } from '~/api/pin';
 
 // import LoadingSpinner from '~/components/Common/LoadingSpinner';
 
@@ -28,17 +28,14 @@ export default function BoardList({
   currentPage,
   onPageChange,
 }: BoardListProps) {
-  const { data: pinBoards } = useQuery<Board[]>({
-    queryKey: ['pinBoards'],
-    queryFn: getPinBoard,
-  });
+  // const { data: pinBoards } = useQuery<Board[]>({
+  //   queryKey: ['pinBoards'],
+  //   queryFn: getPinBoard,
+  // });
 
   const renderBoardContent = () => {
     if (boardsQuery.length > 0) {
-      const pinnedBoardIds = pinBoards
-        ? pinBoards.map((board) => board.boardId)
-        : [];
-
+      const pinnedBoardIds = pinned ? pinned.map((board) => board.boardId) : [];
       // 필터링된 게시물에서 핀된 게시물과 일반 게시물 분리
       const pinnedBoards = boardsQuery.filter((board) =>
         pinnedBoardIds.includes(board.id),

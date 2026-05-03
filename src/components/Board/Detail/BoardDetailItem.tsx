@@ -23,6 +23,8 @@ import BoardUserModal from '~/components/Modal/User/OtherUser/BoardUserModal';
 import { useAuthStore } from '~/store/authStore';
 import { createPinBoard, deletePinBoard } from '~/api/pin';
 import isAdmin from '~/components/Auth/Decode/adminCheck';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { QUERY_KEY } from '~/api/queryKey';
 
 const DEFAULT_PROFILE = import.meta.env.VITE_DEFAULT_IMG as string;
 
@@ -40,6 +42,11 @@ export default function BoardDetailItem({
   board: Board;
   category: number;
 }) {
+  const { data: boardData } = useQuery({
+    queryKey: QUERY_KEY.board.boardById(board.id as number),
+    queryFn: () => getBoardById(board.id as number),
+  });
+
   const [viewCnt, setViewCnt] = useState(board.view);
 
   const [modalOpen, setModalOpen] = useState(false);
@@ -124,23 +131,32 @@ export default function BoardDetailItem({
     }
   };
 
-  const handlePin = async () => {
-    try {
+  //---------------------------------------------
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: async () => {
       if (board.isPined) {
         await deletePinBoard(board.pidId as number);
-        console.log('고정 취소');
       } else {
         await createPinBoard(board.id as number, category);
-        console.log('고정');
       }
-    } catch (error) {
-      console.error('핀 처리 중 오류 발생:', error);
-    }
-  };
+    },
+    onSuccess: () => {
+      void queryClient.invalidateQueries({
+        queryKey: ['board.boards'],
+      });
+
+      void queryClient.invalidateQueries({
+        queryKey: QUERY_KEY.board.boardById(board.id as number),
+      });
+    },
+  });
+  //---------------------------------------------
 
   const { accessToken } = useAuthStore.getState();
   const token = accessToken as string;
-  console.log(board.id);
+
   return (
     <div className={styles['detail-container']}>
       <div className={styles['detail-content']}>
@@ -148,8 +164,12 @@ export default function BoardDetailItem({
           {CATEGORY_STRINGS[category]} 게시판
           <div style={{ cursor: 'pointer' }}>
             {isAdmin(token) && (
-              <div onClick={handlePin}>
-                {board.isPined ? <LuPin size={20} /> : <LuPinOff size={20} />}
+              <div onClick={() => mutation.mutate()}>
+                {boardData?.isPined ? (
+                  <LuPin size={20} />
+                ) : (
+                  <LuPinOff size={20} />
+                )}
               </div>
             )}
           </div>
@@ -197,7 +217,15 @@ export default function BoardDetailItem({
               )}
             </div>
           </div>
-          <div className={styles['content-title']}>{board.title}</div>
+          <div
+            className={
+              boardData?.isPined
+                ? `${styles['content-title']} ${styles['pinned']}`
+                : `${styles['content-title']}`
+            }
+          >
+            {board.title}
+          </div>
           <div className={styles['board-content']}>
             <Viewer initialValue={board.content} />
           </div>
