@@ -204,6 +204,10 @@ const MemberChip = styled.span`
   color: #334155;
 `;
 
+function toAbsoluteUrl(url: string) {
+  return /^https?:\/\//i.test(url) ? url : `https://${url}`;
+}
+
 function ProjectDetail() {
   const navigate = useNavigate();
   const currentUrl = window.location.href;
@@ -253,7 +257,7 @@ function ProjectDetail() {
               <FieldLabel>GitHub</FieldLabel>
               {project.gitHubUrl ? (
                 <LinkValue
-                  href={project.gitHubUrl}
+                  href={toAbsoluteUrl(project.gitHubUrl)}
                   target="_blank"
                   rel="noreferrer"
                 >
@@ -267,7 +271,7 @@ function ProjectDetail() {
               <FieldLabel>서비스 URL</FieldLabel>
               {project.serviceUrl ? (
                 <LinkValue
-                  href={project.serviceUrl}
+                  href={toAbsoluteUrl(project.serviceUrl)}
                   target="_blank"
                   rel="noreferrer"
                 >

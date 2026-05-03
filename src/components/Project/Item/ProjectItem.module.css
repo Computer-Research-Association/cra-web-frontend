@@ -24,11 +24,7 @@
 
 .accentBar {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, #16b8cc, rgba(22, 184, 204, 0.53));
+  background: linear-gradient(#16b8cc);
   border-radius: 4px 4px 0 0;
   opacity: 0;
   transition: opacity 0.2s ease;
@@ -132,4 +128,16 @@
   padding: 3px 10px;
   border-radius: 4px;
   font-family: 'Pretendard Regular';
+}
+
+.moreBadge {
+  font-size: 11px;
+  font-weight: 600;
+  color: #94a3b8;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-family: 'Pretendard SemiBold';
+  flex-shrink: 0;
 }
