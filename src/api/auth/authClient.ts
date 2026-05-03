@@ -77,6 +77,6 @@ authClient.interceptors.response.use(
       }
     }
 
-    return Promise.reject(new Error(error));
+    return Promise.reject(error);
   },
 );

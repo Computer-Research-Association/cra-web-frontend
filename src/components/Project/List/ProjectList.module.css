@@ -31,3 +31,43 @@
 .pagination {
   padding-bottom: 4.5rem;
 }
+
+.tagFilterContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-bottom: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.tagFilterButton {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 18px;
+  border-radius: 20px;
+  border: 0px solid #2cb4db;
+  background: white;
+  font-family: 'Pretendard Regular';
+  font-size: 14px;
+  color: #1a202c;
+  cursor: pointer;
+  transition:
+    background 0.15s,
+    color 0.15s;
+}
+
+.tagFilterButton:hover {
+  background: #f1f5f9;
+}
+
+.tagFilterButtonActive {
+  background: #2cb4db;
+  color: white;
+  border-color: #2cb4db;
+}
+
+.tagFilterButtonActive:hover {
+  background: #27a1c3;
+}

@@ -1,10 +1,204 @@
 .container {
-  padding: 10rem;
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 3rem 2rem 6rem;
+}
+
+.formTitle {
+  font-family: 'Pretendard Bold';
+  font-size: 28px;
+  color: var(--color-dark-text);
+  margin-bottom: 2rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 2px solid var(--color-bright-stroke);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.card {
+  background: white;
+  border-radius: 12px;
+  border: 1px solid var(--color-bright-stroke);
+  padding: 1.75rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.cardTitle {
+  font-family: 'Pretendard SemiBold';
+  font-size: 13px;
+  color: var(--color-brighter-text);
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  margin-bottom: 0.25rem;
+}
+
+.fieldRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.label {
+  font-family: 'Pretendard SemiBold';
+  font-size: 13px;
+  color: var(--color-bright-text);
 }
 
 .input {
-  width: 30%;
-  height: 2rem;
-  padding: 1rem;
-  margin: 2rem;
+  width: 100%;
+  height: 44px;
+  padding: 0 14px;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 8px;
+  font-family: 'Pretendard Regular';
+  font-size: 15px;
+  color: #1a202c;
+  outline: none;
+  background: white;
+  transition:
+    border-color 0.15s,
+    box-shadow 0.15s;
+  box-sizing: border-box;
+}
+
+.input:focus {
+  border-color: #2cb4db;
+  box-shadow: 0 0 0 3px rgba(44, 180, 219, 0.12);
+}
+
+.input::placeholder {
+  color: #a0aec0;
+  font-size: 14px;
+}
+
+.tagList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.tagPill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  background: rgba(44, 180, 219, 0.1);
+  color: #1a8fa8;
+  font-family: 'Pretendard Regular';
+  font-size: 14px;
+}
+
+.tagRemoveBtn {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 11px;
+  padding: 0;
+  line-height: 1;
+  color: #2cb4db;
+}
+
+.tagRemoveBtn:hover {
+  color: #1a8fa8;
+}
+
+.fileInputWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 2rem 1.5rem;
+  border: 1.5px dashed #cbd5e0;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.fileInputWrapper:hover {
+  border-color: #2cb4db;
+  background: rgba(44, 180, 219, 0.03);
+}
+
+.fileInputLabel {
+  font-family: 'Pretendard Regular';
+  font-size: 14px;
+  color: #718096;
+}
+
+.fileInput {
+  width: 100%;
+  font-family: 'Pretendard Regular';
+  font-size: 14px;
+  color: #4a5568;
+  cursor: pointer;
+}
+
+.progressWrapper {
+  position: relative;
+  height: 6px;
+  background: #e2e8f0;
+  border-radius: 9999px;
+  overflow: hidden;
+  margin-top: 8px;
+}
+
+.progressBar {
+  height: 100%;
+  background: #2cb4db;
+  border-radius: 9999px;
+  transition: width 0.2s ease;
+}
+
+.progressText {
+  position: absolute;
+  right: 0;
+  top: -18px;
+  font-size: 12px;
+  font-family: 'Pretendard Regular';
+  color: #2cb4db;
+}
+
+.uploadSuccess {
+  font-size: 13px;
+  font-family: 'Pretendard Regular';
+  color: #2cb4db;
+  margin-top: 6px;
+}
+
+.submitBtn {
+  width: 100%;
+  height: 50px;
+  margin-top: 0.5rem;
+  background: #2cb4db;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-family: 'Pretendard SemiBold';
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.submitBtn:hover {
+  background: #27a1c3;
+}
+
+.submitBtn:disabled {
+  background: #a0aec0;
+  cursor: not-allowed;
 }

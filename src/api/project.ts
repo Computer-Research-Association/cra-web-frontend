@@ -33,7 +33,6 @@ export const getProjectById = async (id: number) => {
 
     return {
       ...project,
-      // undefined 체크 후 기본값 설정
       createdAt: project.createdAt ? new Date(project.createdAt) : new Date(),
     };
   } catch (error) {
@@ -44,7 +43,6 @@ export const getProjectById = async (id: number) => {
 
 export const createProjects = async (project: Project) => {
   try {
-    // 권한이 필요한 작업에 authClient 사용
     const response = await authClient.post<Project>('/admin/project', project, {
       headers: {
         'Content-Type': 'application/json; charset=UTF-8',

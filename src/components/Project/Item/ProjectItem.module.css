@@ -11,15 +11,48 @@
   margin-bottom: 4rem;
 }
 .project-block {
-  aspect-ratio: 1.3 / 1.1;
+  width: 300px;
+  min-height: 200px;
   background-color: white;
   display: flex;
   flex-direction: column;
   padding: 12px;
   cursor: pointer;
+  border: 1px solid #e2e8f0;
   border-radius: 5%;
-  height: 280px;
   overflow: hidden;
+}
+
+.tagContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 6px 8px 4px;
+}
+
+.tagPill {
+  padding: 2px 10px;
+  border-radius: 20px;
+  background: #e8f7fc;
+  color: #2cb4db;
+  font-family: 'Pretendard Regular';
+  font-size: 12px;
+}
+
+.memberContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-bottom: 8px;
+  padding-left: 8px;
+}
+
+.memberButton {
+  padding: 4px 8px;
+  border-radius: 4px;
+  border: 0px;
+  background: #f1f5f9;
+  font-family: 'Pretendard Regular';
 }
 
 .project-block:hover {
@@ -42,19 +75,34 @@
 }
 
 .title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-right: 8px;
   font-family: 'Pretendard SemiBold';
   font-size: 18px;
   font-weight: 200;
-  text-align: center;
-  line-height: 30px;
-  padding-left: 10px;
-  margin-top: 10%;
+  text-align: left;
+  padding-left: 8px;
+  margin-top: 8px;
+}
+
+.semester {
+  display: inline-block;
+  padding: 3px 10px;
+  margin: 6px 8px 2px;
+  background: #e8f7fc;
+  color: #2cb4db;
+  border-radius: 20px;
+  font-family: 'Pretendard SemiBold';
+  font-size: 12px;
+  width: fit-content;
 }
 
 .content {
   font-family: 'Pretendard Regular';
   color: var(--color-dark-stroke);
-  text-align: center;
+  text-align: left;
   padding-left: 10px;
   font-size: clamp(12px, 1vw, 16px);
   flex-grow: 1;
