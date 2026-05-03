@@ -79,7 +79,7 @@ const SemesterBadge = styled.span`
   padding: 3px 10px;
   background: rgba(44, 180, 219, 0.12);
   color: #2cb4db;
-  border-radius: 20px;
+  border-radius: 4px;
   font-family: 'Pretendard SemiBold';
   font-size: 12px;
   flex-shrink: 0;

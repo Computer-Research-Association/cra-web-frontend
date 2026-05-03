@@ -28,20 +28,13 @@ export default function ProjectList({
     : projectsQuery;
 
   const renderBoardContent = () => {
-    if (filtered != null) {
-      return filtered
-        .filter((project) => project.id !== undefined)
-        .map((project, index) => (
-          <div key={`board-${project.id}`}>
-            <div className={styles['board-wrapper']}>
-              <ProjectItem project={project} />
-            </div>
-            {index < filtered.length - 1 && (
-              <div className={styles.divider}></div>
-            )}
-          </div>
-        ));
-    }
+    return filtered
+      .filter((project) => project.id !== undefined)
+      .map((project) => (
+        <div key={`board-${project.id}`} className={styles['board-wrapper']}>
+          <ProjectItem project={project} />
+        </div>
+      ));
   };
 
   return (
@@ -72,7 +65,6 @@ export default function ProjectList({
       </div>
       <div className={styles.boardList}>{renderBoardContent()}</div>
       <div className={styles['board-list-footer']}>
-        <div className={styles['spacer']}></div>
         <div className={styles.pagination}>
           <Pagination
             totalPages={totalPages}
