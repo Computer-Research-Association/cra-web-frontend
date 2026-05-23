@@ -53,15 +53,17 @@ export default function ProjectList({
           </svg>
           All Projects
         </button>
-        {allTags.map((tag) => (
-          <button
-            key={tag}
-            className={`${styles.tagFilterButton} ${selectedTag === tag ? styles.tagFilterButtonActive : ''}`}
-            onClick={() => setSelectedTag(tag)}
-          >
-            {tag}
-          </button>
-        ))}
+        <div className={styles.tagScrollArea}>
+          {allTags.map((tag) => (
+            <button
+              key={tag}
+              className={`${styles.tagFilterButton} ${selectedTag === tag ? styles.tagFilterButtonActive : ''}`}
+              onClick={() => setSelectedTag(tag)}
+            >
+              {tag}
+            </button>
+          ))}
+        </div>
       </div>
       <div className={styles.boardList}>{renderBoardContent()}</div>
       <div className={styles['board-list-footer']}>
