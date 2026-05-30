@@ -58,11 +58,22 @@
 
 .tagFilterContainer {
   display: flex;
-  flex-wrap: wrap;
+  align-items: center;
   gap: 8px;
   padding-bottom: 24px;
-  max-width: 1200px;
-  margin: 0 auto;
+}
+
+.tagScrollArea {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  flex: 1;
+  min-width: 0;
+}
+
+.tagScrollArea::-webkit-scrollbar {
+  display: none;
 }
 
 .tagFilterButton {
@@ -77,6 +88,7 @@
   font-size: 14px;
   color: #1a202c;
   cursor: pointer;
+  flex-shrink: 0;
   transition:
     background 0.15s,
     color 0.15s;

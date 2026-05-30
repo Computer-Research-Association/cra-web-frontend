@@ -235,6 +235,10 @@ const EmptyValue = styled.span`
   color: #94a3b8;
 `;
 
+function toAbsoluteUrl(url: string) {
+  return /^https?:\/\//i.test(url) ? url : `https://${url}`;
+}
+
 function ProjectAdminDetail() {
   const navigate = useNavigate();
   const currentUrl = window.location.href;
@@ -313,7 +317,7 @@ function ProjectAdminDetail() {
               <FieldLabel>GitHub</FieldLabel>
               {project.gitHubUrl ? (
                 <LinkValue
-                  href={project.gitHubUrl}
+                  href={toAbsoluteUrl(project.gitHubUrl)}
                   target="_blank"
                   rel="noreferrer"
                 >
@@ -327,7 +331,7 @@ function ProjectAdminDetail() {
               <FieldLabel>서비스 URL</FieldLabel>
               {project.serviceUrl ? (
                 <LinkValue
-                  href={project.serviceUrl}
+                  href={toAbsoluteUrl(project.serviceUrl)}
                   target="_blank"
                   rel="noreferrer"
                 >
