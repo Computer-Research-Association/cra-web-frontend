@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { deleteProject } from '~/api/project.ts';
+import { deleteProject, getProjects } from '~/api/project.ts';
 import { deleteTag, getBoardsByCategory } from '~/api/board.ts';
 import { ProjectTag } from '~/models/Project.ts';
 import { CATEGORY } from '~/constants/category.ts';
@@ -44,8 +44,35 @@ function ProjectAdminDelete({ id, tags }: { id: number; tags?: ProjectTag[] }) {
           board.tags?.forEach((tag) => academicTagIds.add(tag.id));
         });
 
-        // 아카데믹 게시글에서 사용 중이지 않은 태그만 삭제
-        const tagsToDelete = tags.filter((tag) => !academicTagIds.has(tag.id));
+        // 다른 프로젝트에서 사용 중인 태그 ID 수집 (현재 삭제할 프로젝트 제외)
+        const firstProjectPage = await getProjects(1, 1000);
+        const totalProjectPages = firstProjectPage.totalPages ?? 1;
+        const allProjects = Array.isArray(firstProjectPage.resListProjectDtos)
+          ? [...(firstProjectPage.resListProjectDtos as any[])]
+          : [];
+        if (totalProjectPages > 1) {
+          const remainingProjectPages = await Promise.all(
+            Array.from({ length: totalProjectPages - 1 }, (_, i) =>
+              getProjects(i + 2, 1000),
+            ),
+          );
+          remainingProjectPages.forEach((page) => {
+            if (Array.isArray(page.resListProjectDtos)) {
+              allProjects.push(...(page.resListProjectDtos as any[]));
+            }
+          });
+        }
+        const otherProjectTagIds = new Set<number>();
+        allProjects
+          .filter((project: any) => project.id !== id)
+          .forEach((project: any) =>
+            project.tags?.forEach((tag: { id: number }) => otherProjectTagIds.add(tag.id)),
+          );
+
+        // 아카데믹 게시글과 다른 프로젝트 어디서도 사용 중이지 않은 태그만 삭제
+        const tagsToDelete = tags.filter(
+          (tag) => !academicTagIds.has(tag.id) && !otherProjectTagIds.has(tag.id),
+        );
         await Promise.all(tagsToDelete.map((tag) => deleteTag(tag.id)));
       }
       return deleteProject(id);
