@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Project } from '~/models/Project.ts';
+import { useAllTags } from '~/hooks/useAllTags.ts';
 import ProjectItem from '~/components/Project/Item/ProjectItem.tsx';
 import styles from './ProjectList.module.css';
 import Pagination from '~/components/Pagination/Pagination';
@@ -19,22 +20,18 @@ export default function ProjectList({
 }: ProjectListProps) {
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
 
-  const allTags = Array.from(
-    new Set(projectsQuery.flatMap((p) => p.tags?.map((t) => t.name) ?? [])),
-  );
+  const allTags = useAllTags();
 
   const filtered = selectedTag
     ? projectsQuery.filter((p) => p.tags?.some((t) => t.name === selectedTag))
     : projectsQuery;
 
   const renderBoardContent = () => {
-    return filtered
-      .filter((project) => project.id !== undefined)
-      .map((project) => (
-        <div key={`board-${project.id}`} className={styles['board-wrapper']}>
-          <ProjectItem project={project} />
-        </div>
-      ));
+    return filtered.map((project) => (
+      <div key={`board-${project.id}`} className={styles['board-wrapper']}>
+        <ProjectItem project={project} />
+      </div>
+    ));
   };
 
   return (
@@ -51,16 +48,16 @@ export default function ProjectList({
             <rect x="0" y="7.5" width="5.5" height="5.5" rx="1" />
             <rect x="7.5" y="7.5" width="5.5" height="5.5" rx="1" />
           </svg>
-          All Projects
+          All
         </button>
         <div className={styles.tagScrollArea}>
           {allTags.map((tag) => (
             <button
-              key={tag}
-              className={`${styles.tagFilterButton} ${selectedTag === tag ? styles.tagFilterButtonActive : ''}`}
-              onClick={() => setSelectedTag(tag)}
+              key={tag.id}
+              className={`${styles.tagFilterButton} ${selectedTag === tag.name ? styles.tagFilterButtonActive : ''}`}
+              onClick={() => setSelectedTag(tag.name)}
             >
-              {tag}
+              {tag.name}
             </button>
           ))}
         </div>

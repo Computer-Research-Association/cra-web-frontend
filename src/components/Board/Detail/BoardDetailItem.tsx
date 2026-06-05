@@ -100,19 +100,16 @@ export default function BoardDetailItem({
 
   const handleDownload = async () => {
     if (!board.fileUrl) {
-      // alert('다운로드할 파일이 존재하지 않습니다.');
       return;
     }
 
     try {
-      // ResponseType 설정을 통해 바이너리 데이터 처리
       const response = await fetch(board.fileUrl);
       if (!response.ok) throw new Error('다운로드 실패');
 
       const contentType = response.headers.get('content-type');
       const blob = await response.blob();
 
-      // Blob 객체 생성 시 명시적으로 type 지정
       const file = new Blob([blob], {
         type: contentType || 'application/octet-stream',
       });
@@ -123,11 +120,9 @@ export default function BoardDetailItem({
       link.download = extractFileName(board.fileUrl);
       link.click();
 
-      // 메모리 해제
       window.URL.revokeObjectURL(url);
     } catch (error) {
       console.error('파일 다운로드 실패:', error);
-      // alert('파일 다운로드에 실패했습니다. 다시 시도해 주세요.');
     }
   };
 
@@ -212,7 +207,7 @@ export default function BoardDetailItem({
                   >
                     <FaRegEdit size={22} />
                   </Link>
-                  <BoardDelete id={board.id!} category={category} />
+                  <BoardDelete id={board.id!} category={category} tags={board.tags} />
                 </>
               )}
             </div>
@@ -229,6 +224,18 @@ export default function BoardDetailItem({
           <div className={styles['board-content']}>
             <Viewer initialValue={board.content} />
           </div>
+          {board.tags && board.tags.length > 0 && (
+            <div className={styles['tag-section']}>
+              <Divider />
+              <div className={styles['tag-list']}>
+                {board.tags.map((tag) => (
+                  <span key={tag.id} className={styles['tag-chip']}>
+                    {tag.name}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
 
           <div className={styles['comment-count']}>
             <div className={styles['file-section']}>

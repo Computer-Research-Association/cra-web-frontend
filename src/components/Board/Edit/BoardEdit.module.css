@@ -161,6 +161,39 @@
   cursor: pointer;
 }
 
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.tag-chip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  background: rgba(44, 180, 219, 0.1);
+  color: #1a8fa8;
+  font-family: 'Pretendard Regular';
+  font-size: 14px;
+}
+
+.tag-remove {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 11px;
+  padding: 0;
+  line-height: 1;
+  color: #2cb4db;
+}
+
+.tag-remove:hover {
+  color: #1a8fa8;
+}
+
 @media (max-width: 1200px) {
   .edit-container {
     max-width: 886px;

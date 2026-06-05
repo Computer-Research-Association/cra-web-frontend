@@ -1,8 +1,12 @@
+import { useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { Project } from '~/models/Project.ts';
 import { QUERY_KEY } from '~/api/queryKey.ts';
 import { getProjectById } from '~/api/project.ts';
+import { CATEGORY } from '~/constants/category.ts';
+import { CATEGORY_STRINGS_EN } from '~/constants/category_strings_en.ts';
+import { useAllAcademicBoards } from '~/hooks/useAllAcademicBoards.ts';
 import styled from 'styled-components';
 import LoadingSpinner from '~/components/Common/LoadingSpinner';
 
@@ -204,6 +208,57 @@ const MemberChip = styled.span`
   color: #334155;
 `;
 
+const RelatedBoardRow = styled(Link)`
+  display: flex;
+  align-items: center;
+  background: white;
+  border-radius: 10px;
+  border: 1px solid #e8edf3;
+  padding: 0.875rem 1.25rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  gap: 1rem;
+  text-decoration: none;
+  transition: box-shadow 0.12s;
+
+  &:hover {
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.09);
+  }
+`;
+
+const RelatedBoardTitle = styled.span`
+  font-family: 'Pretendard SemiBold';
+  font-size: 15px;
+  color: #1e293b;
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`;
+
+const RelatedBoardTags = styled.div`
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 6px;
+  flex-shrink: 0;
+`;
+
+const RelatedBoardTag = styled.span`
+  padding: 3px 10px;
+  background: rgba(44, 180, 219, 0.1);
+  border: 1px solid #c9eef8;
+  color: #1a8fa8;
+  border-radius: 4px;
+  font-family: 'Pretendard Regular';
+  font-size: 12px;
+  white-space: nowrap;
+`;
+
+const RelatedList = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+`;
+
 function toAbsoluteUrl(url: string) {
   return /^https?:\/\//i.test(url) ? url : `https://${url}`;
 }
@@ -218,6 +273,20 @@ function ProjectDetail() {
     queryKey: QUERY_KEY.project.projectById(projectId),
     queryFn: async () => getProjectById(projectId),
   });
+
+  const allAcademicBoards = useAllAcademicBoards();
+
+  const projectTagIds = useMemo(
+    () => new Set(projectQuery.data?.tags?.map((t) => t.id) ?? []),
+    [projectQuery.data],
+  );
+  const relatedBoards = useMemo(
+    () =>
+      allAcademicBoards.filter((b) =>
+        b.tags?.some((t) => projectTagIds.has(t.id)),
+      ),
+    [allAcademicBoards, projectTagIds],
+  );
 
   if (projectQuery.isLoading) return <LoadingSpinner />;
   if (projectQuery.isError) return <div>에러가 발생했습니다.</div>;
@@ -242,76 +311,95 @@ function ProjectDetail() {
         <TeamName>{project.teamName}</TeamName>
       </ProjectInfo>
 
-      <>
-        <Card>
-          <CardTitle>프로젝트 소개</CardTitle>
-          <Field>
-            <FieldValue>{project.content}</FieldValue>
-          </Field>
-        </Card>
+      <Card>
+        <CardTitle>프로젝트 소개</CardTitle>
+        <Field>
+          <FieldValue>{project.content}</FieldValue>
+        </Field>
+      </Card>
 
-        <Card>
-          <CardTitle>링크</CardTitle>
-          <FieldGrid>
-            <Field>
-              <FieldLabel>GitHub</FieldLabel>
-              {project.gitHubUrl ? (
-                <LinkValue
-                  href={toAbsoluteUrl(project.gitHubUrl)}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  {project.gitHubUrl}
-                </LinkValue>
-              ) : (
-                <EmptyValue>없음</EmptyValue>
-              )}
-            </Field>
-            <Field>
-              <FieldLabel>서비스 URL</FieldLabel>
-              {project.serviceUrl ? (
-                <LinkValue
-                  href={toAbsoluteUrl(project.serviceUrl)}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  {project.serviceUrl}
-                </LinkValue>
-              ) : (
-                <EmptyValue>없음</EmptyValue>
-              )}
-            </Field>
-          </FieldGrid>
-        </Card>
-
-        <Card>
-          <CardTitle>팀원 & 태그</CardTitle>
+      <Card>
+        <CardTitle>링크</CardTitle>
+        <FieldGrid>
           <Field>
-            <FieldLabel>팀원</FieldLabel>
-            <PillRow>
-              {project.members.length > 0 ? (
-                project.members.map((member, i) => (
-                  <MemberChip key={i}>{member}</MemberChip>
-                ))
-              ) : (
-                <EmptyValue>없음</EmptyValue>
-              )}
-            </PillRow>
+            <FieldLabel>GitHub</FieldLabel>
+            {project.gitHubUrl ? (
+              <LinkValue
+                href={toAbsoluteUrl(project.gitHubUrl)}
+                target="_blank"
+                rel="noreferrer"
+              >
+                {project.gitHubUrl}
+              </LinkValue>
+            ) : (
+              <EmptyValue>없음</EmptyValue>
+            )}
           </Field>
-          <Field style={{ marginTop: '1.25rem' }}>
-            <FieldLabel>태그</FieldLabel>
-            <PillRow>
-              {project.tags && project.tags.length > 0 ? (
-                project.tags.map((tag) => (
-                  <TagPill key={tag.id}>{tag.name}</TagPill>
-                ))
-              ) : (
-                <EmptyValue>없음</EmptyValue>
-              )}
-            </PillRow>
+          <Field>
+            <FieldLabel>서비스 URL</FieldLabel>
+            {project.serviceUrl ? (
+              <LinkValue
+                href={toAbsoluteUrl(project.serviceUrl)}
+                target="_blank"
+                rel="noreferrer"
+              >
+                {project.serviceUrl}
+              </LinkValue>
+            ) : (
+              <EmptyValue>없음</EmptyValue>
+            )}
           </Field>
+        </FieldGrid>
+      </Card>
+
+      <Card>
+        <CardTitle>팀원 & 태그</CardTitle>
+        <Field>
+          <FieldLabel>팀원</FieldLabel>
+          <PillRow>
+            {project.members.length > 0 ? (
+              project.members.map((member, i) => (
+                <MemberChip key={i}>{member}</MemberChip>
+              ))
+            ) : (
+              <EmptyValue>없음</EmptyValue>
+            )}
+          </PillRow>
+        </Field>
+        <Field style={{ marginTop: '1.25rem' }}>
+          <FieldLabel>태그</FieldLabel>
+          <PillRow>
+            {project.tags && project.tags.length > 0 ? (
+              project.tags.map((tag) => (
+                <TagPill key={tag.id}>{tag.name}</TagPill>
+              ))
+            ) : (
+              <EmptyValue>없음</EmptyValue>
+            )}
+          </PillRow>
+        </Field>
+      </Card>
+
+      {relatedBoards.length > 0 && (
+        <Card>
+          <CardTitle>관련 학술 게시글</CardTitle>
+          <RelatedList>
+            {relatedBoards.map((board) => (
+              <RelatedBoardRow
+                key={board.id}
+                to={`/${CATEGORY_STRINGS_EN[CATEGORY.ACADEMIC]}/view/${board.id}`}
+              >
+                <RelatedBoardTitle>{board.title}</RelatedBoardTitle>
+                <RelatedBoardTags>
+                  {board.tags?.map((tag) => (
+                    <RelatedBoardTag key={tag.id}>{tag.name}</RelatedBoardTag>
+                  ))}
+                </RelatedBoardTags>
+              </RelatedBoardRow>
+            ))}
+          </RelatedList>
         </Card>
-      </>
+      )}
     </PageWrapper>
   );
 }

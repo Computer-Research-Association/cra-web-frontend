@@ -1,15 +1,14 @@
 // import { UseQueryResult } from '@tanstack/react-query';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Board } from '~/models/Board.ts';
 import { CATEGORY_STRINGS } from '~/constants/category_strings.ts';
 import { CATEGORY_STRINGS_EN } from '~/constants/category_strings_en.ts';
+import { CATEGORY } from '~/constants/category.ts';
+import { useAllTags } from '~/hooks/useAllTags.ts';
 import BoardItem from '~/components/Board/Item/BoardItem.tsx';
 import Pagination from '~/components/Pagination/Pagination.tsx';
 import styles from './BoardList.module.css';
-// import { useQuery } from '@tanstack/react-query';
-// import { getPinBoard } from '~/api/pin';
-
-// import LoadingSpinner from '~/components/Common/LoadingSpinner';
 
 interface BoardListProps {
   category: number;
@@ -28,23 +27,23 @@ export default function BoardList({
   currentPage,
   onPageChange,
 }: BoardListProps) {
-  // const { data: pinBoards } = useQuery<Board[]>({
-  //   queryKey: ['pinBoards'],
-  //   queryFn: getPinBoard,
-  // });
+  const [selectedTag, setSelectedTag] = useState<string | null>(null);
+
+  const allTags = useAllTags(category === CATEGORY.ACADEMIC);
+
+  const filteredBoards =
+    category === CATEGORY.ACADEMIC && selectedTag
+      ? boardsQuery.filter((b) => b.tags?.some((t) => t.name === selectedTag))
+      : boardsQuery;
 
   const renderBoardContent = () => {
-    if (boardsQuery.length > 0) {
-      const pinnedBoardIds = pinned ? pinned.map((board) => board.boardId) : [];
-      // 필터링된 게시물에서 핀된 게시물과 일반 게시물 분리
-      const pinnedBoards = boardsQuery.filter((board) =>
-        pinnedBoardIds.includes(board.id),
-      );
-
-      const normalBoards = boardsQuery.filter(
-        (board) => !pinnedBoardIds.includes(board.id),
-      );
-
+    if (filteredBoards.length > 0) {
+      const pinnedBoardIdSet = new Set(pinned?.map((board) => board.boardId));
+      const pinnedBoards: Board[] = [];
+      const normalBoards: Board[] = [];
+      for (const board of filteredBoards) {
+        (pinnedBoardIdSet.has(board.id) ? pinnedBoards : normalBoards).push(board);
+      }
       const combinedBoards = [...pinnedBoards, ...normalBoards];
 
       return combinedBoards.map((board, index) => (
@@ -69,6 +68,33 @@ export default function BoardList({
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>{CATEGORY_STRINGS[category]} 게시판</h2>
+      {category === CATEGORY.ACADEMIC && (
+        <div className={styles.tagFilterContainer}>
+          <button
+            className={`${styles.tagFilterButton} ${selectedTag === null ? styles.tagFilterButtonActive : ''}`}
+            onClick={() => setSelectedTag(null)}
+          >
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="currentColor">
+              <rect x="0" y="0" width="5.5" height="5.5" rx="1" />
+              <rect x="7.5" y="0" width="5.5" height="5.5" rx="1" />
+              <rect x="0" y="7.5" width="5.5" height="5.5" rx="1" />
+              <rect x="7.5" y="7.5" width="5.5" height="5.5" rx="1" />
+            </svg>
+            All
+          </button>
+          <div className={styles.tagScrollArea}>
+            {allTags.map((tag) => (
+              <button
+                key={tag.id}
+                className={`${styles.tagFilterButton} ${selectedTag === tag.name ? styles.tagFilterButtonActive : ''}`}
+                onClick={() => setSelectedTag(tag.name)}
+              >
+                {tag.name}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
       <div className={styles.boardList}>{renderBoardContent()}</div>
       <div className={styles['board-list-footer']}>
         <div className={styles['spacer']} />
@@ -77,7 +103,7 @@ export default function BoardList({
           currentPage={currentPage}
           onPageChange={onPageChange}
         />
-        {CATEGORY_STRINGS[category] === '학술' ? (
+        {category === CATEGORY.ACADEMIC ? (
           <Link
             className={styles.WriteLink}
             to={`/${CATEGORY_STRINGS_EN[category]}/write`}

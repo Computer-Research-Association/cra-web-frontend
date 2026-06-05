@@ -91,11 +91,34 @@
   min-height: 200px;
 }
 
+.tag-section {
+  margin-top: 24px;
+}
+
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.tag-chip {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(44, 180, 219, 0.1);
+  border: 1px solid #c9eef8;
+  color: #1a8fa8;
+  font-size: 13px;
+  font-family: 'Pretendard Regular';
+  padding: 5px 14px;
+  border-radius: 4px;
+}
+
 .comment-count {
   display: flex;
-  justify-content: space-between; /* 양끝 정렬로 변경 */
-  align-items: center; /* 세로 중앙 정렬 추가 */
-  margin: 138px 10px 14px 10px;
+  justify-content: space-between;
+  align-items: center;
+  margin: 40px 10px 14px 10px;
   font-size: 20px;
   color: var(--color-brighter-text);
 }
@@ -109,7 +132,7 @@
 .viewContainer {
   display: flex;
   align-items: center;
-  gap: 10px; /* 원하는 간격(px 단위) */
+  gap: 10px;
   width: 4ch;
 }
 

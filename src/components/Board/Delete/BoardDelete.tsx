@@ -3,23 +3,62 @@
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
-import { deleteBoards } from '~/api/board.ts';
+import { deleteBoards, deleteTag } from '~/api/board.ts';
+import { getProjects } from '~/api/project.ts';
 import { QUERY_KEY } from '~/api/queryKey.ts';
+import { BoardTag } from '~/models/Board.ts';
 import { MdDeleteOutline } from 'react-icons/md';
 import styles from './BoardDelete.module.css';
 
 export default function BoardDelete({
   id,
   category,
+  tags,
 }: {
   id: number;
   category: number;
+  tags?: BoardTag[];
 }) {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
   const deleteMutation = useMutation({
-    mutationFn: (id: number) => deleteBoards(id),
+    mutationFn: async (id: number) => {
+      if (tags && tags.length > 0) {
+        // 프로젝트 전체를 API로 직접 조회해 사용 중인 태그 이름 수집
+        const firstPage = await getProjects(1, 1000);
+        const totalPages = firstPage.totalPages ?? 1;
+
+        const allProjects = Array.isArray(firstPage.resListProjectDtos)
+          ? (firstPage.resListProjectDtos as any[])
+          : [];
+
+        if (totalPages > 1) {
+          const remainingPages = await Promise.all(
+            Array.from({ length: totalPages - 1 }, (_, i) =>
+              getProjects(i + 2, 1000),
+            ),
+          );
+          remainingPages.forEach((page) => {
+            if (Array.isArray(page.resListProjectDtos)) {
+              allProjects.push(...(page.resListProjectDtos as any[]));
+            }
+          });
+        }
+
+        const projectTagIds = new Set<number>();
+        allProjects.forEach((project) => {
+          project.tags?.forEach((tag: { id: number }) =>
+            projectTagIds.add(tag.id),
+          );
+        });
+
+        // 프로젝트에서 사용 중이지 않은 태그만 삭제
+        const tagsToDelete = tags.filter((tag) => !projectTagIds.has(tag.id));
+        await Promise.all(tagsToDelete.map((tag) => deleteTag(tag.id)));
+      }
+      return deleteBoards(id);
+    },
     onSuccess: async () => {
       await navigate(-1);
       // 게시글 목록 캐시 무효화

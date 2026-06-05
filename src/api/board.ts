@@ -1,9 +1,8 @@
 /* eslint-disable */
 // @ts-nocheck
-import { Board, BoardPageList } from '~/models/Board.ts';
+import { Board, BoardPageList, UpdateBoard } from '~/models/Board.ts';
 // import { client } from './client.ts';
 import { authClient } from './auth/authClient.ts';
-import { UpdateBoard } from '~/models/Board.ts';
 import { reissueToken } from './auth/authApi.ts';
 import { useAuthStore } from '~/store/authStore.ts';
 
@@ -129,6 +128,7 @@ export const updateBoards = async (board: UpdateBoard, file: File | null) => {
       imageUrls: board.imageUrls,
       isChangedFile: !!file,
       deleted: false,
+      tags: board.tags,
     };
 
     formData.append(
@@ -167,6 +167,25 @@ export const deleteBoards = async (id: number): Promise<Board> => {
     // 권한이 필요한 작업에 authClient 사용
     const response = await authClient.delete<Board>(`/board/${id}`);
     return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+export const getAllTags = async (): Promise<{ id: number; name: string }[]> => {
+  try {
+    const response = await authClient.get<{ id: number; name: string }[]>('/tags');
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+export const deleteTag = async (tagId: number): Promise<void> => {
+  try {
+    await authClient.delete(`/tags/${tagId}`);
   } catch (error) {
     console.error(error);
     throw error;

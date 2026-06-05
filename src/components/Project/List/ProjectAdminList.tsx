@@ -163,7 +163,7 @@ function ProjectAdminList({
             <TeamName>{project.teamName}</TeamName>
             <Actions onClick={(e) => e.preventDefault()}>
               <EditLink to={`/admin/project/edit/${project.id}`}>수정</EditLink>
-              <ProjectDelete id={project.id!} />
+              <ProjectDelete id={project.id!} tags={project.tags} />
             </Actions>
           </Row>
         ))}

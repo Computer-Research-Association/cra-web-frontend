@@ -1,5 +1,10 @@
 import { Comment } from './Comment';
 
+export interface BoardTag {
+  id: number;
+  name: string;
+}
+
 export interface BoardPageList {
   resListBoardDtos?: Board[];
   resBoardPinDtos?: Board[];
@@ -44,6 +49,8 @@ export interface Board {
     professor?: string;
   };
   resListCommentDtos?: Comment[];
+  tagNames?: string[];
+  tags?: BoardTag[];
 }
 export interface UpdateBoard {
   title: string;
@@ -51,4 +58,5 @@ export interface UpdateBoard {
   imageUrls?: string[];
   isChangedFile: boolean;
   deleted: boolean;
+  tags?: string[];
 }

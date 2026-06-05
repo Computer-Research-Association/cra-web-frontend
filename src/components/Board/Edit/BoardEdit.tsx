@@ -1,7 +1,7 @@
 /* eslint-disable */
 // @ts-nocheck
 import React, { useEffect, useState } from 'react';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { CATEGORY_STRINGS } from '~/constants/category_strings';
 import { getBoardById, updateBoards } from '~/api/board';
@@ -21,6 +21,8 @@ export default function BoardEdit({ category }: BoardEditProps) {
   const [errors, setErrors] = useState<{ title?: string; content?: string }>(
     {},
   );
+  const [tags, setTags] = useState<string[]>([]);
+  const [tagInput, setTagInput] = useState('');
   const [formData, setFormData] = useState<{
     title: string;
     content: string;
@@ -38,6 +40,8 @@ export default function BoardEdit({ category }: BoardEditProps) {
   const currentUrl = window.location.href;
   const id = currentUrl.substring(currentUrl.lastIndexOf('/') + 1);
   const boardId = Number(id);
+
+  const queryClient = useQueryClient();
 
   const { editorRef, editorConfig } = useMarkdownEditor({
     onContentChange: (content) => {
@@ -64,7 +68,7 @@ export default function BoardEdit({ category }: BoardEditProps) {
         imageUrls: board.imageUrls || [],
         fileUrl: board.fileUrl || '',
       });
-
+      setTags(board.tags?.map((t) => t.name) ?? []);
       editorRef.current.getInstance().setMarkdown(board.content || '');
     }
   }, [boardQuery.data, editorRef.current]);
@@ -85,9 +89,12 @@ export default function BoardEdit({ category }: BoardEditProps) {
         file: fileToUpload ? fileToUpload.name : null,
       };
 
-      return await updateBoards(payload.board, fileToUpload);
+      return await updateBoards({ ...payload.board, tags }, fileToUpload);
     },
     onSuccess: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: QUERY_KEY.board.boardById(boardId),
+      });
       await navigate(-1);
       setTimeout(() => {
         window.scrollTo(0, 0);
@@ -136,6 +143,21 @@ export default function BoardEdit({ category }: BoardEditProps) {
     }
   };
 
+  const handleTagKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter' && !e.nativeEvent.isComposing) {
+      e.preventDefault();
+      const trimmed = tagInput.trim();
+      if (trimmed && !tags.includes(trimmed)) {
+        setTags((prev) => [...prev, trimmed]);
+      }
+      setTagInput('');
+    }
+  };
+
+  const handleRemoveTag = (tag: string) => {
+    setTags((prev) => prev.filter((t) => t !== tag));
+  };
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       setFile(e.target.files[0]);
@@ -155,11 +177,11 @@ export default function BoardEdit({ category }: BoardEditProps) {
   };
 
   // 로딩 상태 처리
-  if (boardQuery.isLoading || boardQuery.isLoading) {
+  if (boardQuery.isLoading) {
     return <LoadingSpinner />;
   }
 
-  if (boardQuery.isError || boardQuery.isError) {
+  if (boardQuery.isError) {
     return <div>에러가 발생했습니다!!</div>;
   }
 
@@ -192,6 +214,33 @@ export default function BoardEdit({ category }: BoardEditProps) {
         </div>
         {errors.content && (
           <p className={styles['error-message']}>{errors.content}</p>
+        )}
+
+        <label htmlFor="tag">태그</label>
+        <input
+          className={styles['input-title']}
+          type="text"
+          id="tag"
+          placeholder="태그를 입력하고 Enter를 누르세요."
+          value={tagInput}
+          onChange={(e) => setTagInput(e.target.value)}
+          onKeyDown={handleTagKeyDown}
+        />
+        {tags.length > 0 && (
+          <div className={styles['tag-list']}>
+            {tags.map((tag) => (
+              <span key={tag} className={styles['tag-chip']}>
+                {tag}
+                <button
+                  type="button"
+                  className={styles['tag-remove']}
+                  onClick={() => handleRemoveTag(tag)}
+                >
+                  ✕
+                </button>
+              </span>
+            ))}
+          </div>
         )}
 
         <label className={styles['file-button']} htmlFor="fileUpload">

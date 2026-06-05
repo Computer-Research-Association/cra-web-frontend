@@ -10,7 +10,6 @@ import styles from './BoardWrite.module.css';
 import BoardUploadSpinner from '~/components/Common/BoardUploadSpinner.tsx';
 import AlertModal from '~/components/Modal/Alert/AlertModal.tsx';
 import { useModalStore } from '~/store/modalStore.ts';
-import { BiCheckbox, BiPin } from 'react-icons/bi';
 
 interface BoardWriteProps {
   category: number;
@@ -23,6 +22,8 @@ export default function BoardWrite({ category }: BoardWriteProps) {
   );
   const { isOpen: modalIsOpen, openModal, closeModal } = useModalStore();
   const [modalMessage, setModalMessage] = useState('');
+  const [tags, setTags] = useState<string[]>([]);
+  const [tagInput, setTagInput] = useState('');
   const [formData, setFormData] = useState<{
     title: string;
     content: string;
@@ -74,7 +75,7 @@ export default function BoardWrite({ category }: BoardWriteProps) {
       };
 
       return await createBoards(
-        { ...payload.board, likes: 0, liked: false },
+        { ...payload.board, likes: 0, liked: false, tags },
         fileToUpload,
       );
     },
@@ -94,6 +95,8 @@ export default function BoardWrite({ category }: BoardWriteProps) {
         imageUrls: [],
       });
       setFile(null);
+      setTags([]);
+      setTagInput('');
     },
 
     onError: (error) => {
@@ -152,6 +155,21 @@ export default function BoardWrite({ category }: BoardWriteProps) {
     setFile(null);
   };
 
+  const handleTagKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter' && !e.nativeEvent.isComposing) {
+      e.preventDefault();
+      const trimmed = tagInput.trim();
+      if (trimmed && !tags.includes(trimmed)) {
+        setTags((prev) => [...prev, trimmed]);
+      }
+      setTagInput('');
+    }
+  };
+
+  const handleRemoveTag = (tag: string) => {
+    setTags((prev) => prev.filter((t) => t !== tag));
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validateForm()) {
@@ -188,6 +206,33 @@ export default function BoardWrite({ category }: BoardWriteProps) {
         </div>
         {errors.content && (
           <p className={styles['error-message']}>{errors.content}</p>
+        )}
+
+        <label htmlFor="tag">태그</label>
+        <input
+          className={styles['input-title']}
+          type="text"
+          id="tag"
+          placeholder="태그를 입력하고 Enter를 누르세요."
+          value={tagInput}
+          onChange={(e) => setTagInput(e.target.value)}
+          onKeyDown={handleTagKeyDown}
+        />
+        {tags.length > 0 && (
+          <div className={styles['tag-list']}>
+            {tags.map((tag) => (
+              <span key={tag} className={styles['tag-chip']}>
+                {tag}
+                <button
+                  type="button"
+                  className={styles['tag-remove']}
+                  onClick={() => handleRemoveTag(tag)}
+                >
+                  ✕
+                </button>
+              </span>
+            ))}
+          </div>
         )}
 
         <label className={styles['file-button']} htmlFor="fileUpload">
