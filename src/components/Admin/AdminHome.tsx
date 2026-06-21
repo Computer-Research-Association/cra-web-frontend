@@ -214,56 +214,6 @@ const IconActivity = () => (
   </svg>
 );
 
-const IconBook = () => (
-  <svg
-    width="17"
-    height="17"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
-    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
-  </svg>
-);
-
-const IconBox = () => (
-  <svg
-    width="17"
-    height="17"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <rect x="3" y="3" width="7" height="7" />
-    <rect x="14" y="3" width="7" height="7" />
-    <rect x="14" y="14" width="7" height="7" />
-    <rect x="3" y="14" width="7" height="7" />
-  </svg>
-);
-
-const IconOpenBook = () => (
-  <svg
-    width="17"
-    height="17"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
-    <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
-  </svg>
-);
-
 const IconKey = () => (
   <svg
     width="17"
@@ -295,24 +245,6 @@ const quickMenuItems = [
     desc: '회원 목록 및 권한 관리',
     to: '/admin/allusers',
     icon: <IconUsers />,
-  },
-  {
-    label: '도서 관리',
-    desc: '도서 등록 및 대출 현황',
-    to: '/admin/book',
-    icon: <IconBook />,
-  },
-  {
-    label: '비품 관리',
-    desc: '비품 목록 및 대여 관리',
-    to: '/admin/item',
-    icon: <IconBox />,
-  },
-  {
-    label: '하브루타 과목 관리',
-    desc: '스터디 과목 등록 및 수정',
-    to: '/admin/havruta',
-    icon: <IconOpenBook />,
   },
   {
     label: '프로젝트 관리',
