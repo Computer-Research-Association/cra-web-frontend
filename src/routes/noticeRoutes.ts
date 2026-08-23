@@ -1,6 +1,7 @@
 import { createRoute, redirect } from '@tanstack/react-router';
 import { lazy } from 'react';
 import { rootRoute } from './__root';
+import { adminLayoutRoute } from './adminLayoutRoute';
 import { useAuthStore } from '~/store/authStore';
 
 const requireAuth = () => {
@@ -31,8 +32,7 @@ export const noticeEditRoute = createRoute({
 });
 
 export const adminNoticeWriteRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: 'admin/notice/write',
+  getParentRoute: () => adminLayoutRoute,
+  path: '/admin/notice/write',
   component: lazy(() => import('~/pages/Board/Notice/NoticeWritePage.tsx')),
-  beforeLoad: requireAuth,
 });

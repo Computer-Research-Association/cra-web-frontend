@@ -8,11 +8,14 @@ export const registerRoute = createRoute({
   component: lazy(() => import('~/pages/Register/RegisterPage.tsx')),
 });
 
+/*
+// no longer used. 더이상 사용되지 않음.
 export const registerInfoRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/register',
   component: lazy(() => import('~/pages/Register/RegisterInfoPage.tsx')),
 });
+*/
 
 export const registerWelcomeRoute = createRoute({
   getParentRoute: () => rootRoute,

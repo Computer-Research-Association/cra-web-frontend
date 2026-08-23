@@ -82,6 +82,11 @@
   line-height: 59px;
 }
 
+.pinned {
+  color: var(--color-primary);
+  font-weight: bold;
+}
+
 .board-content {
   min-height: 200px;
 }

@@ -30,7 +30,7 @@ import { loginRoute } from './loginRoute.ts';
 import {
   registerRoute,
   registerWelcomeRoute,
-  registerInfoRoute,
+  //registerInfoRoute,
   privacyPolicyRoute,
 } from './registerRoutes.ts';
 import {
@@ -54,13 +54,14 @@ import {
 } from './academicRoutes.ts';
 // import { bookRoute } from './bookRoute.ts';
 // import { itemRoute } from './itemRoute.ts';
-import { projectRoute } from './projectRoute.ts';
+import { projectRoute, projectDetailRoute } from './projectRoute.ts';
 // import {
 //   havrutaRoute,
 //   havrutaViewRoute,
 //   havrutaEditRoute,
 //   havrutaWriteRoute,
 // } from './havrutaRoutes.ts';
+import { adminLayoutRoute } from './adminLayoutRoute.ts';
 import { adminRoute, superAdminRoute } from './adminRoute.ts';
 import { adminAllUsers } from './adminAllUsers.ts';
 import {
@@ -109,7 +110,7 @@ export const routes = createRouter({
     loginRoute,
     registerRoute,
     registerWelcomeRoute,
-    registerInfoRoute,
+    //registerInfoRoute,
     privacyPolicyRoute,
     idSerachRoute,
     idCompleteRoute,
@@ -119,7 +120,6 @@ export const routes = createRouter({
     noticeRoute,
     noticeViewRoute,
     noticeEditRoute,
-    adminNoticeWriteRoute,
     academicRoute,
     academicViewRoute,
     academicEditRoute,
@@ -127,28 +127,32 @@ export const routes = createRouter({
     // bookRoute,
     // itemRoute,
     projectRoute,
+    projectDetailRoute,
     // havrutaRoute,
     // havrutaViewRoute,
     // havrutaEditRoute,
     // havrutaWriteRoute,
-    adminRoute,
-    superAdminRoute,
-    adminAllUsers,
-    adminBookRoute,
-    adminBookDetailRoute,
-    adminBookUpdateRoute,
-    adminBookCreateRoute,
-    adminItemRoute,
-    adminItemDetailRoute,
-    adminItemUpdateRoute,
-    adminItemCreateRoute,
-    // adminHavrutaRoute,
-    // adminHavrutaUpdateRoute,
-    // adminHavrutaCreateRoute,
-    adminProjectRoute,
-    adminProjectDetailRoute,
-    adminProjectUpdateRoute,
-    adminProjectCreateRoute,
+    adminLayoutRoute.addChildren([
+      adminRoute,
+      superAdminRoute,
+      adminAllUsers,
+      adminNoticeWriteRoute,
+      adminBookRoute,
+      adminBookDetailRoute,
+      adminBookUpdateRoute,
+      adminBookCreateRoute,
+      adminItemRoute,
+      adminItemDetailRoute,
+      adminItemUpdateRoute,
+      adminItemCreateRoute,
+      // adminHavrutaRoute,
+      // adminHavrutaUpdateRoute,
+      // adminHavrutaCreateRoute,
+      adminProjectRoute,
+      adminProjectDetailRoute,
+      adminProjectUpdateRoute,
+      adminProjectCreateRoute,
+    ]),
     userEditRoute,
     userInfoRoute,
     userDeleteRoute,

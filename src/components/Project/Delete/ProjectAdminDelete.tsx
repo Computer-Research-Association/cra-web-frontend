@@ -1,7 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { deleteProject } from '~/api/project.ts';
-import { QUERY_KEY } from '~/api/queryKey.ts';
-import { Project } from '~/models/Project.ts';
 import styled from 'styled-components';
 
 const DeleteButton = styled.button`
@@ -21,17 +19,8 @@ function ProjectAdminDelete({ id }: { id: number }) {
   const mutation = useMutation({
     mutationFn: (id: number) => deleteProject(id),
     onSuccess: async () => {
-      queryClient.setQueryData<Project[]>(
-        QUERY_KEY.project.projectById(id),
-        (oldData) => {
-          if (!oldData) return [];
-          return oldData.filter((project) => project.id !== id);
-        },
-      );
-
-      await queryClient.invalidateQueries({
-        queryKey: QUERY_KEY.project.projectById(id),
-      });
+      await queryClient.invalidateQueries({ queryKey: ['project.projects'] });
+      alert('프로젝트가 성공적으로 삭제됐습니다.');
     },
     onError: (error) => {
       console.error('프로젝트 삭제 실패', error);
