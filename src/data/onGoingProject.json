@@ -1,22 +1,22 @@
 {
   "data": [
     {
-      "image": "https://axtgtqxmsmpp.objectstorage.ap-chuncheon-1.oci.customer-oci.com/n/axtgtqxmsmpp/b/cra-web-bucket/o/assets%2F25-2%2F25-2mafia.png",
-      "title": "시민팀 - Mafia game AI",
+      "image": "https://axtgtqxmsmpp.objectstorage.ap-chuncheon-1.oci.customer-oci.com/n/axtgtqxmsmpp/b/cra-web-bucket/o/assets%2F26-1%2F26-1mememory.png",
+      "title": "MEMEMORY팀 - 신조어 트렌드 분석 서비스",
       "description": [
-        "부분 관측 마르코프 결정 과정 환경에서 강화학습과 모방학습을 시현할 수 있는 환경을 마련하였습니다.",
-        "간단한 연구 질문을 설정하여 연구를 진행하고 스스로 논문을 작성하는 경험을 할 수 있었습니다."
+        "인터넷 커뮤니티 데이터를 기반으로 신조어의 뜻과 유래를 분석하고, 실시간 유행 정도를 점수화하여 보여주는 서비스를 개발하였습니다.",
+        "키워드 검색만으로 신조어의 의미, 출처, 유행 상태를 한 화면에서 확인할 수 있도록 구현하였습니다."
       ],
-      "stack": "PyTorch, Gymnasium, PettingZoo, SuperSuit, TensorBoard"
+      "stack": "Flask, React, MongoDB, Qdrant, LangChain, BGE-M3"
     },
     {
-      "image": "https://axtgtqxmsmpp.objectstorage.ap-chuncheon-1.oci.customer-oci.com/n/axtgtqxmsmpp/b/cra-web-bucket/o/assets%2F25-2%2F25-2gold.png",
-      "title": "금 나와라 뚝딱팀 - 알고리즘 기반 주식 자동 매매 시스템",
+      "image": "https://axtgtqxmsmpp.objectstorage.ap-chuncheon-1.oci.customer-oci.com/n/axtgtqxmsmpp/b/cra-web-bucket/o/assets%2F26-1%2F26-1dosay.png",
+      "title": "Dosay팀 - 알고리즘 및 강화학습 기반 사과게임 자동풀이 에이전트 개발 연구",
       "description": [
-        "사용자를 대신하여 비트코인을 자동으로 매매해주는 서비스입니다. ",
-        "매매 현황, 거래 내역, 시스템 로그를 웹 페이지에서 확인할 수 있습니다."
+        "탐색 알고리즘과 강화학습을 활용하여 사과게임에서 최적의 해를 찾아내는 자동풀이 에이전트를 개발하였습니다.",
+        "게임 환경에서 다양한 에이전트가 판단하고 최적해를 탐색하는 과정을 실험하며, 게임 AI의 동작 원리를 직접 학습하였습니다."
       ],
-      "stack": "React, PostgreSQL, Python, FastAPI"
+      "stack": "TensorFlow, PyTorch, Optuna, Numba, Cython"
     }
   ]
 }
